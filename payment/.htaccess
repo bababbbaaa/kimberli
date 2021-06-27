@@ -1,0 +1,11 @@
+Order Deny,Allow
+Deny from all
+
+<Files callback.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files index.php>
+    Order Allow,Deny
+    Allow from all
+</Files>

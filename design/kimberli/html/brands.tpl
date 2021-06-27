@@ -1,0 +1,47 @@
+{* The brand page template *}
+
+{* The canonical address of the page *}
+{$canonical="/brands" scope=parent}
+<div class="page_container">
+    {* The page heading *}
+    <div class="wrap_blog_heading_page">
+        <h1 class="heading_page">
+            <span data-page="{$page->id}">{if $page->name_h1|escape}{$page->name_h1|escape}{else}{$page->name|escape}{/if}</span>
+        </h1>
+    </div>
+    
+    {* The list of the brands *}
+    {if $brands}
+        <div class="page_brands clearfix block row">
+            {foreach $brands as $b}
+                {if $b->visible}
+                <div class="p_brand_item no_padding col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                    <a class="brand_link" data-brand="{$b->id}" href="{$lang_link}brands/{$b->url}">
+                        {if $b->image}
+                            <div class="brand_image">
+                                <img class="brand_img" src="{$b->image|resize:200:200:false:$config->resized_brands_dir}" alt="{$b->name|escape}" title="{$b->name|escape}">
+                            </div>
+                             <div class="brand_name">
+                                <span data-brand="{$b->id}">{$b->name|escape}</span>
+                            </div>
+                        {else}
+                            <div class="brand_image">
+                                <div class="brand_name">
+                                    <span data-brand="{$b->id}">{$b->name|escape}</span>
+                                </div>
+                            </div>
+                        {/if}    
+                    </a>
+                </div>
+                {/if} 
+            {/foreach}
+        </div>
+    {/if}
+
+    {* The page body *}
+    {if $page->description}
+        <div class="block padding">
+            {$page->description}
+        </div>
+    {/if}
+</div>    

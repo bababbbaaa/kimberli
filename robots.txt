@@ -1,0 +1,69 @@
+User-agent: *
+Disallow: /404
+Disallow: /backend
+Disallow: /order/
+Disallow: /user/
+#Disallow: /api/
+Disallow: /cart/*
+Disallow: /cron
+Disallow: /*?currency_id
+Disallow: /*?keyword
+Disallow: /*?utm
+Disallow: /*&utm
+#Disallow: /*optinsert
+Disallow: /*?orderby
+#Disallow: /en/*
+
+User-agent: Yandex
+Allow: *.css
+Allow: *.js
+Disallow: /404
+Disallow: /backend
+Disallow: /order/
+Disallow: /user/
+#Disallow: /api/
+Disallow: /cart/*
+Disallow: /*?currency_id
+Disallow: /*?keyword
+Disallow: /*?utm
+Disallow: /*&utm
+Disallow: /tmp
+Disallow: /cron
+#Disallow: /en/*
+
+Host: https://kimberli.ua
+
+User-agent: Googlebot
+Allow: *.css
+Allow: *.js
+#Disallow: /en
+#Disallow: /en/*
+Disallow: /404
+Disallow: /backend
+Disallow: /order/
+Disallow: /user/
+#Disallow: /api/
+Disallow: /cart/*
+Disallow: /*?currency_id
+Disallow: /*?keyword
+Disallow: /*?utm
+Disallow: /*&utm
+Disallow: /*?orderby
+Disallow: /*razmer=
+Disallow: /tmp
+Disallow: /cron
+#Disallow: /en/*
+
+User-agent: Googlebot-Image
+Allow: *images*
+Allow: *jpg*
+Allow: *jpeg*
+Allow: *png*
+
+User-agent: YandexImages
+Allow: *images*
+Allow: *jpg*
+Allow: *jpeg*
+Allow: *png*
+
+Sitemap: https://kimberli.ua/sitemap.xml

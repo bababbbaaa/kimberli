@@ -1,0 +1,23 @@
+order deny,allow
+deny from all
+<Files dropbox_download.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files update_product.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files insertions_to_mysql.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files update_insertions.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files update_curs.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+

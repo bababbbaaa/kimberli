@@ -1,0 +1,30 @@
+02.06.2021 20:24:54
+Error (1048) Column 'email' cannot be null
+----------------------
+INSERT INTO ok_feedbacks SET name='Ярослав Романчук', email=NULL, phone='0968171330', message='gjfghj', utm='google:video_youtube_kyiv', ip='195.38.11.96', lang_id='3', url='http://kimberli.ua/rest/feedback?name=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2+%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D1%87%D1%83%D0%BA&phone=0968171330&message=gjfghj&feedback=1', date = NOW()
+----------------------
+
+02.06.2021 20:29:04
+Error (1048) Column 'email' cannot be null
+----------------------
+INSERT INTO ok_feedbacks SET name='Ярослав', email=NULL, phone='0968171330', message='hgdfghgfh', utm='google:video_youtube_kyiv', ip='195.38.11.96', lang_id='3', url='http://kimberli.ua/rest/feedback?name=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2&phone=0968171330&message=hgdfghgfh&feedback=1', date = NOW()
+----------------------
+
+02.06.2021 20:29:39
+Error (1048) Column 'email' cannot be null
+----------------------
+INSERT INTO ok_feedbacks SET name='Ярослав', email=NULL, phone='0968171330', message='hgdfghgfh', utm='google:video_youtube_kyiv', ip='195.38.11.96', lang_id='3', url='http://kimberli.ua/rest/feedback?name=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2&phone=0968171330&message=hgdfghgfh&feedback=1', date = NOW()
+----------------------
+
+02.06.2021 20:31:44
+Error (1048) Column 'email' cannot be null
+----------------------
+INSERT INTO ok_feedbacks SET name='Ярослав', email=NULL, phone='0968171330', message='hgdfghgfh', utm='google:video_youtube_kyiv', ip='195.38.11.96', lang_id='3', url='http://kimberli.ua/rest/feedback?name=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2&phone=0968171330&message=hgdfghgfh&feedback=1', date = NOW()
+----------------------
+
+02.06.2021 20:35:13
+Error (1048) Column 'email' cannot be null
+----------------------
+INSERT INTO ok_feedbacks SET name='Ярослав Романчук', email=NULL, phone='0968171330', message='gjfghj', utm='google:video_youtube_kyiv', ip='195.38.11.96', lang_id='3', url='http://kimberli.ua/rest/feedback?name=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2+%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D1%87%D1%83%D0%BA&phone=0968171330&message=gjfghj&feedback=1', date = NOW()
+----------------------
+

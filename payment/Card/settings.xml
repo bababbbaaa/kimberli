@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>
+		PayCard
+	</name>
+        <settings>
+		<variable>number_card</variable>
+		<name>Номер карты</name>
+	</settings>
+</module>

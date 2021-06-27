@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>
+		PayParts
+	</name>
+        <settings>
+		<variable>parts_count</variable>
+		<name>Максимальное количество частей оплаты</name>
+	</settings>
+        <settings>
+		<variable>merchantType</variable>
+		<name>Тип платежа</name>
+                <options>
+			<name>Оплата частинами</name>
+			<value>PP</value>
+		</options>
+		<options>
+			<name>Миттєва розстрочка</name>
+			<value>II</value>
+		</options>
+	</settings>
+	<settings>
+		<variable>store_id</variable>
+		<name>Идентификатор магазина</name>
+	</settings>
+	<settings>
+		<variable>password</variable>
+		<name>Пароль</name>
+	</settings>
+</module>

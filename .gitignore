@@ -1,0 +1,10 @@
+backend/design/compiled/*
+compiled/*
+files/*
+composer.lock
+cron/dropbox.log
+tmp/
+log/*
+config/config.local.php
+cache/*
+vendor/*
