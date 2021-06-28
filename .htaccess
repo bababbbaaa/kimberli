@@ -17,7 +17,7 @@ RewriteRule ^(.+)/$ %1 [R=301,L]
 
 # Кэширование / поддерживается не на всех хостингах
 <ifmodule mod_expires.c>
-    <filesmatch "\.(jpg|jpeg|png|gif|js|css|swf|ico|woff|mp3)$">
+    <filesmatch "\.(jpg|jpeg|png|gif|js|css|swf|ico|woff|mp3|otf)$">
         ExpiresActive on
         ExpiresDefault "access plus 7 days"
     </filesmatch>

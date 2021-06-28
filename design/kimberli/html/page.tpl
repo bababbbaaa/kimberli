@@ -14,9 +14,9 @@
             <img class="border" src="design/{$settings->theme|escape}/images/heading_border.png" alt="page_border">
         </div>
     </div>
-    <div class="page_container">
+    <div class="page_container1">
          {if $dop_files_header}
-            {$dop_files_header}
+            {*$dop_files_header*}
         {/if}
         {* The page heading *}
        {* <div class="wrap_blog_heading_page">
@@ -24,13 +24,17 @@
                 <span data-page="{$page->id}">{if $page->name_h1|escape}{$page->name_h1|escape}{else}{$page->name|escape}{/if}</span>
             </h1>
         </div>*}
-        
-        {* The page content *}
-        <div class="admin_formated" style="padding-top: 20px;">
-            {$page->description}
-        </div>
-        {if $dop_files_footer}
-            {$dop_files_footer}
+
+        {if $page->content}
+            {$page->content}
+        {else}
+            {* The page content *}
+            <div class="admin_formated" style="padding-top: 20px;">
+                {$page->description}
+            </div>
+            {if $dop_files_footer}
+                {$dop_files_footer}
+            {/if}
         {/if}
     </div>
          {if $compilation }

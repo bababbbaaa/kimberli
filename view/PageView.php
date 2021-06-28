@@ -21,13 +21,17 @@ class PageView extends View {
         
         switch ($url) {
         case 'atelier': 
-            $this->design->assign('dop_files_header', $this->design->fetch('dop_files_header.tpl'));
-            $footer = $this->design->fetch('dop_files_header.tpl');
-            $footer .= $this->design->fetch('callback_page.tpl');
+           // $this->design->assign('dop_files_header', $this->design->fetch('dop_files_header.tpl'));
+           // $footer = $this->design->fetch('dop_files_header.tpl');
+            $footer = $this->design->fetch('callback_page.tpl');
             $this->design->assign('dop_files_footer', $footer);
             break;
         default : break;
         }
+      
+      if (file_exists(BASE_DIR . '/design/kimberli/html/page/' . $url . '.tpl')) {
+			$page->content = $this->design->fetch('page/' . $url . '.tpl');
+		}
         
         if (!empty($page->compilation_id)) {
             

@@ -1,19 +1,17 @@
 <?php
-namespace cron;
-
 if(!empty($_SERVER['HTTP_USER_AGENT'])){
     session_name(md5($_SERVER['HTTP_USER_AGENT']));
 }
-
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
 session_start();
+//chdir('..');
 require_once('function_cron.php');
 include_once('../api/Okay.php');
 $okay = new Okay();
-
 use XBase\Table;
 
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
+
 $categoriesMap = [
 	'' => 0,
 	'Серьги' => [
@@ -48,6 +46,10 @@ $categoriesMap = [
 		'id' => 32,
 		'translit' => 'broshka'
 	],
+	'Сертификат' => [
+		'id' => 33,
+		'translit' => 'sertifikat'
+	],
 ];
 
 $color = [
@@ -69,11 +71,6 @@ $data = ['update' => 0, 'add_options' => 0, 'add' => 0];
 $i=0;
 $dbProductsPath = 'files/Sait.dbf';
 
-if (!file_exists($dbProductsPath)) {
-  echo 'no file';
-exit;
-}
-
 $date_file = date('Y-m-d H:i:s', filemtime($dbProductsPath));
 
 $sql = "SELECT log_id FROM  `ok_dropbox_log` WHERE `date_file` = '{$date_file}' LIMIT 1";
@@ -89,7 +86,7 @@ if ($okay->db->result('log_id')) {
 try
 {
     $table = new Table($dbProductsPath, null, 'CP1251');
-echo 'dfsg'; exit;
+ 
     if ($table->getRecordCount() <= 0) {
     	exit();
 	}
@@ -127,6 +124,10 @@ $okay->db->query("UPDATE `ok_variants` SET `kimb`.`ok_variants`.`stock` = 0"); /
         } else {
 
 			$new_sku = $record->si .'-' . $record->cvet . '-' . $record->namev;
+
+			if ('Сертификат' == $record->si) {
+				$new_sku .= '-' .$record->shtr;
+			}
 			$proc =  proc($record->cena, $record->cenas);
 
 			$url = $categoriesMap[$record->namer]['translit'] . '-' . $record->shtr;
@@ -145,18 +146,24 @@ $okay->db->query("UPDATE `ok_variants` SET `kimb`.`ok_variants`.`stock` = 0"); /
 			$res = $okay->db->result();
 
 			if($res->product_id) {
+
+				$cvet = !empty($record->cvet) ? $record->cvet : '';
+				$namev = !empty($record->namev) ? $record->namev : '';
+				$mas = !empty($record->mas) ? $record->mas : 0;
+				$proc = !empty($record->proc) ? $record->proc : 0;
+
 				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
 					. "{$res->product_id},"
 					. "'{$url}',"
 					. "'{$new_sku}',"
-					. "'{$record->cvet}',"
-					. "'{$record->namev}',"
+					. "'{$cvet}',"
+					. "'{$namev}',"
 					. "'{$record->si}', "
 					. "{$record->shtr}, "
 					. "{$record->shtr}, "
 					. " '{$ru_name}', "
-					. "{$record->mas}, "
-					. "{$record->proc}, "
+					. "{$mas}, "
+					. "{$proc}, "
 					. "{$record->cena}, "
 					. "{$record->cenas}, "
 					. "{$record->kol}, "
@@ -201,6 +208,7 @@ $okay->db->query("UPDATE `ok_variants` SET `kimb`.`ok_variants`.`stock` = 0"); /
 					. " 0,"
 					. " '{$record->gr}'"
 					. ")";
+
 				$okay->db->query($sql);
 				$id = $okay->db->insert_id();
 
@@ -210,18 +218,24 @@ $okay->db->query("UPDATE `ok_variants` SET `kimb`.`ok_variants`.`stock` = 0"); /
                                                                         (3, {$id}, '{$ua_name}')
                                                                         ");
 
+				$cvet = !empty($record->cvet) ? $record->cvet : '';
+				$namev = !empty($record->namev) ? $record->namev : '';
+				$mas = !empty($record->mas) ? $record->mas : 0;
+				$proc = !empty($record->proc) ? $record->proc : 0;
+
+
 				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
 					. "{$id},"
 					. "'{$url}',"
 					. "'{$new_sku}',"
-					. "'{$record->cvet}',"
-					. "'{$record->namev}',"
+					. "'{$cvet}',"
+					. "'{$namev}',"
 					. "'{$record->si}', "
 					. "{$record->shtr}, "
 					. "{$record->shtr}, "
 					. " '{$ru_name}', "
-					. "{$record->mas}, "
-					. "{$record->proc}, "
+					. "{$mas}, "
+					. "{$proc}, "
 					. "{$record->cena}, "
 					. "{$record->cenas}, "
 					. "{$record->kol}, "

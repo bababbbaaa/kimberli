@@ -2,6 +2,7 @@
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', false);
 //ini_set('display_startup_errors', 1);
+ const BASE_DIR = __DIR__;
 
 require_once('function.php');
 set_exception_handler('exception_handler');

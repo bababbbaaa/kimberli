@@ -64,7 +64,7 @@ class Settings extends Okay {
         $this->vars = array();
         $this->db->query('SELECT name, value FROM __settings');
         foreach($this->db->results() as $result) {
-            if(!($this->vars[$result->name] = unserialize($result->value))) {
+            if(!isset($this->vars[$result->name]) || $this->vars[$result->name] != unserialize($result->value)) {
                 $this->vars[$result->name] = $result->value;
             }
         }

@@ -1,10 +1,10 @@
 {* Callback form *}
-    <form id="fn_callback_page" class="callback_form_page fn_validate_callback" method="post">
+    <form id="fn_callback_page" class="callback_form_page fn_validate_callback atelier-request_form" method="post">
 
         {* The form heading *}
-        <div class="popup_heading">
+        {*<div class="popup_heading">
             <span data-language="callback_header">{$lang->callback_page_header}</span>
-        </div>
+        </div>*}
         
         <div class="message_error d-none"></div>
 
@@ -25,7 +25,8 @@
         
         {* Submit button *}
         <div class="boxed_button">
-            <input class="btn btn_black btn_account" type="submit" name="callback_page" data-language="callback_order" value="{$lang->callback_order}">
+            <button class="btn btn_black btn_account submit"  type="submit" name="callback_page" data-language="callback_order">{$lang->callback_order}</button>
+           {* <input class="btn btn_black btn_account submit" type="submit" name="callback_page" data-language="callback_order" value="{$lang->callback_order}">*}
         </div>
 
     </form>
