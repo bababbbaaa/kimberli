@@ -1,16 +1,16 @@
 <?php
-if(!empty($_SERVER['HTTP_USER_AGENT'])){
-    session_name(md5($_SERVER['HTTP_USER_AGENT']));
-}
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-session_start();
-//chdir('..');
-require_once('function_cron.php');
-include_once('../api/Okay.php');
-$okay = new Okay();
-use XBase\Table;
 
+namespace cron;
+
+use rest\api\Okay;
+
+session_start();
+//require_once('function_cron.php');
+//include_once('../api/Okay.php');
+$okay = new Okay();
+
+print_r($okay); exit;
+use XBase\Table;
 
 $categoriesMap = [
 	'' => 0,
@@ -76,6 +76,8 @@ $date_file = date('Y-m-d H:i:s', filemtime($dbProductsPath));
 $sql = "SELECT log_id FROM  `ok_dropbox_log` WHERE `date_file` = '{$date_file}' LIMIT 1";
 $okay->db->query($sql);
 
+print_r($okay->db->result('log_id')); exit;
+
 if ($okay->db->result('log_id')) {
 	$log_messsage = "File not update. Last update " . $date_file;
 	set_log($log_messsage);
@@ -91,8 +93,9 @@ try
     	exit();
 	}
 
-$okay->db->query("UPDATE `ok_variants` SET `kimb`.`ok_variants`.`stock` = 0"); //обнуление остатка
+$okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`stock` > 0;"); //обнуление остатка
 
+	exit;
     while ($record = $table->nextRecord()) {
     
    // $sql = "UPDATE `kimb`.`ok_variants` SET `kimb`.`ok_variants`.`stock` = {$record->kol}, `kimb`.`ok_variants`.`price` = {$record->cena}, `kimb`.`ok_variants`.`compare_price` = {$record->cenas}, `kimb`.`ok_variants`.`weight` = {$record->mas} WHERE `kimb`.`ok_variants`.`sku` = {$record->shtr} ";

@@ -217,7 +217,7 @@
                         </div>
 
                         {* Callback *}
-                        <a class="callback informer binct-phone-number-1" target="_blank" title="{$lang->index_back_call}" href="tel:0800335972" data-language="index_back_call">
+                        <a class="callback informer binct-phone-number" target="_blank" title="{$lang->index_back_call}" href="tel:0800335972" data-language="index_back_call">
                             {include file="svg.tpl" svgId="callback"}
                         </a>
 

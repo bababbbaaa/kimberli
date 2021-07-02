@@ -1688,6 +1688,10 @@ a.logo img{
     right: 56px;
 }
 
+.top_header .informer.callback:before {
+
+}
+
 .top_header .informer a .informer_counter {
     font-size: 11px;
     color: rgb(0, 0, 0);

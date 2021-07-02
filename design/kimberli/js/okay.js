@@ -1283,15 +1283,16 @@ $(function(){
     };
 
     if($(window).width() > 768) {
-        $(".fn_images").on("afterChange", function (){
-            setGalleryPreview();
-        });
+      //  $(".fn_images").on("afterChange", function (){
+       //     setGalleryPreview();
+       // });
 
         $(".images_item").click(function(){
             slideIndex = $(this).index();
             $(".images_item").removeClass('slick-current');
             $(this).addClass('slick-current');
             $('.fn_images').slick('slickGoTo', parseInt(slideIndex));
+            setGalleryPreview();
         });
     }
 

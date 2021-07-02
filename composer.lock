@@ -1,0 +1,493 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "afe45ddf49456faaca3856c7ffd1d375",
+    "packages": [
+        {
+            "name": "gregwar/cache",
+            "version": "v1.0.13",
+            "target-dir": "Gregwar/Cache",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Cache.git",
+                "reference": "184cc341c25298ff7d584f86b55b6ca26626da4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Cache/zipball/184cc341c25298ff7d584f86b55b6ca26626da4f",
+                "reference": "184cc341c25298ff7d584f86b55b6ca26626da4f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gregwar\\Cache": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregwar",
+                    "email": "g.passault@gmail.com"
+                }
+            ],
+            "description": "A lightweight file-system cache system",
+            "keywords": [
+                "cache",
+                "caching",
+                "file-system",
+                "system"
+            ],
+            "time": "2021-04-20T07:23:58+00:00"
+        },
+        {
+            "name": "gregwar/image",
+            "version": "v2.1.0",
+            "target-dir": "Gregwar/Image",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Image.git",
+                "reference": "1cf64c34cbb22933b36727c16b15ed4d925b6fc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Image/zipball/1cf64c34cbb22933b36727c16b15ed4d925b6fc6",
+                "reference": "1cf64c34cbb22933b36727c16b15ed4d925b6fc6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "gregwar/cache": "^1.0.6",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "sllh/php-cs-fixer-styleci-bridge": "~1.0",
+                "symfony/phpunit-bridge": "^2.7.4 || ^3.0"
+            },
+            "suggest": {
+                "behat/transliterator": "Transliterator provides ability to set non-latin1 pretty names"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gregwar\\Image": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                }
+            ],
+            "description": "Image handling",
+            "homepage": "https://github.com/Gregwar/Image",
+            "keywords": [
+                "gd",
+                "image"
+            ],
+            "time": "2021-02-17T16:00:53+00:00"
+        },
+        {
+            "name": "hisamu/php-xbase",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/luads/php-xbase.git",
+                "reference": "cdbe9d41292ead86d7f52d2f6af54779a5b04d57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/luads/php-xbase/zipball/cdbe9d41292ead86d7f52d2f6af54779a5b04d57",
+                "reference": "cdbe9d41292ead86d7f52d2f6af54779a5b04d57",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpunit/phpunit": "^7.0||^8.0||^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "XBase\\": "src/XBase"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luã de Souza",
+                    "email": "lsouza@codeinc.com.br"
+                },
+                {
+                    "name": "Erwin Kooi",
+                    "email": "info@cyane.nl"
+                }
+            ],
+            "description": "A simple parser for *.dbf, *.fpt files using PHP",
+            "homepage": "https://github.com/luads/php-xbase",
+            "keywords": [
+                "dbase",
+                "dbf",
+                "foxpro"
+            ],
+            "time": "2021-03-15T21:04:31+00:00"
+        },
+        {
+            "name": "inok/dbf",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nchizhov/inok-dbf.git",
+                "reference": "96122f8b93c2a017aea2745f8f72f6b77ffeac4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nchizhov/inok-dbf/zipball/96122f8b93c2a017aea2745f8f72f6b77ffeac4e",
+                "reference": "96122f8b93c2a017aea2745f8f72f6b77ffeac4e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-calendar": "*",
+                "ext-ctype": "*",
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inok\\Dbf\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chizhov Nikolay",
+                    "email": "admin@kgd.in",
+                    "homepage": "http://blog.kgd.in",
+                    "role": "System Administrator"
+                }
+            ],
+            "description": "Package for reading DBASE-files (FoxPro) with/without MEMO-fields",
+            "homepage": "http://blog.kgd.in",
+            "keywords": [
+                "dbase",
+                "dbf",
+                "foxpro",
+                "memo"
+            ],
+            "time": "2020-03-15T08:24:29+00:00"
+        },
+        {
+            "name": "mesilov/bitrix24-php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mesilov/bitrix24-php-sdk.git",
+                "reference": "1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mesilov/bitrix24-php-sdk/zipball/1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33",
+                "reference": "1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.2",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "~0.3",
+                "jakub-onderka/php-parallel-lint": "0.9",
+                "phpunit/phpunit": "~4.8",
+                "phpunit/phpunit-mock-objects": "2.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxim Mesilov",
+                    "homepage": "https://github.com/mesilov/"
+                }
+            ],
+            "description": "A powerfull PHP library for the Bitrix24 REST API",
+            "homepage": "https://github.com/mesilov/bitrix24-php-sdk",
+            "keywords": [
+                "Bitrix24",
+                "api",
+                "php",
+                "rest"
+            ],
+            "time": "2021-06-10T05:26:48+00:00"
+        },
+        {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "2.8.37",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "9841e3c46f5bd0739b53aed8ac677fa712943df7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/9841e3c46f5bd0739b53aed8ac677fa712943df7",
+                "reference": "9841e3c46f5bd0739b53aed8ac677fa712943df7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8.35||~5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://mobiledetect.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2021-02-19T21:22:57+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a5b5c43e50b7fba655f793ad27303cd74c57363c",
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-hash": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "doctrine/annotations": "^1.2",
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.5.6",
+                "yoast/phpunit-polyfills": "^0.2.0"
+            },
+            "suggest": {
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2021-06-16T14:33:43+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2021-05-03T11:20:27+00:00"
+        },
+        {
+            "name": "smarty/smarty",
+            "version": "v3.1.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "bf1de6c1051ec648b546839ad84eeead76aea819"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/bf1de6c1051ec648b546839ad84eeead76aea819",
+                "reference": "bf1de6c1051ec648b546839ad84eeead76aea819",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "libs/Smarty.class.php",
+                    "libs/SmartyBC.class.php",
+                    "libs/sysplugins/smarty_security.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2014-10-31T01:15:15+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "mesilov/bitrix24-php-sdk": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}

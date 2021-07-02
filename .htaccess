@@ -47,6 +47,9 @@ ModPagespeedEnableFilters convert_png_to_jpeg,convert_jpeg_to_webp
 ModPagespeedEnableFilters collapse_whitespace,remove_comments
 </IfModule>
 
+# Веб почта /webmail
+RewriteRule	^webmail/?$  webmail [L]
+
 # Редирект с page-1 на основную страницу в ЧПУ
 RewriteCond %{REQUEST_URI} ^(.*)/page-1(?![0-9])(.*)$
 RewriteRule ^(.*)$ %1%3 [R=301,L]

@@ -1,5 +1,7 @@
 <?php
 
+namespace cron;
+
 function set_log($message = ''){
    $log = file_get_contents('dropbox.log');
   

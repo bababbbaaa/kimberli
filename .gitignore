@@ -1,10 +1,14 @@
 backend/design/compiled/*
 compiled/*
 files/*
-composer.lock
 cron/dropbox.log
 tmp/
 log/*
 config/config.local.php
 cache/*
-vendor/*
+mail/*
+dev/*
+vendor.tgz
+composer.phar
+.idea/*
+.idea

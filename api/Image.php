@@ -123,7 +123,7 @@ class Image extends Okay {
             $crop_params['y_pos'] = $matches[7];
         }
 
-        return array($file.'.'.$ext, $width, $height, $set_watermark, $crop_params);
+        return array($file.'.'.$ext, $width, $height, $set_watermark, ($crop_params?? []));
     }
 
     /*Загрузка изображения*/
