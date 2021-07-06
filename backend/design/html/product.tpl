@@ -249,6 +249,13 @@
                         </select>
                          </div>
                     </div>
+                    <div class="col-lg-12 toggle_body_wrap on fn_card ">
+                        <div class="heading_label">Youtube Link</div>
+                        <div class="input-group">
+                            <span class="input-group-addon">https://www.youtube.com/embed/</span>
+                            <input name="youtube" class="fn_meta_field form-control "  type="text" value="{$product->youtube|escape}" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

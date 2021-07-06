@@ -542,6 +542,11 @@
             </div>
         </div>
     </div>
+    {if $product->youtube}
+        <div class="atelier-movie">
+            <iframe width="100%" height="100%"  src="https://www.youtube.com/embed/{$product->youtube}?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    {/if}
     <div class="">
 
         {* Previous/Next product *}
@@ -632,6 +637,22 @@
             $('.product_tab').removeClass('active');
             $(this).closest('.product_tab').addClass('active');
         }
+    });
+
+        $('#video-play').on('click', function(evt) {
+        var video = $('.atelier-movie video')[0];
+
+        video.play();
+        video.controls = true;
+
+        video.addEventListener('ended', f);
+        $('.atelier-movie').addClass('active');
+
+        function f(){
+        $('.atelier-movie').removeClass('active');
+        video.controls = false;
+    }
+
     });
 </script>
 

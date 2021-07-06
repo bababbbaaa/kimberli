@@ -342,6 +342,7 @@ INNER JOIN ok_variants pv ON pv.product_id = pp.id";
                 p.main_image_id,
                 p.gia,
                 p.hrd,
+                p.youtube,
                 pv.sku,
                 pv.sku2,
                 pv.url,
@@ -716,7 +717,8 @@ INNER JOIN ok_variants pv ON pv.product_id = pp.id";
                 p.xml_category_id,
                 p.main_image_id,
                 p.gia,
-                p.hrd,                
+                p.hrd,
+                p.youtube,
                 pv.sku,
                 pv.new_sku,
                 $lang_sql->fields

@@ -29,6 +29,7 @@ class ProductAdmin extends Okay {
             $product->rating = $this->request->post('rating', 'float');
             $product->votes = $this->request->post('votes', 'integer');
             $product->special = $this->request->post('special','string');
+			$product->youtube = $this->request->post('youtube','string');
             
             // Свойства товара
             if ($this->request->post('insertions')) {
