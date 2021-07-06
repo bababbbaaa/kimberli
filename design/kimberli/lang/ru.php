@@ -301,3 +301,4 @@ $lang['order_step_one_btn'] = "Сохранить и продолжить";
 $lang['order_step_comment'] = "Добавить комментарий к заказу";
 $lang['work_in'] = "Работа в";
 $lang['marketing_department'] = "Отдел маркетинга";
+$lang['certificate_gia_hrd'] = "Сертификат";

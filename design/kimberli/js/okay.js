@@ -116,6 +116,8 @@ $(document).on('submit', '.coupon_form', function(e) {
 
                 if (data.status === true) {
 
+                    gtag('event', 'popup', {'event_category': 'send_form',});
+
                   $('.coupon-popup .body').html(data.data.message);
 
                     setTimeout(function(){

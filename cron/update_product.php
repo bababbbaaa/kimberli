@@ -8,7 +8,7 @@ use rest\api\Okay;
 require_once('function_cron.php');
 $okay = new Okay();
 
-use XBase\Table;
+use XBase\TableReader;
 
 $categoriesMap = [
 	'' => 0,
@@ -84,9 +84,10 @@ if ($okay->db->result('log_id')) {
 
 try
 {
-    $table = new Table($dbProductsPath, null, 'CP1251');
+    $table = new TableReader($dbProductsPath, ['encoding' => 'CP1251']);
  
     if ($table->getRecordCount() <= 0) {
+    	echo 'error getRecordCount';
     	exit();
 	}
 

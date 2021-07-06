@@ -235,6 +235,12 @@
                                                 <button data-hint="{$btr->general_add_xml|escape}" type="button" class="setting_icon setting_icon_yandex fn_ajax_action {if $product->variants[0]->feed}fn_active_class{/if} hint-bottom-middle-t-info-s-small-mobile  hint-anim" data-module="variant" data-action="feed" data-id="{$product->variants[0]->id}">
                                                    XML
                                                 </button>
+                                                <button data-hint="{$btr->gia|escape}" type="button" class="setting_icon setting_icon_featured fn_ajax_action {if $product->gia}fn_active_class{/if} hint-bottom-middle-t-info-s-small-mobile  hint-anim" data-module="product" data-action="gia" data-id="{$product->id}" >
+                                                    GIA
+                                                </button>
+                                                <button data-hint="{$btr->hrd|escape}" type="button" class="setting_icon setting_icon_featured fn_ajax_action {if $product->hrd}fn_active_class{/if} hint-bottom-middle-t-info-s-small-mobile  hint-anim" data-module="product" data-action="hrd" data-id="{$product->id}" >
+                                                    HRD
+                                                </button>
 
                                                 {*copy*}
                                                {* <button data-hint="{$btr->products_dublicate|escape}" type="button" class="setting_icon setting_icon_copy fn_copy hint-bottom-middle-t-info-s-small-mobile  hint-anim">

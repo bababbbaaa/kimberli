@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afe45ddf49456faaca3856c7ffd1d375",
+    "content-hash": "29470ff1f7f6969451d90901635a0ed8",
     "packages": [
         {
             "name": "gregwar/cache",
@@ -103,16 +103,16 @@
         },
         {
             "name": "hisamu/php-xbase",
-            "version": "1.4.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luads/php-xbase.git",
-                "reference": "cdbe9d41292ead86d7f52d2f6af54779a5b04d57"
+                "reference": "72e073693c594620ea6fc190b8d34a70e3ed4fc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luads/php-xbase/zipball/cdbe9d41292ead86d7f52d2f6af54779a5b04d57",
-                "reference": "cdbe9d41292ead86d7f52d2f6af54779a5b04d57",
+                "url": "https://api.github.com/repos/luads/php-xbase/zipball/72e073693c594620ea6fc190b8d34a70e3ed4fc0",
+                "reference": "72e073693c594620ea6fc190b8d34a70e3ed4fc0",
                 "shasum": ""
             },
             "require": {
@@ -120,19 +120,21 @@
                 "php": ">=7.1"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^7.0||^8.0||^9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "XBase\\": "src/XBase"
-                }
+                    "XBase\\": "src"
+                },
+                "exclude-from-classmap": [
+                    "/tests"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -146,6 +148,10 @@
                 {
                     "name": "Erwin Kooi",
                     "email": "info@cyane.nl"
+                },
+                {
+                    "name": "Alexander Strizhak",
+                    "email": "gam6itko@gmail.com"
                 }
             ],
             "description": "A simple parser for *.dbf, *.fpt files using PHP",
@@ -155,7 +161,7 @@
                 "dbf",
                 "foxpro"
             ],
-            "time": "2021-03-15T21:04:31+00:00"
+            "time": "2021-03-21T20:49:38+00:00"
         },
         {
             "name": "inok/dbf",
@@ -205,58 +211,6 @@
                 "memo"
             ],
             "time": "2020-03-15T08:24:29+00:00"
-        },
-        {
-            "name": "mesilov/bitrix24-php-sdk",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mesilov/bitrix24-php-sdk.git",
-                "reference": "1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mesilov/bitrix24-php-sdk/zipball/1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33",
-                "reference": "1f8b3afbc40e38073bcf5f420f29a5d00d8a2f33",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "php": ">=5.3.2",
-                "psr/log": "^1.0"
-            },
-            "require-dev": {
-                "jakub-onderka/php-console-highlighter": "~0.3",
-                "jakub-onderka/php-parallel-lint": "0.9",
-                "phpunit/phpunit": "~4.8",
-                "phpunit/phpunit-mock-objects": "2.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxim Mesilov",
-                    "homepage": "https://github.com/mesilov/"
-                }
-            ],
-            "description": "A powerfull PHP library for the Bitrix24 REST API",
-            "homepage": "https://github.com/mesilov/bitrix24-php-sdk",
-            "keywords": [
-                "Bitrix24",
-                "api",
-                "php",
-                "rest"
-            ],
-            "time": "2021-06-10T05:26:48+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -377,68 +331,25 @@
             "time": "2021-06-16T14:33:43+00:00"
         },
         {
-            "name": "psr/log",
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "time": "2021-05-03T11:20:27+00:00"
-        },
-        {
             "name": "smarty/smarty",
-            "version": "v3.1.18",
+            "version": "v3.1.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "bf1de6c1051ec648b546839ad84eeead76aea819"
+                "reference": "e27da524f7bcd7361e3ea5cdfa99c4378a7b5419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/bf1de6c1051ec648b546839ad84eeead76aea819",
-                "reference": "bf1de6c1051ec648b546839ad84eeead76aea819",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/e27da524f7bcd7361e3ea5cdfa99c4378a7b5419",
+                "reference": "e27da524f7bcd7361e3ea5cdfa99c4378a7b5419",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^6.5 || ^5.7 || ^4.8",
+                "smarty/smarty-lexer": "^3.1"
             },
             "type": "library",
             "extra": {
@@ -448,9 +359,7 @@
             },
             "autoload": {
                 "classmap": [
-                    "libs/Smarty.class.php",
-                    "libs/SmartyBC.class.php",
-                    "libs/sysplugins/smarty_security.php"
+                    "libs/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -476,15 +385,13 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-31T01:15:15+00:00"
+            "time": "2021-02-17T21:57:51+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mesilov/bitrix24-php-sdk": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

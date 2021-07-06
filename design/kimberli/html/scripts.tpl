@@ -177,13 +177,12 @@
 
                 },
                 message: "required",
-                captcha_code: "required"
             },
             messages: {
                 name: form_enter_name,
                 email: form_enter_email,
                 message: form_enter_message,
-                captcha_code: form_error_captcha
+                phone: form_enter_phone
             }
         });
     }

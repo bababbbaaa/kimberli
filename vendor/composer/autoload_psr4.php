@@ -8,8 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'rest\\' => array($baseDir . '/application'),
     'cron\\' => array($baseDir . '/cron'),
-    'XBase\\' => array($vendorDir . '/hisamu/php-xbase/src/XBase'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'XBase\\' => array($vendorDir . '/hisamu/php-xbase/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'KB\\' => array($baseDir . '/rest_file'),
     'Inok\\Dbf\\' => array($vendorDir . '/inok/dbf/src'),

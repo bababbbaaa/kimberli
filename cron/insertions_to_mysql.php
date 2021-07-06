@@ -7,13 +7,14 @@ use rest\api\Okay;
 
 require_once('function_cron.php');
 $okay = new Okay();
-use XBase\Table;
+
+use XBase\TableReader;
 
 $dbProductsPath = 'files/Saitv.dbf';
 
 try
 {
-    $table = new Table($dbProductsPath, null, 'CP1251');
+    $table = new TableReader($dbProductsPath, null, 'CP1251');
     echo 'Record count: '.$table->getRecordCount() . PHP_EOL;
 
     $shtr = [];

@@ -1,12 +1,11 @@
 {
     "require": {
-        "gregwar/image": "2.*",
-        "smarty/smarty": "3.1.18",
-        "mobiledetect/mobiledetectlib": "^2.8",
-        "phpmailer/phpmailer": "~6.0",
-        "inok/dbf": "1.*",
-        "hisamu/php-xbase": "1.*",
-        "mesilov/bitrix24-php-sdk": "dev-master"
+        "gregwar/image": "v2.1.0",
+        "smarty/smarty": "v3.1.39",
+        "mobiledetect/mobiledetectlib": "2.8.37",
+        "phpmailer/phpmailer": "6.5.0",
+        "inok/dbf": "1.0.7",
+        "hisamu/php-xbase": "2.0.1"
     },
     "autoload": {
         "psr-4": {
