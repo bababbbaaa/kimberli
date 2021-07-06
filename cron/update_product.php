@@ -1,15 +1,13 @@
 <?php
-
 namespace cron;
+
+require_once('bootstrap.php');
 
 use rest\api\Okay;
 
-session_start();
-//require_once('function_cron.php');
-//include_once('../api/Okay.php');
+require_once('function_cron.php');
 $okay = new Okay();
 
-print_r($okay); exit;
 use XBase\Table;
 
 $categoriesMap = [
@@ -76,7 +74,6 @@ $date_file = date('Y-m-d H:i:s', filemtime($dbProductsPath));
 $sql = "SELECT log_id FROM  `ok_dropbox_log` WHERE `date_file` = '{$date_file}' LIMIT 1";
 $okay->db->query($sql);
 
-print_r($okay->db->result('log_id')); exit;
 
 if ($okay->db->result('log_id')) {
 	$log_messsage = "File not update. Last update " . $date_file;
@@ -95,7 +92,8 @@ try
 
 $okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`stock` > 0;"); //обнуление остатка
 
-	exit;
+
+
     while ($record = $table->nextRecord()) {
     
    // $sql = "UPDATE `kimb`.`ok_variants` SET `kimb`.`ok_variants`.`stock` = {$record->kol}, `kimb`.`ok_variants`.`price` = {$record->cena}, `kimb`.`ok_variants`.`compare_price` = {$record->cenas}, `kimb`.`ok_variants`.`weight` = {$record->mas} WHERE `kimb`.`ok_variants`.`sku` = {$record->shtr} ";

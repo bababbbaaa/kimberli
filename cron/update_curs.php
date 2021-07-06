@@ -1,5 +1,11 @@
 <?php
+namespace cron;
+
+require_once('bootstrap.php');
+
 require_once('function_cron.php');
+use rest\api\Okay;
+
 try {
     $up_curs = [];
     $curs = update_curs();
@@ -15,7 +21,6 @@ try {
         
         if(count($up_curs)){
             $log = '';
-            include_once('../api/Okay.php');
             $okay = new Okay();
             foreach ($up_curs as $k => $c) {
                 if($c['rate_to'] > 0) {
