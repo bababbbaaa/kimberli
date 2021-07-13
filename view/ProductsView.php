@@ -856,6 +856,7 @@ class ProductsView extends View {
             foreach($products as &$product) {
                 if(isset($product->variants[0])) {
                     $product->variant = $product->variants[0];
+					unset($product->variants); // убираем варианты, что бы небыло выпадающего списка с вариантами в каталоге
                 }
             }
 

@@ -20,12 +20,16 @@
                 {/if}
             </a>
             <form class="fn_variants preview_form" action="/{$lang_link}cart">
+
+                <input type="hidden" name="variant" value="{$product->variant->id}">
+                {if $product->variants}
                 {* Product variants *}
                 <select name="variant" class="fn_variant_list variant_select {if $product->variants|count == 1}hidden{/if}">
                     {foreach $product->variants as $v}
                         <option value="{$v->id}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-href="products/{$v->url}" data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if}>{if $v->name}{$v->name|escape} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
                     {/foreach}
                 </select>
+                {/if}
 
                 <div class="action">
 

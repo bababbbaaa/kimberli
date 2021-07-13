@@ -92,7 +92,7 @@ try
 	}
 
 $okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`stock` > 0;"); //обнуление остатка
-
+$okay->db->results();
 
 
     while ($record = $table->nextRecord()) {
@@ -105,13 +105,17 @@ $okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`st
         $id = $res->id;
         $p_id = $res->product_id;
         
-        if($id){
+        if ($id) {
         	$kol = $record->kol;
 			$price = $record->cena;
 			$oldPrice = $record->cenas;
 			$mas = $record->mas;
         	$proc = !empty($record->proc) ? $record->proc : 0;
-            $okay->db->query("UPDATE `ok_variants` SET `ok_variants`.`stock` = {$kol}, `ok_variants`.`price` = {$price}, `ok_variants`.`compare_price` = {$oldPrice}, `ok_variants`.`weight` = {$mas}, `ok_variants`.`proc` = {$proc}, `ok_variants`.`cvet` = '{$record->cvet}', `ok_variants`.`vstavka` = '{$record->namev}' WHERE `ok_variants`.`id` = {$id}");
+            $okay->db->query(
+            	"UPDATE `ok_variants`
+					SET `ok_variants`.`stock` = {$kol}, `ok_variants`.`price` = {$price}, `ok_variants`.`compare_price` = {$oldPrice}, `ok_variants`.`weight` = {$mas}, `ok_variants`.`proc` = {$proc}, `ok_variants`.`cvet` = '{$record->cvet}', `ok_variants`.`vstavka` = '{$record->namev}'
+					WHERE `ok_variants`.`id` = {$id}"
+			);
             
             if($p_id) {
                 $okay->db->query("SELECT `product_id` as `ids` FROM `ok_products_features_values` WHERE `product_id` = {$p_id} LIMIT 1");
@@ -130,6 +134,7 @@ $okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`st
 			if ('Сертификат' == $record->si) {
 				$new_sku .= '-' .$record->shtr;
 			}
+
 			$proc =  proc($record->cena, $record->cenas);
 
 			$url = $categoriesMap[$record->namer]['translit'] . '-' . $record->shtr;

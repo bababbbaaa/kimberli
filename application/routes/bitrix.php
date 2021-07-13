@@ -8,7 +8,7 @@ use KB\network\http\request;
 routing::add_controller('bitrix', '/rest/bitrix/');
 
 /**
- * @see \controller\bitrix_controller::action_profile()
+ * @see \rest\controller\bitrix_controller::action_profile()
  */
 routing::add_route(request::GET, 'bitrix', 'profile', 'profile');
 

@@ -11,20 +11,25 @@ routing::add_controller('rest', '/rest/');
 /**
  * @link GET /
  * @code 200
- * @see \controller\rest_controller::action_index()
+ * @see \rest\controller\rest_controller::action_index()
  */
 routing::add_route(request::GET, 'rest', '', 'index');
 
 /**
- * @see \controller\rest_controller::action_feedback()
+ * @see \rest\controller\rest_controller::action_feedback()
  */
 routing::add_route(request::POST, 'rest', 'feedback', 'feedback');
 
 
 /**
- * @see \controller\rest_controller::action_coupon()
+ * @see \rest\controller\rest_controller::action_coupon()
  */
 routing::add_route(request::POST, 'rest', 'coupon', 'coupon');
+
+/**
+ * @see \rest\controller\rest_controller::action_argo()
+ */
+routing::add_route(request::GET, 'rest', 'argo', 'argo');
 
 
 

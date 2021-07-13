@@ -224,7 +224,8 @@
                                                 
                                                 {*outlet*}
                                                 <button data-hint="{$btr->general_outlet|escape}" type="button" class="setting_icon setting_icon_featured fn_ajax_action {if $product->outlet}fn_active_class{/if} hint-bottom-middle-t-info-s-small-mobile  hint-anim" data-module="product" data-action="outlet" data-id="{$product->id}" >
-                                                    {include file='svg_icon.tpl' svgId='icon_copy'}
+                                                    OUT
+                                                    {*include file='svg_icon.tpl' svgId='icon_copy'*}
                                                 </button>
 
                                                 {*open*}

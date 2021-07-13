@@ -137,7 +137,7 @@ final class application {
 		#endregion
 
 		// execute action
-		return controller::build($route, $this->request, $response, $path = $this->application_real_path)->execute();
+		return controller::build($route, $this->request, $response)->execute();
 	}
 
 	/**

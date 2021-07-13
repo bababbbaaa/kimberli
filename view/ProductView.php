@@ -142,18 +142,23 @@ class ProductView extends View {
                     }
                 }
             }
+
             $related_products_variants = $this->variants->get_variants(array('product_id'=>$related_var, 'in_stock' => 1));
+
             foreach($related_products_variants as $related_product_variant) {
                 if(isset($related_products[$related_product_variant->product_id])) {
                     $related_products[$related_product_variant->product_id]->variants[] = $related_product_variant;
                 }
             }
-            foreach($related_products as $id=>$r) {
+
+            foreach($related_products as $id => $r) {
                 if(is_object($r)) {
                     $r->variant = $r->variants[0];
                 } else {
                     unset($related_products[$id]);
                 }
+
+                unset($r->variants);
             }
             $this->design->assign('related_products', $related_products);
         }

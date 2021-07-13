@@ -135,7 +135,8 @@
                                     <span data-language="product_shtr">{$lang->product_shtr}:</span>
                                     <span class="fn_sku sku_nubmer" {if $product->variant->sku}itemprop = "sku"{/if}>{$product->variant->sku|escape}</span>
                                 </div>
-                                <div class="product_sku  clearfix{if !$product->gia && !$product->hrd} hidden{/if}">
+                                {if $product->gia || $product->hrd}
+                                <div class="product_sku  clearfix">
                                     <span data-language="certificate_gia_hrd">{$lang->certificate_gia_hrd}:</span>
                                     <span class="fn_shtr sku_nubmer">
                                         {if $product->gia && $product->hrd}
@@ -146,6 +147,12 @@
                                         {/if}
                                     </span>
                                 </div>
+                                {/if}
+                                {if $product->outlet}
+                                    <div class="product_sku clearfix">
+                                        <span class="fn_shtr sku_nubmer">OUTLET</span>
+                                    </div>
+                                {/if}
                                 {*<div class="">
                                     <span class="details_label quontity_label" data-language="product_quantity">
                                         {$lang->product_quantity}<span class="fn_units">{if $product->variant->units}, {$product->variant->units|escape}{/if}</span>:

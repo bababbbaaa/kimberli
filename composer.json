@@ -9,9 +9,9 @@
     },
     "autoload": {
         "psr-4": {
-            "rest\\": "application",
-            "KB\\": "rest_file",
-            "cron\\": "cron"
+            "rest\\": "application/",
+            "KB\\": "rest_file/",
+            "cron\\": "cron/"
         }
     }
 }

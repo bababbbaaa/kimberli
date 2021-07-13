@@ -7,6 +7,7 @@ use rest\api\Coupons;
 use rest\api\SMSClient;
 use rest\validation\errors;
 use rest\validation\ValidationException;
+use rest\entity\Argo;
 
 class rest_controller extends base_controller
 {
@@ -76,7 +77,12 @@ class rest_controller extends base_controller
 		];
 	}
 
-
+	/**
+	 * Generate new coupon and send sms
+	 *
+	 * @return array
+	 * @throws \rest\api\SMSError_Exception
+	 */
 	public function action_coupon()
 	{
 		$phone = $this->request->post('phone');
@@ -138,6 +144,25 @@ class rest_controller extends base_controller
 				'status' => $status,
 				'message' => $coupon->design->fetch('popap/coupon_result.tpl'),
 		];
+	}
+
+	/**
+	 * Save check to DB
+	 *
+	 * @return array
+	 */
+	public function action_argo()
+	{
+		try {
+			$argo = new Argo();
+
+			$id = $argo->create($this->request->get());
+		} catch (\RuntimeException $e) {
+			$this->response->set_code(400);
+			return ['message' => $e->getMessage()];
+		}
+
+		return ['numberCheck' => $id];
 	}
 
 }
