@@ -1,7 +1,7 @@
 <div class="about-exposition atelier">
     <div class="container-fluid">
         <div class="about-exposition_container">
-            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier_preview1.png');"></div>
+            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-exposition_preview.jpg');"></div>
             <div class="about-exposition_content">
                 <div class="about-heading">
                     Авторські прикраси в KIMBERLI ATELIER: краса в єдиному екземплярі
@@ -183,7 +183,7 @@
 <div class="about-exposition atelier">
     <div class="container-fluid">
         <div class="about-exposition_container">
-            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier_preview1.png');"></div>
+            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/advantages_over buying_ready-made.jpg');"></div>
             <div class="about-exposition_content">
                 <div class="about-heading">
                     преимущества перед покупкой готовых украшений
@@ -201,7 +201,7 @@
 <div class="about-exposition atelier reverse-section">
     <div class="container-fluid">
         <div class="about-exposition_container">
-            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview1.png');"></div>
+            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/main_differences.jpg');"></div>
             <div class="about-exposition_content">
                 <div class="about-heading">
                     основные отличия украшения, изготовленных под заказ
@@ -369,15 +369,15 @@
         идельный подарок KIMBERLI ATELIER
     </div>
     <div class="about-gallery_list">
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/k100138-beloe.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/k100138-beloe.1300x1300.png" data-caption="Подарок #1"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/k5000-zheltoe-zoloto.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/k5000-zheltoe-zoloto.1300x1300.png" data-caption="Подарок #3"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/br3028-brillianty-krasnoe.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/br3028-brillianty-krasnoe.1300x1300.png" data-caption="Подарок #4"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/s2372-rubiny-brillianty-beloe_2.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/s2372-rubiny-brillianty-beloe_2.1300x1300.png" data-caption="Подарок #2"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/s2372-praziolity-brillianty-beloe_3.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/s2372-praziolity-brillianty-beloe_3.1300x1300.png" data-caption="Подарок #6"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/s2357-emal-beloe.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/s2357-emal-beloe.1300x1300.png" data-caption="Подарок #7"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/k100135-sapfiry-brillianty-krasnoe-nyu.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/k100135-sapfiry-brillianty-krasnoe-nyu.1300x1300.png" data-caption="Подарок #8"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/ya5030-goryachaya-emal-sapfiry-rubiny-taya.1300x1300.png')" data-fancybox="products" href="https://dev.kimberli.ua/files/products/ya5030-goryachaya-emal-sapfiry-rubiny-taya.1300x1300.png" data-caption="Подарок #5"></a>
-        <a class="about-gallery_item" style="background-image: url('https://dev.kimberli.ua/files/products/s2455-sapfiry-brillianty-beloe_3.1300x1300.png');" data-fancybox="products" href="https://dev.kimberli.ua/files/products/s2455-sapfiry-brillianty-beloe_3.1300x1300.png" data-caption="Подарок #9"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/k100138-beloe.1300x1300.png');" data-fancybox="products" href="files/products/k100138-beloe.1300x1300.png" data-caption="Подарок #1"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/k5000-zheltoe-zoloto.1300x1300.png');" data-fancybox="products" href="files/products/k5000-zheltoe-zoloto.1300x1300.png" data-caption="Подарок #3"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/br3028-brillianty-krasnoe.1300x1300.png');" data-fancybox="products" href="files/products/br3028-brillianty-krasnoe.1300x1300.png" data-caption="Подарок #4"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/s2372-rubiny-brillianty-beloe_2.1300x1300.png');" data-fancybox="products" href="files/products/s2372-rubiny-brillianty-beloe_2.1300x1300.png" data-caption="Подарок #2"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/s2372-praziolity-brillianty-beloe_3.1300x1300.png');" data-fancybox="products" href="files/products/s2372-praziolity-brillianty-beloe_3.1300x1300.png" data-caption="Подарок #6"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/s2357-emal-beloe.1300x1300.png');" data-fancybox="products" href="files/products/s2357-emal-beloe.1300x1300.png" data-caption="Подарок #7"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/k100135-sapfiry-brillianty-krasnoe-nyu.1300x1300.png');" data-fancybox="products" href="files/products/k100135-sapfiry-brillianty-krasnoe-nyu.1300x1300.png" data-caption="Подарок #8"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/ya5030-goryachaya-emal-sapfiry-rubiny-taya.1300x1300.png')" data-fancybox="products" href="files/products/ya5030-goryachaya-emal-sapfiry-rubiny-taya.1300x1300.png" data-caption="Подарок #5"></a>
+        <a class="about-gallery_item" style="background-image: url('files/products/s2455-sapfiry-brillianty-beloe_3.1300x1300.png');" data-fancybox="products" href="files/products/s2455-sapfiry-brillianty-beloe_3.1300x1300.png" data-caption="Подарок #9"></a>
     </div>
 </div>
 
