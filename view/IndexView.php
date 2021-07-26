@@ -15,21 +15,20 @@ class IndexView extends View {
     public function fetch() {
         
        $this->design->assign('call_sent_page', false);
-       
-        /*Принимаем данные с формы заказа обратного звонка*/
-        if($this->request->method('post') && $this->request->post('callback')) {
-            $callback = new stdClass();
-            $callback->phone        = $this->request->post('phone');
-            $callback->name         = $this->request->post('name');
-            $callback->url          = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-            $callback->message      = $this->request->post('message');
-            $captcha_code =  $this->request->post('captcha_code', 'string');
-            
-            $this->design->assign('callname',  $callback->name);
-            $this->design->assign('callphone', $callback->phone);
-            $this->design->assign('callmessage', $callback->message);
 
-            /*Валидация данных клиента*/
+		/* if($this->request->method('post') && $this->request->post('callback')) { //Принимаем данные с формы заказа обратного звонка
+			 $callback = new stdClass();
+			 $callback->phone        = $this->request->post('phone');
+			 $callback->name         = $this->request->post('name');
+			 $callback->url          = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			 $callback->message      = $this->request->post('message');
+			 $captcha_code =  $this->request->post('captcha_code', 'string');
+
+			 $this->design->assign('callname',  $callback->name);
+			 $this->design->assign('callphone', $callback->phone);
+			 $this->design->assign('callmessage', $callback->message);
+
+			 //Валидация данных клиента
             if (!$this->validate->is_name($callback->name, true)) {
                 $this->design->assign('call_error', 'empty_name');
             } elseif(!$this->validate->is_phone($callback->phone, true)) {
@@ -48,8 +47,7 @@ class IndexView extends View {
             } else {
                 $this->design->assign('call_error', 'unknown error');
             }
-        } /*else /*Принимаем заявку с формы обратной связи*/
-        /*if($this->request->method('post') && $this->request->post('feedback')) {
+        } else if($this->request->method('post') && $this->request->post('feedback')) { //Принимаем заявку с формы обратной связи
             $feedback = new stdClass;
             $feedback->name         = $this->request->post('name');
             $feedback->email        = $this->request->post('email');

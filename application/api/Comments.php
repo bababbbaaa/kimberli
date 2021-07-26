@@ -1,8 +1,12 @@
 <?php
 
-require_once('Okay.php');
+namespace rest\api;
 
 class Comments extends Okay {
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
     /*Выбираем конкретный комментарий*/
     public function get_comment($id) {

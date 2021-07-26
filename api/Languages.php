@@ -23,6 +23,7 @@ class Languages extends Okay {
         'feature_alias'         => 'features_aliases',
         'feature_alias_value'   => 'features_aliases_values',
         'feature_value'         => 'features_values',
+		'vacancy'				=> 'vacancy',
     );
     
     private $languages = array();
@@ -61,6 +62,7 @@ class Languages extends Okay {
         $fields['seo_filter_patterns'] = array('h1', 'title', 'keywords', 'meta_description', 'description');
         $fields['features_aliases']    = array('name');
         $fields['features_aliases_values'] = array('value');
+		$fields['vacancy']          = array('name', 'description', 'experience', 'schedule', 'city', 'responsibilities', 'required_skills', 'extra_skills', 'offer');
 
         if($object && !empty($fields[$object])) {
             return $fields[$object];

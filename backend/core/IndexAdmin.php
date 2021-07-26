@@ -30,6 +30,9 @@ class IndexAdmin extends Okay {
         'left_blog' => array(
             'left_blog_title'           => array('BlogAdmin', 'PostAdmin'),
         ),
+		'left_vacancy' => array(
+			'left_vacancy_title'           => array('VacanciesAdmin', 'VacancyAdmin'),
+		),
         'left_comments' => array(
             'left_comments_title'       => array('CommentsAdmin'),
             'left_feedbacks_title'      => array('FeedbacksAdmin'),
@@ -151,7 +154,9 @@ class IndexAdmin extends Okay {
         'SeoFilterPatternsAdmin'    => 'seo_filter_patterns',
         'SupportAdmin'              => 'support',
         'TopicAdmin'                => 'support',
-        'FeaturesAliasesAdmin'      => 'features_aliases'
+        'FeaturesAliasesAdmin'      => 'features_aliases',
+		'VacanciesAdmin'			=> 'vacancies',
+		'VacancyAdmin'				=> 'vacancies',
     );
     
     // Конструктор
@@ -225,10 +230,10 @@ class IndexAdmin extends Okay {
                         $this->manager->menu[$section][$title] = $modules;
                     }
                 }
-                if (count($this->left_menu[$section]) == 0) {
+                if (isset($this->left_menu[$section]) && count($this->left_menu[$section]) == 0) {
                     unset($this->left_menu[$section]);
                 }
-                if (count($this->manager->menu[$section]) == 0) {
+                if (isset($this->manager->menu[$section]) && count((array) $this->manager->menu[$section]) == 0) {
                     unset($this->manager->menu[$section]);
                 }
                 unset($modules);

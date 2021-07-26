@@ -57,6 +57,7 @@ class Okay {
         'lead'                 => 'LeadBitrix',
         'compilation'          => 'Compilations',
 		'sms'				   => 'SMSClient',
+		'vacancy'			   => 'Vacancy',
     );
     
     private static $objects = array();

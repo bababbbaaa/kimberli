@@ -223,7 +223,11 @@ foreach($products as $p) {
     }*/
 
     $str = ucfirst(mb_strtolower(trim($p->product_name . ' ('.$p->sku.')'.' '.implode(" ", $pn))));
-    list($str[0], $str[1]) = mb_strtoupper($str[0].$str[1], 'UTF8'); 
+
+    if (isset($str[0], $str[1])) {
+    	list($str[0], $str[1]) = mb_strtoupper($str[0].$str[1], 'UTF8');
+	}
+
     $p->product_name = $str;
     
     print "<name>" . htmlspecialchars($p->product_name) . "</name>

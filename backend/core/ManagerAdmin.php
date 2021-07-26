@@ -95,6 +95,9 @@ class ManagerAdmin extends Okay {
             'left_blog'     => array(
                 'blog'          => $btr->left_blog,
             ),
+			'left_vacancies'     => array(
+				'vacancies'          => $btr->left_vacancies,
+			),
             'left_comments' => array(
                 'comments'      => $btr->left_comments_title,
                 'feedbacks'     => $btr->left_feedbacks_title,

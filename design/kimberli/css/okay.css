@@ -6839,3 +6839,297 @@ body #bingc-active {
 .contacts .atelier-request{
     margin-bottom: 30px;
 }
+.career_heading{
+    margin-bottom: 60px;
+    position: relative;
+    padding-bottom: 20px;
+}
+.career_heading::after{
+    position: absolute;
+    content: "";
+    left: 50%;
+    bottom: 0px;
+    width: 225px;
+    height: 7px;
+    background: url(../images/bottom_heading.jpg) no-repeat;
+    margin-left: -112px;
+}
+.career_title{
+    text-align: center;
+    color: #000000;
+    font-size: 52px;
+    line-height: 62px;
+    font-family: 'SolomonSansSemiBold';
+}
+.career_descr{
+    text-align: center;
+    color: #000000;
+    font-size: 22px;
+}
+.vacancies{
+    width: 74%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.vacancy:first-child .vacancy_preview{
+    padding-top: 0;
+}
+.vacancy.active .vacancy_content{
+    display: block;
+    animation: showopacity 1s linear;
+    animation-fill-mode: both;
+}
+.vacancy.active .vacancy_preview::after{
+    opacity: 0;
+}
+.vacancy.active .vacancy_preview .details{
+    opacity: 0;
+}
+.vacancy_preview .arrow span{
+    display: none;
+}
+.vacancy.active .vacancy_preview .name{
+    color: #BE9948;
+}
+@keyframes showopacity {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.vacancy_preview{
+    position: relative;
+    padding-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding-top: 40px;
+}
+.vacancy_preview::after{
+    width: 100%;
+    display: block;
+    content: '';
+    height: 1px;
+    background-color: #000;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    transition: all 0.2s;
+}
+.vacancy_preview .name{
+    font-family: 'SolomonSansSemiBold';
+    font-size: 28px;
+    display: block;
+    margin-bottom: 10px;
+}
+.vacancy_preview .details{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #000000;
+    transition: all 0.2s;
+}
+.vacancy_preview .details span::after{
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #1d1d1f;
+    display: inline-block;
+    margin-left: 12px;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+.vacancy_preview .details span:last-child::after{
+    display: none;
+}
+.vacancy_preview .arrow{
+    position: absolute;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    margin-top: -16px;
+    transition: all 0.2s;
+}
+.vacancy_preview .arrow svg path{
+    transition: all 0.2s;
+}
+
+.vacancy_content{
+    display: none;
+    padding-bottom: 50px;
+}
+.vacancy_details{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    width: 60%;
+}
+.vacancy_details_item{
+    width: 48%;
+    margin-bottom: 40px;
+}
+.vacancy_details_item span{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 22px;
+}
+.vacancy_details_item p{
+    margin: 0;
+    display: block;
+    font-size: 20px;
+    line-height: 30px;
+    font-family: 'SolomonSansSemiBold';
+}
+.vacancy_descr{
+    margin-bottom: 30px;
+}
+.vacancy_descr p{
+    font-size: 18px;
+    line-height: 28px;
+}
+.vacancy_descr_title{
+    font-family: 'SolomonSansSemiBold';
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+.vacancy_info{
+    margin-bottom: 40px;
+}
+.vacancy_info_title{
+    font-family: 'SolomonSansSemiBold';
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+.vacancy_info ul{
+    list-style: disc;
+    padding-left: 20px;
+    font-size: 18px;
+    line-height: 23px;
+}
+.vacancy_info ul li{
+    margin-bottom: 15px;
+}
+
+.vacancy_submit{
+    display: block;
+    outline: none;
+    transition: all 0.2s;
+    padding: 24px 71px;
+    background: #000000;
+    color: #FFFFFF;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: 'SolomonSansSemiBold';
+    border: none;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.atelier-request.vacancy-request .atelier-request_form{
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+.atelier-request.vacancy-request .form-group{
+    width: 48%;
+    margin-bottom: 30px;
+}
+.atelier-request.vacancy-request .form-group input, .atelier-request.vacancy-request .form-group textarea{
+    margin-bottom: 0;
+}
+.atelier-request.vacancy-request .form-group.upload input{
+    display: none;
+}
+.atelier-request.vacancy-request .form-group.upload label{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+.atelier-request.vacancy-request .form-group.upload label span{
+    text-decoration: underline;
+    font-size: 16px;
+}
+.atelier-request.vacancy-request .form-group.upload label span.check{
+    color: #BE9948;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 88%;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+.atelier-request.vacancy-request .form-group.upload label svg{
+    width: 25px;
+    vertical-align: bottom;
+    margin-right: 7px;
+}
+.atelier-request.vacancy-request .form-group.upload label svg.check-icon{
+    width: 18px;
+    height: 14px;
+    vertical-align: middle;
+}
+.atelier-request.vacancy-request .form-group.w-100{
+    width: 100%;
+}
+.atelier-request_form{
+    max-width: 60%;
+}
+.form-group.upload{
+    border-bottom: 1px solid #000000;
+    display: flex;
+}
+.form-group.upload input{
+    display: none;
+}
+.form-group.upload .remove-file{
+    display: none;
+}
+.form-group.upload .remove-file svg{
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+.form-group.upload .check-icon{
+    display: none;
+}
+
+.atelier-request.vacancy-request .atelier-request_form .submit{
+    margin-top: 20px;
+    padding: 20px 71px;
+    font-size: 13px;
+}
+.atelier-request.vacancy-request .atelier-request_heading::after{
+    content: '';
+    display: block;
+    background: #F3C47F;
+    width: 63px;
+    height: 2px;
+    margin: 0 auto;
+    margin-top: 13px;
+}
+.red {
+    border: 1.5px solid red !important;
+}
+
+.beforeSend {
+    height: 64px;
+    position: relative;
+    background: url("/design/kimberli/images/fn_ajax_wait.gif");
+    background-position-x: center;
+    background-repeat: no-repeat;
+}
+.contacts_socials .phone:before {}

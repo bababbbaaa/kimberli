@@ -26,10 +26,20 @@ class PageView extends View {
             $footer = $this->design->fetch('callback_page.tpl');
             $this->design->assign('dop_files_footer', $footer);
             break;
-        default : break;
+			default : break;
         }
       
       if (file_exists(BASE_DIR . '/design/kimberli/html/page/' . $url . '.tpl')) {
+
+		  switch($url) {
+			  case 'vacancy':
+
+				  $vacancies = $this->vacancy->get_vacancies(['visible' => 1]);
+				  $this->design->assign('vacancies', $vacancies);
+				  break;
+			  default : break;
+		  }
+
 			$page->content = $this->design->fetch('page/' . $url . '.tpl');
 		}
         

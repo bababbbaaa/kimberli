@@ -10,23 +10,22 @@
 
         {* User's name *}
         <div class="form_group">
-            <input class="form_input_accaunt" type="text" name="name" value="{$user->name|escape}" data-language="form_name" placeholder="{$lang->form_name}*">
+            <input class="form_input_accaunt name" type="text" name="name" value="{$user->name|escape}" data-language="form_name" placeholder="{$lang->form_name}*">
         </div>
 
         {* User's phone *}
         <div class="form_group">
-            <input class="form_input_accaunt" type="text" name="phone" value="{$user->phone|escape}" data-language="form_phone" placeholder="{$lang->form_phone}*">
+            <input class="form_input_accaunt phone" type="text" name="phone" value="{$user->phone|escape}" data-language="form_phone" placeholder="{$lang->form_phone}*">
         </div>
 
         {* User's message *}
         <div class="form_group">
-            <textarea class="form_textarea_accaunt" rows="3" name="message" data-language="form_enter_message" placeholder="{$lang->form_enter_message}"></textarea>
+            <textarea class="form_textarea_accaunt message" rows="3" name="message" data-language="form_enter_message" placeholder="{$lang->form_enter_message}"></textarea>
         </div>
         
         {* Submit button *}
         <div class="boxed_button">
             <button class="btn btn_black btn_account submit"  type="submit" name="callback_page" data-language="callback_order">{$lang->callback_order}</button>
-           {* <input class="btn btn_black btn_account submit" type="submit" name="callback_page" data-language="callback_order" value="{$lang->callback_order}">*}
         </div>
 
     </form>

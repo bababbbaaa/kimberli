@@ -1,8 +1,13 @@
 <?php
 
-require_once('Okay.php');
+namespace rest\api;
 
 class Callbacks extends Okay {
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
     /*Выбираем конкретную заявку на обратный звонок*/
     public function get_callback($id) {

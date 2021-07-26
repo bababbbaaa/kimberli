@@ -14,6 +14,7 @@ class View extends Okay {
     public $lang_link;
     public $js_version;
     public $css_version;
+    public $url;
 
     /* Класс View похож на синглтон, храним статически его инстанс */
     private static $view_instance;
@@ -51,6 +52,7 @@ class View extends Okay {
             $this->user         = &self::$view_instance->user;
             $this->group        = &self::$view_instance->group;
             $this->page         = &self::$view_instance->page;
+			$this->url         = &self::$view_instance->url;
             $this->language     = &self::$view_instance->language;
             $this->lang_link    = &self::$view_instance->lang_link;
             $this->js_version   = &self::$view_instance->js_version;
@@ -179,6 +181,7 @@ class View extends Okay {
             if (isset($_GET['page_url']) && in_array($_GET['page_url'], array('all-products', 'discounted', 'bestsellers'))) {
                 $page_url = $_GET['page_url'];
             }
+            $this->url = $page_url;
             $this->design->assign('language', $this->language);
             $this->design->assign('languages', $languages);
             $this->translations->debug = (bool)$this->config->debug_translation;
@@ -193,6 +196,7 @@ class View extends Okay {
             $this->design->assign('currency',   $this->currency);
             $this->design->assign('user',       $this->user);
             $this->design->assign('group',      $this->group);
+			$this->design->assign('url',      $this->group);
             
             $this->design->assign('config',     $this->config);
             $this->design->assign('settings',   $this->settings);

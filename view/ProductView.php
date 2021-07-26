@@ -70,7 +70,7 @@ class ProductView extends View {
         }
         
         // Принимаем комментарий
-        if ($this->request->method('post') && $this->request->post('comment')) {
+       /* if ($this->request->method('post') && $this->request->post('comment')) {
             $comment = new stdClass;
             $comment->name = $this->request->post('name');
             $comment->email = $this->request->post('email');
@@ -106,7 +106,7 @@ class ProductView extends View {
 
                 header('location: '.$_SERVER['REQUEST_URI'].'#comment_'.$comment_id);
             }
-        }
+        }*/
         
         // Связанные товары
         $related_ids = array();

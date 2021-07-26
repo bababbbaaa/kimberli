@@ -9,7 +9,7 @@ class Managers extends Okay {
         'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import', 'export',
         'stats', 'design', 'settings', 'currency', 'delivery', 'payment', 'managers', 'languages',
         'banners', 'callbacks','robots', 'seo_patterns', 'support', 'subscribes', 'menu', 'seo_filter_patterns', 
-        'settings_counter', 'features_aliases', 'compilations', 'translations'
+        'settings_counter', 'features_aliases', 'compilations', 'translations', 'vacancies', 'vacancy'
         
     );
 

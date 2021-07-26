@@ -14,8 +14,9 @@ $dbProductsPath = 'files/Saitv.dbf';
 
 try
 {
-    $table = new TableReader($dbProductsPath, null, 'CP1251');
-    echo 'Record count: '.$table->getRecordCount() . PHP_EOL;
+	$table = new TableReader($dbProductsPath, ['encoding' => 'CP1251']);
+
+	echo 'Record count: '.$table->getRecordCount() . PHP_EOL;
 
     $shtr = [];
 

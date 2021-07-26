@@ -532,6 +532,9 @@
                                         {/if}
                                     {/if}
                                     <input type="hidden" name="comment" value="1">
+                                    <input type="hidden" name="type" value="product">
+                                    <input type="hidden" name="url" value="{$url}">
+                                    <input type="hidden" name="object" value="{$product->id}">
                                     {* Submit button *}
                                     <input class="btn btn_big btn_black btn_comment g-recaptcha" style="margin-left: auto; display: block;" type="submit" name="comment" data-language="form_send" {if $settings->captcha_type == "invisible"}data-sitekey="{$settings->public_recaptcha_invisible}" data-badge='bottomleft' data-callback="onSubmit"{/if} value="{$lang->form_send}"/>
                                 </form>

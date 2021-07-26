@@ -58,8 +58,8 @@ $(document).on('submit', '#fn_callback_page', function(e) {
         message = $(this).find('textarea[name=message]').val();
     }
     /* ajax запрос */
-    $.ajax( {
-        url: "ajax/callback.php",
+    $.ajax({
+        url: "rest/callback",
         method: 'POST',
         data: {
             phone: phone,
@@ -68,19 +68,45 @@ $(document).on('submit', '#fn_callback_page', function(e) {
             url: window.location.href
         },
         dataType: 'json',
+        beforeSend: function () {
+           // $('#fn_callback_page').append('<div class="beforeSend"></div>');
+        },
         success: function(data) {
-            $('.message_error').hide();
-            if(data.errors){
-                 $('.message_error').html(data.errors).show();
-        }else{
-           $('#fn_callback_page').fadeOut();
-            $('.result_callback_page' ).html(data.text).fadeIn();
-            fbq('track', 'Lead', {  content_name: 'my-Name',  content_category: 'pick_a_gem', });
-            gtag('event', 'pick_a_gem', {'event_category': 'send',});
+            //$('#fn_callback_page .beforeSend').remove();
+                gtag('event', 'pick_a_gem', {'event_category': 'send'});
+                fbq('trackCustom', 'SpecialOrder', {
+                    'content_name': name,
+                    'content_content': message,
+                });
+
+                $('#fn_callback_page').fadeOut();
+                $('.result_callback_page' ).html(data.data.message).fadeIn();
+        },
+        error: function (e) {
+            //$('#fn_callback_page .beforeSend').remove();
+            parseAjaxError(e, 'fn_callback_page');
         }
-        }
-    } );
+    });
 });
+
+function parseAjaxError(e, formId)
+{
+    switch (e.status)
+    {
+        case 400:
+            let error = e.responseJSON.validation;
+
+            for (let key in error) {
+                $('#'+formId+' [name='+key+']').addClass('red').attr( 'placeholder', error[key]);
+            }
+
+        break;
+        case 401: console.log(e.responseText); break;
+        case 403: console.log(e.responseText); break;
+        case 500: console.log(e.responseText); break;
+        case 503: console.log(e.responseText); break;
+    }
+}
 
 setTimeout(function(){
     let str = $(location).attr('pathname');
@@ -154,7 +180,6 @@ $(function(){
     $("#phone").mask("+38 (099) 999-99-99");
 });
 
-/* Аякс feedback */
 /* Аякс quick_order */
 $(document).on('submit', '.fn_validate_feedback', function(e) {
     e.preventDefault();
@@ -247,6 +272,62 @@ $('.fn_validate_feedback input[type="submit"]').click(function(e) {
             alert('Код устарел!');
         }
     }
+});
+
+/* Аякс callback */
+$(document).on('submit', '.callback_form', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "rest/callback",
+        method: 'POST',
+        data: $('.callback_form').serialize(),
+        dataType: 'json',
+        success: function (data) {
+            if (data.status === true) {
+                fbq('track', 'BackCall', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+                gtag( 'event', 'WriteInCallback', { 'event_category': 'send'});
+                $('.callback_form' ).html(data.data.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+            console.log(status);
+            console.log(error);
+            return false;
+        }
+    });
+
+    return false;
+});
+
+/* Аякс callback */
+$(document).on('submit', '.comment_form', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "rest/comment/add",
+        method: 'POST',
+        data: $('.comment_form').serialize(),
+        dataType: 'json',
+        success: function (data) {
+            if (data.status === true) {
+                fbq('track', 'NewComment', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+                gtag( 'event', 'NewComment', { 'event_category': 'send'});
+                location.reload();
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+            console.log(status);
+            console.log(error);
+            var err = JSON.parse(xhr.responseText);
+            console.log(err.message);
+            return false;
+        }
+    });
+
+    return false;
 });
 
 
@@ -421,7 +502,7 @@ $(document).on('submit', '.fn_validate_cart', function(e) {
     console.log('end');
     return false;
 });
-
+/* Ajax new order cart confirm */
 $('.fn_validate_cart input[type="submit"]').click(function(e) {
 
     if ($(this).attr('data-method') == 'confirm') {
@@ -523,12 +604,13 @@ function confirmOrder(data)
         success: function (data) {
             if (data.status === true) {
                 fbq('track', 'Purchase', {
-                    value: data.data.value,
-                    currency: data.data.currency,
+                    'value': data.data.value,
+                    'currency': data.data.currency,
                 });
 
                 window.location = data.data.url;
             }
+
             return false;
         },
         error: function (e) {

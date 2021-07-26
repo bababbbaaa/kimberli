@@ -4,8 +4,14 @@ namespace rest\api;
 
 class Languages extends Okay {
 
-    /*Создание списка мультиязычных таблиц в БД*/
-    public $tables = array('product'  => 'products',
+	public function __construct() {
+		parent::__construct();
+		$this->init_languages();
+	}
+
+	/*Создание списка мультиязычных таблиц в БД*/
+    public $tables = array(
+    	'product'  => 'products',
         'variant'  => 'variants',
         'brand'    => 'brands',
         'category' => 'categories',
@@ -142,11 +148,6 @@ class Languages extends Okay {
     /*Установка ID языка*/
     public function set_lang_id($id) {
         $this->lang_id = $_SESSION['lang_id'] = intval($id);
-    }
-
-    public function __construct() {
-        parent::__construct();
-        $this->init_languages();
     }
 
     // Если нужно обновить список языков, в нужное место добавить вызов этой ф-ии

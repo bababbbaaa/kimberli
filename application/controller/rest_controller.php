@@ -3,11 +3,15 @@
 namespace rest\controller;
 
 use rest\api\Feedbacks;
+use rest\api\Callbacks;
+use rest\api\Comments;
 use rest\api\Coupons;
 use rest\api\SMSClient;
 use rest\validation\errors;
 use rest\validation\ValidationException;
 use rest\entity\Argo;
+use RuntimeException;
+use Exception;
 
 class rest_controller extends base_controller
 {
@@ -17,6 +21,11 @@ class rest_controller extends base_controller
 		]);
 	}
 
+	/**
+	 * FeedBack Form
+	 *
+	 * @return array
+	 */
 	public function action_feedback()
 	{
 		$feed = new Feedbacks();
@@ -46,7 +55,7 @@ class rest_controller extends base_controller
 
 		$feedback->ip = $_SERVER['REMOTE_ADDR'];
 		$feedback->lang_id = $feed->languages->lang_id();
-		$feedback->url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$feedback->url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 		$feedback_id = $feed->add_feedback($feedback);
 
@@ -75,6 +84,136 @@ class rest_controller extends base_controller
                 <b>'. $feedback->name .',</b> <span data-language="feedback_message_sent">' . $lang->feedback_message_sent . '.</span>
             </div>',
 		];
+	}
+
+	public function action_callback()
+	{
+		$call = new Callbacks();
+
+		$callback = new \stdClass();
+		$callback->phone        = $this->request->post('phone');
+		$callback->name         = $this->request->post('name');
+		$callback->url          = $this->request->post('url')?? 'https://'.$_SERVER['HTTP_HOST'].($_SERVER['REQUEST_URI']?? '');
+		$callback->message      = $this->request->post('message');
+		$callback->utm = '';
+
+		/*Определяем язык*/
+		$language = $call->languages->get_language($call->languages->lang_id());
+		$lang = $call->translations->get_translations(['lang'=>$language->label]);
+		$call->design->assign('lang', $lang);
+
+		if (empty($callback->phone)) {
+			throw new ValidationException(errors::create(['phone' => $lang->form_enter_phone]));
+		}
+
+		if (empty($callback->name)) {
+			throw new ValidationException(errors::create(['name' => $lang->form_enter_name]));
+		}
+
+		if (empty($callback->message)) {
+			throw new ValidationException(errors::create(['message' => $lang->form_enter_comment]));
+		}
+
+		if (isset($_COOKIE["utm_source"])) {
+			$callback->utm .= $_COOKIE["utm_source"];
+		}
+
+		if (isset($_COOKIE["utm_campaign"])) {
+			$callback->utm .= ':' .$_COOKIE["utm_campaign"];
+		}
+		try {
+			$callback_id = $call->add_callback($callback);
+		} catch (Exception $e) {
+			throw new RuntimeException($e->getMessage());
+		}
+
+		if (false === $callback_id) {
+			throw new RuntimeException('Error create callback!');
+		}
+
+		// Создаем лид в битрикс
+		$call->lead->add_lead_bitrix(
+			[
+				'title' => 'NEW CALLBACK#' . $callback_id,
+				'name' => $callback->name,
+				'currency' => 'UAH',
+				'comment' => $callback->message,
+				'phone' => $callback->phone,
+				'source' => 'OPENLINE',
+			],
+			'Обратный звонок на сайте'
+		);
+
+		return [
+			'id' => $callback_id,
+			'message' => $call->design->fetch('callback_page_result.tpl'),
+		];
+	}
+
+	public function action_add_comment()
+	{
+		$comm = new Comments();
+
+		$comment = new \stdClass;
+		$comment->name = $this->request->post('name');
+		$comment->email = $this->request->post('email');
+		$comment->text = $this->request->post('text');
+		$comment->type = $this->request->post('type');
+		$comment->object_id = (int) $this->request->post('object');
+		$comment->ip        = $_SERVER['REMOTE_ADDR'];
+		$comment->lang_id   = $_SESSION['lang_id']?? 3;
+		$comment->utm = '';
+		$comment->approved = $comm->settings->auto_approved;
+
+		if (empty($comment->email)) {
+			throw new ValidationException(errors::create(['email' => 'Email not be empty']));
+		}
+
+		if (empty($comment->text)) {
+			throw new ValidationException(errors::create(['text' => 'Comment not be empty']));
+		}
+
+		if (empty($comment->name)) {
+			throw new ValidationException(errors::create(['name' => 'Name not be empty']));
+		}
+
+		if (isset($_COOKIE["utm_source"])) {
+			$comment->utm .= $_COOKIE["utm_source"];
+		}
+
+		if (isset($_COOKIE["utm_campaign"])) {
+			$comment->utm .= ':' .$_COOKIE["utm_campaign"];
+		}
+
+		$comment->lang_id = $comm->languages->lang_id();
+
+		try {
+			$comment_id = $comm->add_comment($comment);
+		} catch (Exception $e) {
+			throw new RuntimeException($e->getMessage());
+		}
+
+		if (false === $comment_id) {
+			throw new RuntimeException('Error create comment!');
+		}
+
+		// Создаем лид в битрикс
+		$comm->lead->add_lead_bitrix(
+			[
+				'title' => 'NEW COMMENT#' . $comment_id,
+				'name' => $comment->name,
+				'currency' => 'UAH',
+				'comment' => $comment->text,
+				'source' => 'OPENLINE',
+			],
+			'Новый коммент на сайте'
+		);
+
+		return [
+			'id' => $comment_id,
+			'message' => '',
+		];
+
 	}
 
 	/**
@@ -157,7 +296,7 @@ class rest_controller extends base_controller
 			$argo = new Argo();
 
 			$id = $argo->create($this->request->get());
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			$this->response->set_code(400);
 			return ['message' => $e->getMessage()];
 		}
