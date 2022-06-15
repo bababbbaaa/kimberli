@@ -1,5 +1,5 @@
 {* Информер избранного (отдаётся аяксом) *}
-{if $wished_products|count > 0}
+{if count($wished_products) > 0}
     <a href="{$lang_link}wishlist" data-language="wishlist_header" title="{$lang->wishlist_header}">
         {include file="svg.tpl" svgId="wishlist"}
         <span class="informer_counter">{$wished_products|count}</span>

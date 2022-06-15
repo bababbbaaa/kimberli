@@ -120,12 +120,11 @@ class BlogView extends View {
        // print_r($post);
         
         switch ($post->id) {
-            case 24:  $this->design->assign('form', $this->design->fetch('form/santa/santa_send.tpl')); break;
-            case 25: $this->design->assign('form', $this->design->fetch('form/25/25.tpl')); break;
-            case 26:
-                
-                $this->design->assign('form', $this->design->fetch('form/26/26.tpl'));
-                break;
+            case 24:  	$this->design->assign('form', $this->design->fetch('form/santa/santa_send.tpl')); break;
+            case 25: 	$this->design->assign('form', $this->design->fetch('form/25/25.tpl')); break;
+            case 26:  	$this->design->assign('form', $this->design->fetch('form/26/26.tpl')); break;
+			case 29:  	$this->design->assign('form', $this->design->fetch('form/29/29.tpl')); break;
+			case 32:  	$this->design->assign('form', $this->design->fetch('form/32/32.tpl')); break;
            
             default : break;
         }

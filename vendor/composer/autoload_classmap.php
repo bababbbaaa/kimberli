@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
+    'PayParts\\PayParts' => $vendorDir . '/privatbank/payparts/src/PayParts/PayParts.php',
     'Smarty' => $vendorDir . '/smarty/smarty/libs/Smarty.class.php',
     'SmartyBC' => $vendorDir . '/smarty/smarty/libs/SmartyBC.class.php',
     'SmartyCompilerException' => $vendorDir . '/smarty/smarty/libs/sysplugins/smartycompilerexception.php',

@@ -2,7 +2,7 @@
 var okay = {};
 okay.amount = 1;
 
-/* Аяксовая корзина */
+/* Аяксовая корзина  добавить товар в корзину*/
 $(document).on('submit', '.fn_variants', function(e) {
     e.preventDefault();
     var variant,
@@ -23,22 +23,179 @@ $(document).on('submit', '.fn_variants', function(e) {
     }
     /* ajax запрос */
     $.ajax( {
-        url: "ajax/cart.php",
+        url: "rest/cart/add",
         data: {
             variant: variant,
             amount: amount
         },
         dataType: 'json',
         success: function(data) {
-            //console.log(data);
-            $( '#cart_informer a span' ).html( data.cart_informer );
-            $('#fn_cart').html(data.cart_popap);
+            console.log(data);
+            $( '#cart_informer a span' ).html( data.data.cart_informer );
+            $('#fn_cart').html(data.data.cart_popap);
         }
-    } );
+    });
     /* Улеталка */
     transfer( $('#cart_informer'), $(this) );
         /* Всплывающая корзина*/
-     setTimeout('$(".fn_cart").trigger("click")', 1000);
+    $.fancybox.open({
+        src: '#fn_cart',
+        type: 'inline'
+    });
+});
+
+function continue_shopping(id_popup)
+{
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/order/continue/shopping",
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            $('#' + id_popup).html(data.data.message);
+        },
+        error: function (e) {
+            console.log(e);
+            $.fancybox.close({
+                src: '#' + id_popup,
+                type: 'inline'
+            });
+        }
+    });
+}
+
+function checkSmsStatusFitting(smsId, limit = 1)
+{
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/order/sms/status",
+        method: 'GET',
+        data: {id: smsId},
+        dataType: 'json',
+        success: function(data) {
+            if (!data.data.status && limit < 5) {
+                checkSmsStatus(smsId, limit++);
+            } else {
+                console.log('fancybox sms');
+
+                $('#order_fitting .signin-sms__wrap').show();
+
+                $('#order_fitting .sms-input:first-child').focus();
+                //$('#sms_code_run').focus();
+               $('#order_fitting input[type=submit]').val('Підтвердити');
+            }
+        },
+        error: function(e) {
+            console.log(e);
+            return false;
+        }
+    });
+
+    return false;
+}
+
+$(function(){
+
+
+    let shopping_cod_sms = $('#shopping_cod_sms');
+
+    shopping_cod_sms.onkeyup = shopping_cod_sms.oninput = showCount;
+    shopping_cod_sms.onpropertychange = function() {
+        if (event.propertyName == "value") showCount();
+    }
+    shopping_cod_sms.oncut = function() {
+        setTimeout(showCount, 0); // на момент oncut значение ещё старое
+    };
+
+    function showCount() {
+        if(shopping_cod_sms.value.length == 4) {
+            if (typeof(readCookie('sms_code')) != "undefined" && readCookie('sms_code') !== null && shopping_cod_sms.value == readCookie('sms_code')) {
+
+                $('#order_fitting').submit();
+            }
+        }
+
+        console.log(shopping_cod_sms.value);
+    }
+});
+
+
+
+$(document).on('submit', '#order_fitting', function(e) {
+    e.preventDefault();
+    /* ajax запрос */
+
+if (!$('#order_fitting .signin-sms__wrap').is(":visible")) {
+    let val = $('#order_fitting #shopping_popup_phone');
+    let phone = val.val();
+
+    if (phone) {
+        val.prop("disabled", true);
+
+        $.ajax({url: "rest/order/initiate",  method: 'GET'});
+
+        $.ajax({
+            url: "rest/order/sms/send",
+            method: 'GET',
+            data: {phone: phone},
+            dataType: 'json',
+            success: function(data) {
+                writeCookie('sms_code', data.data.code, 60);
+            },
+            error: function(e) {
+                console.log(e);
+                return false;
+            }
+        }).done(function (data) {
+            let id = data.data.id;
+
+            checkSmsStatusFitting(id);
+        });
+
+        setTimeout(function(){
+            val.removeAttr('disabled');
+        }, 3000);
+
+       // $('#order_fitting .signin-sms__wrap').show();
+        console.log('send sms');
+    }
+} else if (typeof(readCookie('sms_code')) != "undefined" && readCookie('sms_code') !== null && $('#order_fitting #shopping_cod_sms').val() == readCookie('sms_code')) {
+
+            $.ajax({
+                url: "rest/order/fitting",
+                method: 'GET',
+                data: $(this).serialize(),
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#order_fitting input[type=submit]').val('Відправка...');
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#fn_cart').html(data.data.message);
+                    gtag('event', 'send_form', {'event_category': 'popup_cart'});
+
+                    setTimeout(function() {
+                        $.fancybox.close({
+                            src: '#fn_cart',
+                            type: 'inline'
+                        });
+                    }, 1000);
+
+                },
+                error: function (e) {
+                    console.log(e);
+                    $.fancybox.close({
+                        src: '#fn_cart',
+                        type: 'inline'
+                    });
+                }
+            });
+
+} else if ($('#order_fitting .signin-sms__wrap').is(":visible")) {
+    $('#order_fitting #shopping_cod_sms').val('').focus();
+}
+
 });
 
 /* Аякс callback */
@@ -89,6 +246,88 @@ $(document).on('submit', '#fn_callback_page', function(e) {
     });
 });
 
+/* Аякс coupon_argo */
+$(document).on('submit', '#code_argo', function(e) {
+    e.preventDefault();
+    let code, phone;
+    /* Вариант */
+    if($(this).find('input[name=code]').size() > 0 ) {
+        code = $(this).find('input[name=code]').val();
+    }
+    if($(this).find('input[name=phone]').size() > 0 ) {
+        phone = $(this).find('input[name=phone]').val();
+    }
+
+
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/argo",
+        method: 'POST',
+        data: {
+            code: code,
+            phone: phone
+        },
+        dataType: 'json',
+        success: function(data) {
+            //$('#fn_callback_page .beforeSend').remove();
+           /* gtag('event', 'pick_a_gem', {'event_category': 'send'});
+            fbq('trackCustom', 'SpecialOrder', {
+                'content_name': name,
+                'content_content': message,
+            });*/
+
+            $('#code_argo').fadeOut();
+            $('.form_code_argo').html(data.data.message).fadeIn();
+        },
+        error: function (e) {
+           // $('#fn_callback_page .beforeSend').remove();
+            parseAjaxError(e, 'code_argo');
+        }
+    });
+});
+
+/* Аякс coupon_argo */
+$(document).on('submit', '#vacancy-request_form', function(e) {
+    e.preventDefault();
+    var $that = $(this),
+        formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/vacancy",
+        method: 'POST',
+        data: formData,
+        contentType: false, // важно - убираем форматирование данных по умолчанию
+        processData: false, // важно - убираем преобразование строк по умолчанию
+        dataType: 'json',
+        beforeSend: function(){ // Функция вызывается перед отправкой запроса
+            console.debug('Запрос отправлен. Ждите ответа.');
+            // тут можно, к примеру, начинать показ прелоадера, в общем, на ваше усмотрение
+        },
+        success: function(data) {
+            //$('#fn_callback_page .beforeSend').remove();
+            /* gtag('event', 'pick_a_gem', {'event_category': 'send'});
+
+
+             fbq('trackCustom', 'SpecialOrder', {
+                 'content_name': name,
+                 'content_content': message,
+             });
+             */
+            fbq('trackCustom', 'VacancyOrder', {
+                'content_name': data.data.name,
+                'content_content': data.data.message,
+            });
+
+            $that.fadeOut();
+            $('.vacancy-request_form_result').html(data.data.message).fadeIn();
+        },
+        error: function (e) {
+            // $('#fn_callback_page .beforeSend').remove();
+            parseAjaxError(e, 'vacancy-request_form');
+        }
+    });
+});
+
 function parseAjaxError(e, formId)
 {
     switch (e.status)
@@ -97,7 +336,18 @@ function parseAjaxError(e, formId)
             let error = e.responseJSON.validation;
 
             for (let key in error) {
-                $('#'+formId+' [name='+key+']').addClass('red').attr( 'placeholder', error[key]);
+                $('#'+formId+' [name='+key+']').addClass('red');//.attr( 'placeholder', error[key]);
+
+                if ($('#'+formId+' [name='+key+']').next('span.error').length) {
+                    $('#'+formId+' [name='+key+']').next('span.error').text(error[key]);
+
+                } else {
+                    $('#'+formId+' [name='+key+']').after('<span class="error">' + error[key] + '</span>');
+                }
+
+
+
+              //  setTimeout($('#'+formId+' .error').fadeOut(), 3000);
             }
 
         break;
@@ -108,19 +358,35 @@ function parseAjaxError(e, formId)
     }
 }
 
+/*
 setTimeout(function(){
     let str = $(location).attr('pathname');
 
-    if ((str.includes('products') || str.includes('catalog')) && !readCookie('coupon')) {
 
-        writeCookie('coupon', 'set', 43200); // 12 чвсов
+    if ((str.includes('products') || str.includes('catalog'))) {
 
-        $.fancybox.open({
-            src: '#coupon-popup',
-            type: 'inline'
-        });
+        $.ajax( {
+            url: "rest/check_session/?key=coupon",
+            method: 'GET',
+            success: function(data) {
+                console.log(data);
+                if (data.data.status == false) {
+                    writeSession('coupon'); // 12 чвсов
+
+                    $.fancybox.open({
+                        src: '#coupon-popup',
+                        type: 'inline'
+                    });
+                }
+            },
+            error: function(e) {
+                console.log(e);
+                return false;
+            }
+        } );
     }
 }, 3000);
+*/
 
 $(document).on('submit', '.coupon_form', function(e) {
     e.preventDefault();
@@ -133,43 +399,50 @@ $(document).on('submit', '.coupon_form', function(e) {
 
     if (phone) {
 
-        $.ajax({
-            url: "rest/coupon",
-            method: 'POST',
-            data: {phone: phone},
-            dataType: 'json',
-            success: function (data) {
+        if (typeof(e.isTrigger) != "undefined" && e.isTrigger !== null) {
 
-                if (data.status === true) {
+         $.ajax({
+                        url: "rest/coupon",
+                        method: 'POST',
+                        data: {phone: phone},
+                        dataType: 'json',
+                        success: function (data) {
 
-                    gtag('event', 'popup', {'event_category': 'send_form',});
+                            if (data.status === true) {
 
-                  $('.coupon-popup .body').html(data.data.message);
+                                gtag('event', 'popup', {'event_category': 'send_form',});
 
-                    setTimeout(function(){
-                        $.fancybox.close({
-                            src: '#coupon-popup',
-                            type: 'inline'
-                        });
-                    }, 1000);
+                                $('.coupon-popup .body').html(data.data.message);
 
-                } else {
+                                setTimeout(function(){
+                                    $.fancybox.close({
+                                        src: '#coupon-popup',
+                                        type: 'inline'
+                                    });
+                                }, 3000);
 
-                    $.fancybox.close({
-                        src: '#coupon-popup',
-                        type: 'inline'
+                            } else {
+
+                                $.fancybox.close({
+                                    src: '#coupon-popup',
+                                    type: 'inline'
+                                });
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
+
+                            $.fancybox.close({
+                                src: '#coupon-popup',
+                                type: 'inline'
+                            });
+                        }
                     });
-                }
-            },
-            error: function (e) {
-                console.log(e);
 
-                $.fancybox.close({
-                    src: '#coupon-popup',
-                    type: 'inline'
-                });
-            }
-        });
+        } else {
+            sendSms(phone, 'coupon_sms_verification');
+        }
+
     }
 
     return false;
@@ -177,8 +450,26 @@ $(document).on('submit', '.coupon_form', function(e) {
 
 $(function(){
     //2. Получить элемент, к которому необходимо добавить маску
-    $("#phone").mask("+38 (099) 999-99-99");
+    $("input[name=phone]").inputmask("+38 (099) 999-99-99");
+    $('.phone').inputmask("+38 (099) 999-99-99");
+
+    $.validator.addMethod("checkMaskPhone", function(value, element) {
+        return /\+\d{2} \(\d{3}\) \d{3}-\d{2}-\d{2}/g.test(value);
+    });
+
+    // вешаем валидацию на поле с телефоном по классу
+    $.validator.addClassRules({
+        'phone': {
+            checkMaskPhone: true,
+        }
+    });
+
+    if($(".coupon_form").size()>0) {
+        // получаем нашу форму по class // включаем валидацию в форме
+        $('.coupon_form').validate();
+    }
 });
+
 
 /* Аякс quick_order */
 $(document).on('submit', '.fn_validate_feedback', function(e) {
@@ -398,6 +689,7 @@ $('.quick_order_form input[type="submit"]').click(function(e) {
                 $('#sms_code_run').val('').focus();
             }
         } else {
+            $.fancybox.
             $.fancybox.close({
                 src: '#fn_sms_verification',
                 type: 'inline'
@@ -476,10 +768,13 @@ function confirmQuickOrder(data)
 
 /* Ajax new order*/
 $(document).on('submit', '.fn_validate_cart', function(e) {
+
     e.preventDefault();
-    let val = $(document.activeElement);
+    let val = $('.fn_validate_cart input[name=submit1]')
+
+
     // серилизацию тем или иным способом
-    if (val.attr('data-method') == 'create') {
+    if (val.data("method") === "create") {
         let phone = false;
 
         if($('.fn_validate_cart input[name=phone]').size() > 0 ) {
@@ -496,7 +791,11 @@ $(document).on('submit', '.fn_validate_cart', function(e) {
             }, 3000);
 
             console.log('send sms');
+        } else {
+          alert('error phone');
         }
+    } else {
+        alert('error');
     }
 
     console.log('end');
@@ -541,8 +840,41 @@ $('.fn_validate_cart input[type="submit"]').click(function(e) {
 }
 });
 
+function checkValidCode(formId = '', popupId = '') {
 
-function sendSms(phone) {
+    if (typeof(readCookie('sms_code')) != "undefined" && readCookie('sms_code') !== null) {
+        let cod = $('#sms_code_run').val();
+
+        if (cod == readCookie('sms_code')) {
+            $('#' + formId).submit();
+            $('#' + formId + ' input[type="submit"]').val('Loading...').prop("disabled", true);
+
+            $.fancybox.close({
+                src: '#' + popupId,
+                type: 'inline'
+            });
+        } else {
+            $('.send_code_button').prop("disabled", true);
+
+            $('.sms_hide_error').fadeIn(100);
+
+            setTimeout(function(){
+                $('.sms_hide_error').fadeOut(300);
+            }, 3000);
+
+            $('#sms_code_run').val('').focus();
+        }
+    } else {
+        $.fancybox.close({
+            src: '#' + popupId,
+            type: 'inline'
+        });
+        alert('Код устарел!');
+    }
+}
+
+
+function sendSms(phone, popup = '') {
     /* ajax запрос */
     $.ajax({
         url: "rest/order/sms/send",
@@ -559,11 +891,12 @@ function sendSms(phone) {
     }).done(function (data) {
         let id = data.data.id;
 
-        checkSmsStatus(id);
+        checkSmsStatus(id, 1, popup);
+
     });
 }
 
-function checkSmsStatus(smsId, limit = 1)
+function checkSmsStatus(smsId, limit = 1, popup = '')
 {
     /* ajax запрос */
     $.ajax({
@@ -577,8 +910,14 @@ function checkSmsStatus(smsId, limit = 1)
             } else {
                 console.log('fancybox sms');
 
+                if (popup != '') {
+                    src = popup;
+                } else {
+                    src = 'fn_sms_verification';
+                }
+
                 $.fancybox.open({
-                    src: '#fn_sms_verification',
+                    src: '#' + src,
                     type: 'inline'
                 });
 
@@ -636,6 +975,40 @@ function readCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : false;
 }
 /* Работаем с куками*/
+
+function writeSession(val) {
+    /* ajax запрос */
+    $.ajax( {
+        url: "rest/set_session/",
+        method: 'PATCH',
+        data: {
+            key: val
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(e) {
+            console.log(e);
+        }
+    } );
+}
+
+function readSession(name) {
+    /* ajax запрос */
+    $.ajax( {
+        url: "rest/check_session/?key=" + name,
+        method: 'GET',
+        success: function(data) {
+            console.log(data);
+            return data.data.status
+        },
+        error: function(e) {
+            console.log(e);
+            return false;
+        }
+    } );
+}
 
 /* Аякс santa */
 $(document).on('submit', '#santa_form', function(e) {
@@ -861,11 +1234,11 @@ $(document).on('click', '.fn_wishlist', function(e){
         action = $( this ).hasClass( 'selected' ) ? 'delete' : '';
     /* ajax запрос */
     $.ajax( {
-        url: "ajax/wishlist.php",
+        url: "rest/wishlist/",
         data: { id: $( this ).data( 'id' ), action: action },
         dataType: 'json',
         success: function(data) {
-            $( '.wishlist-data' ).html( data.info );
+            $( '.wishlist-data' ).html( data.data.info );
             /* Смена класса кнопки */
             if (action == '') {
                 button.addClass( 'selected' );
@@ -938,6 +1311,7 @@ function price_slider_init() {
                 },
                 dataType: 'json',
                 success: function(data) {
+                    console.log(data);
                     $('#fn_products_content').html( data.products_content );
                     $('.fn_pagination').html( data.products_pagination );
                     $('.fn_products_sort').html(data.products_sort);

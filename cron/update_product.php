@@ -1,14 +1,12 @@
 <?php
 namespace cron;
+use Exception;
 
 require_once('bootstrap.php');
 
-use rest\api\Okay;
+$cron = new cron();
 
-require_once('function_cron.php');
-$okay = new Okay();
-
-use XBase\TableReader;
+$cron->setFile(__DIR__ . '/files/Sait.dbf');
 
 $categoriesMap = [
 	'' => 0,
@@ -52,9 +50,9 @@ $categoriesMap = [
 
 $color = [
     'Белый' => 640,
-    'Желтый' =>644,
+    'Желтый' => 644,
     'Желто-белый' => 644,
-    'Красный' =>643,
+    'Красный' => 643,
     'Красно-белый' => 643,
 ];
 
@@ -65,64 +63,55 @@ $collection = [
     'KIMBERLI Classic' => 348,
 ];
 
-$data = ['update' => 0, 'add_options' => 0, 'add' => 0];
+$data = ['update' => 0, 'add_options' => 0, 'add' => [], 'error' => []];
+
 $i=0;
-$dbProductsPath = 'files/Sait.dbf';
 
-$date_file = date('Y-m-d H:i:s', filemtime($dbProductsPath));
+$cron->checkLastUpdateFile();// проверяем последнее обновление файла
 
-$sql = "SELECT log_id FROM  `ok_dropbox_log` WHERE `date_file` = '{$date_file}' LIMIT 1";
-$okay->db->query($sql);
+$table = $cron->readFile(); // читаем содержимое файла
 
+try {
 
-if ($okay->db->result('log_id')) {
-	$log_messsage = "File not update. Last update " . $date_file;
-	set_log($log_messsage);
-	echo $log_messsage;
-	exit();
-}
+	$cron->updateStockVariant(); //обнуление остатка
 
-try
-{
-    $table = new TableReader($dbProductsPath, ['encoding' => 'CP1251']);
- 
-    if ($table->getRecordCount() <= 0) {
-    	echo 'error getRecordCount';
-    	exit();
-	}
-
-$okay->db->query("UPDATE `ok_variants` SET `stock` = '0' WHERE `ok_variants`.`stock` > 0;"); //обнуление остатка
-$okay->db->results();
-
+	// Дальше переписать
 
     while ($record = $table->nextRecord()) {
-    
-   // $sql = "UPDATE `kimb`.`ok_variants` SET `kimb`.`ok_variants`.`stock` = {$record->kol}, `kimb`.`ok_variants`.`price` = {$record->cena}, `kimb`.`ok_variants`.`compare_price` = {$record->cenas}, `kimb`.`ok_variants`.`weight` = {$record->mas} WHERE `kimb`.`ok_variants`.`sku` = {$record->shtr} ";
-     $sql = "SELECT `id`, `product_id` FROM  `ok_variants` WHERE `sku` LIKE '%{$record->shtr}%'  LIMIT 1";
-     
-        $okay->db->query($sql);
-        $res = $okay->db->results()[0];
-        $id = $res->id;
-        $p_id = $res->product_id;
+    	$shtr = trim($record->shtr);
+
+		$cron->query("SELECT `id`, `product_id` FROM  `ok_variants` WHERE `sku` LIKE '$shtr'  LIMIT 1"); //
+
+        $id = $cron->result('id');
+        $p_id = $cron->result('product_id');
         
         if ($id) {
         	$kol = $record->kol;
 			$price = $record->cena;
 			$oldPrice = $record->cenas;
 			$mas = $record->mas;
-        	$proc = !empty($record->proc) ? $record->proc : 0;
-            $okay->db->query(
+        	$proc = $record->proc;
+        	$size = $record->razm;
+
+			$cron->query(
             	"UPDATE `ok_variants`
-					SET `ok_variants`.`stock` = {$kol}, `ok_variants`.`price` = {$price}, `ok_variants`.`compare_price` = {$oldPrice}, `ok_variants`.`weight` = {$mas}, `ok_variants`.`proc` = {$proc}, `ok_variants`.`cvet` = '{$record->cvet}', `ok_variants`.`vstavka` = '{$record->namev}'
+					SET `ok_variants`.`stock` = {$kol},
+					    `ok_variants`.`price` = {$price},
+					    `ok_variants`.`compare_price` = {$oldPrice},
+					    `ok_variants`.`weight` = {$mas},
+					    `ok_variants`.`size` = {$size},
+					    `ok_variants`.`proc` = {$proc},
+					    `ok_variants`.`cvet` = '{$record->cvet}',
+					    `ok_variants`.`vstavka` = '{$record->namev}'
 					WHERE `ok_variants`.`id` = {$id}"
 			);
             
             if($p_id) {
-                $okay->db->query("SELECT `product_id` as `ids` FROM `ok_products_features_values` WHERE `product_id` = {$p_id} LIMIT 1");
+				$cron->query("SELECT `product_id` as `ids` FROM `ok_products_features_values` WHERE `product_id` = {$p_id} LIMIT 1");
                 
-                if(!$okay->db->result('ids') && !empty($color[$record->namecr]) && !empty($collection[$record->gr])) {
+                if(!$cron->result('ids') && !empty($color[$record->namecr]) && !empty($collection[$record->gr])) {
                     $data['add_options'] += 1;
-                    $okay->db->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) VALUES ({$p_id}, {$color[$record->namecr]}), ({$p_id}, {$collection[$record->gr]})"); // добавление свойства: цвет золота и коллекция
+					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) VALUES ({$p_id}, {$color[$record->namecr]}), ({$p_id}, {$collection[$record->gr]})"); // добавление свойства: цвет золота и коллекция
                 }  
             }
              
@@ -135,31 +124,27 @@ $okay->db->results();
 				$new_sku .= '-' .$record->shtr;
 			}
 
-			$proc =  proc($record->cena, $record->cenas);
-
 			$url = $categoriesMap[$record->namer]['translit'] . '-' . $record->shtr;
 
 			$ru_name =  $record->namer . ' - ' . $record->namecr . ' - ' . $record->shtr . ' - ' . $record->si;
 			$en_name = $record->namei . ' - ' . $record->nameci . ' - ' . $record->shtr . ' - ' . $record->si;
 			$ua_name = $record->name . ' - ' . $record->namec . ' - ' . $record->shtr . ' - ' . $record->si;
 
+
 			$cvet = $record->cvet;
-			$vstavka = $record->namev;
-			$sku2 = $record->si;
+			$namev = $record->namev;
+			$mas = $record->mas;
+			$proc = $record->proc;
+			$size = $record->razm;
 
 			$sql = "SELECT `id`, `product_id` FROM  `ok_variants` WHERE `new_sku` LIKE '{$new_sku}' LIMIT 1";
 
-			$okay->db->query($sql);
-			$res = $okay->db->result();
+			$cron->query($sql);
+			$res = $cron->result();
 
-			if($res->product_id) {
+			if(!empty($res->product_id)) {
 
-				$cvet = !empty($record->cvet) ? $record->cvet : '';
-				$namev = !empty($record->namev) ? $record->namev : '';
-				$mas = !empty($record->mas) ? $record->mas : 0;
-				$proc = !empty($record->proc) ? $record->proc : 0;
-
-				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
+				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `size`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
 					. "{$res->product_id},"
 					. "'{$url}',"
 					. "'{$new_sku}',"
@@ -170,25 +155,24 @@ $okay->db->results();
 					. "{$record->shtr}, "
 					. " '{$ru_name}', "
 					. "{$mas}, "
+					. "{$size}, "
 					. "{$proc}, "
 					. "{$record->cena}, "
 					. "{$record->cenas}, "
 					. "{$record->kol}, "
 					. "4"
 					. ")";
-				$okay->db->query($var);
-				$id_var = $okay->db->insert_id();
+				$cron->query($var);
+				$id_var = $cron->insert_id();
 
-				$okay->db->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
+				$cron->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
                                                                         (1, {$id_var}, '{$ru_name}'),
                                                                         (2, {$id_var}, '{$en_name}'),
                                                                         (3, {$id_var}, '{$ua_name}')
                                                                         ");
 
-				$data[$i] = ['var' => $id_var];
-
 				$i++;
-				$data['add'] = $data['add']+1;
+				$data['add'][] = ['var' => $id_var];
 
 			} else {
 				$sql = "INSERT INTO `ok_products`("
@@ -216,20 +200,19 @@ $okay->db->results();
 					. " '{$record->gr}'"
 					. ")";
 
-				$okay->db->query($sql);
-				$id = $okay->db->insert_id();
+				$cron->query($sql);
 
-				$okay->db->query("INSERT INTO `ok_lang_products` (`lang_id`, `product_id`, `name`) VALUES
+				$id = $cron->insert_id();
+
+				if (0 == $id) {
+					throw new \RuntimeException('Error insert ok_products');
+				}
+
+				$cron->query("INSERT INTO `ok_lang_products` (`lang_id`, `product_id`, `name`) VALUES
                                                                         (1, {$id}, '{$ru_name}'),
                                                                         (2, {$id}, '{$en_name}'),
                                                                         (3, {$id}, '{$ua_name}')
                                                                         ");
-
-				$cvet = !empty($record->cvet) ? $record->cvet : '';
-				$namev = !empty($record->namev) ? $record->namev : '';
-				$mas = !empty($record->mas) ? $record->mas : 0;
-				$proc = !empty($record->proc) ? $record->proc : 0;
-
 
 				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
 					. "{$id},"
@@ -248,39 +231,56 @@ $okay->db->results();
 					. "{$record->kol}, "
 					. "4"
 					. ")";
-				$okay->db->query($var);
+				$cron->query($var);
 
-				$id_var = $okay->db->insert_id();
+				$id_var = $cron->insert_id();
 
-				$okay->db->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
+				$cron->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
                                                                         (1, {$id_var}, '{$ru_name}'),
                                                                         (2, {$id_var}, '{$en_name}'),
                                                                         (3, {$id_var}, '{$ua_name}')
                                                                         ");
 
-				$okay->db->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) VALUES ({$id}, {$color[$record->namecr]}), ({$id}, {$collection[$record->gr]})"); // добавление свойства: цвет золота и коллекция
+				if (!empty($color[$record->namecr])) {
+					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
+								VALUES ({$id}, {$color[$record->namecr]})
+       						"); // добавление свойства: цвет золота
+				} else {
+					$data['error'][] = ['product_id' => $id, 'color' => $record->namecr];
+				}
 
-				$okay->db->query("INSERT INTO `ok_products_categories` (`product_id`, `category_id`) VALUES ({$id}, {$categoriesMap[$record->namer]['id']})");
+				if (!empty($collection[$record->gr])) {
+					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
+								VALUES ({$id}, {$collection[$record->gr]})
+       						"); // добавление свойства: коллекция
+				} else {
+					$data['error'][] = ['product_id' => $id, 'collection' => $record->gr];
+				}
 
-				$data[$i] = ['prod' => $id, 'var' => $id_var];
+				$cron->query("INSERT INTO `ok_products_categories` (`product_id`, `category_id`) VALUES ({$id}, {$categoriesMap[$record->namer]['id']})");
 
 				$i++;
-				$data['add'] = $data['add']+1;
+				$data['add'][] = ['prod' => $id, 'var' => $id_var];
 			}
 
         }   
 }
 
-$okay->db->query("INSERT INTO `ok_dropbox_log` (`update_product`, `add_product`, `add_options`, `date_file`)
-VALUES ({$data['update']}, {$data['add']}, {$data['add_options']}, '{$date_file}')");
+	$cron->query("UPDATE `ok_products` P SET P.`stock` = (SELECT COALESCE( SUM(V.stock), 0) FROM ok_variants V WHERE V.product_id = P.id), P.price = (SELECT MIN(V.price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0), P.compare_price = (SELECT MIN(V.compare_price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0)");
 
-$log_messsage = "products(update:{$data['update']}, add:{$data['add']}, add_options: {$data['add_options']})";
-set_log($log_messsage);
-//l($data);	
-} catch (\Exception $e){
+		if (count($data['error']) > 0) {
+			$cron->printLog($data['error']);
+		}
+	unset($data['error']);
+
+	$data['date_file'] = $cron->dateFile;
+	$data['add'] = count($data['add']);
+
+	$cron->logging("products(update:{$data['update']}, add:{$data['add']}, add_options: {$data['add_options']})");
+
+    $cron->logging($data, 'db');
+
+} catch (Exception $e){
     echo $e->getMessage();
  }
-echo '<pre>';
- print_r($data);
-echo '</pre>';
 

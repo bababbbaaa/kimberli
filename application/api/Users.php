@@ -3,9 +3,67 @@
 namespace rest\api;
 
 class Users extends Okay {
-    
-    // осторожно, при изменении соли испортятся текущие пароли пользователей
-    private $salt = '8e86a279d6e182b3c811c559e6b15484';
+
+	// осторожно, при изменении соли испортятся текущие пароли пользователей
+	private $salt = '8e86a279d6e182b3c811c559e6b15484';
+
+	private $user = null;
+
+	public function __construct($userId = null) {
+
+		parent::__construct();
+
+		if (null != $userId) {
+		$where = $this->db->placehold('AND u.id=? ', intval($userId));
+
+	// Выбираем пользователя
+	$query = $this->db->placehold("SELECT 
+                u.id, 
+                u.email, 
+                u.password, 
+                u.name,
+                u.phone,
+                u.address,
+                u.group_id, 
+                u.last_ip, 
+                u.created, 
+                g.discount, 
+                g.name as group_name 
+            FROM __users u 
+            LEFT JOIN __groups g ON u.group_id=g.id 
+            WHERE
+                1 
+                $where 
+            LIMIT 1
+        ", $userId);
+
+	$this->db->query($query);
+
+	$userData = $this->db->result();
+
+	if(empty($userData)) {
+		throw new \RuntimeException('The User does not exist');
+	}
+
+	$userData->discount *= 1; // Убираем лишние нули, чтобы было 5 вместо 5.00
+
+	$this->user = $userData;
+		}
+	}
+
+	/**
+	 * @param null $userId
+	 * @return false
+	 */
+	public function get($userId = null)
+	{
+		if (null != $userId) {
+			return $this->get_user($userId);
+		}
+
+		return  $this->get_user($this->user->id);
+	}
+
 
     /*Выборка пользователей*/
     public function get_users($filter = array()) {
@@ -145,12 +203,14 @@ class Users extends Okay {
                 $where 
             LIMIT 1
         ", $id);
+
         $this->db->query($query);
         $user = $this->db->result();
         if(empty($user)) {
             return false;
         }
         $user->discount *= 1; // Убираем лишние нули, чтобы было 5 вместо 5.00
+
         return $user;
     }
 
@@ -254,5 +314,9 @@ class Users extends Okay {
         }
         return false;
     }
+
+    public function isLogged() {
+    	return $_SESSION['user_id'] ?? null;
+	}
     
 }

@@ -50,9 +50,17 @@ class Config {
 
 
         // Вычисляем DOCUMENT_ROOT вручную, так как иногда в нем находится что-то левое
-        $localpath=getenv("SCRIPT_NAME");
-        $absolutepath=getenv("SCRIPT_FILENAME");
-        $_SERVER['DOCUMENT_ROOT']=substr($absolutepath,0,strpos($absolutepath,$localpath));
+        $localpath = (string) getenv("SCRIPT_NAME");
+        $absolutepath = (string) getenv("SCRIPT_FILENAME");
+
+        if (!empty($localpath) && !empty($absolutepath)) {
+			$pos = (strpos($absolutepath, $localpath) == false) ? 1 : strpos($absolutepath, $localpath);
+
+			$_SERVER['DOCUMENT_ROOT'] = substr($absolutepath,0, $pos);
+		} else {
+			$_SERVER['DOCUMENT_ROOT'] = '/';
+		}
+
         
         // Адрес сайта - тоже одна из настроек, но вычисляем его автоматически, а не берем из файла
         $script_dir1 = realpath(dirname(dirname(dirname(__FILE__))));
@@ -61,17 +69,18 @@ class Config {
         $subdir = trim(substr($script_dir1, strlen($script_dir2)), "/\\");
         
         // Протокол
-        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'? 'https' : 'http';
-        if($_SERVER["SERVER_PORT"] == 443)
-            $protocol = 'https';
-        elseif (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1')))
+        $protocol = isset($_SERVER["SERVER_PROTOCOL"]) ? strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'? 'https' : 'http' : 'https';
+
+        if(isset($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"] == 443) {
+			$protocol = 'https';
+		} else if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1')))
             $protocol = 'https';
         elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
             $protocol = 'https';
 
 
         $this->vars['protocol'] = $protocol;
-        $this->vars['root_url'] = $protocol.'://'.rtrim($_SERVER['HTTP_HOST']);
+        $this->vars['root_url'] = isset($_SERVER['HTTP_HOST']) ? $protocol.'://'.rtrim($_SERVER['HTTP_HOST']) : '';
 
         if(!empty($subdir)) {
             $this->vars['root_url'] .= '/'.$subdir;

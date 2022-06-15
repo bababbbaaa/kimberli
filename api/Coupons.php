@@ -24,7 +24,9 @@ class Coupons extends Okay {
                 c.min_order_price, 
                 c.single, 
                 c.usages,
-                ((DATE(NOW()) <= DATE(c.expire) OR c.expire IS NULL) AND (c.usages=0 OR NOT c.single)) AS valid
+                ((DATE(NOW()) <= DATE(c.expire) OR c.expire IS NULL) AND (c.usages=0 OR NOT c.single)) AS valid,
+       			c.date_add,
+       			c.phone
             FROM __coupons c 
             WHERE
                 1
@@ -87,14 +89,16 @@ class Coupons extends Okay {
                 c.min_order_price, 
                 c.single, 
                 c.usages, 
-        		((DATE(NOW()) <= DATE(c.expire) OR c.expire IS NULL) AND (c.usages=0 OR NOT c.single)) AS valid
+        		((DATE(NOW()) <= DATE(c.expire) OR c.expire IS NULL) AND (c.usages=0 OR NOT c.single)) AS valid,
+       			c.date_add,
+       			c.phone
             FROM __coupons c 
             WHERE 
                 1 
                 $coupon_id_filter 
                 $valid_filter 
                 $keyword_filter
-            ORDER BY valid DESC, id DESC 
+            ORDER BY id DESC 
             $sql_limit
         ",$this->settings->date_format);
         

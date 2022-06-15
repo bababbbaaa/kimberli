@@ -70,6 +70,7 @@ class ProductsView extends View {
         $_GET['b'] = array();
         //определение текущего положения и выставленных параметров
         $this->uri_array = $this->filter_chpu_parse_url();
+
         foreach($this->uri_array as $k=>$v) {
             if(empty($v)) {
                 continue;
@@ -411,10 +412,13 @@ class ProductsView extends View {
         if($result_array['page'] > 1 || $result_array['page'] == 'all') {
             $result_string .= '/page-' . $result_array['page'];
         }
+
         $keyword = $this->request->get('keyword');
+
         if (!empty($keyword)) {
             $result_string .= '?keyword='.$keyword;
         }
+
         $smarty->assign('seo_hide_filter', $seo_hide_filter);
         //отдаем сформированную ссылку
         return $result_string;
@@ -467,13 +471,15 @@ class ProductsView extends View {
             return false;
         }
         // GET-Параметры
-        $brand_url    = $this->request->get('brand', 'string');
+        $brand_url = $this->request->get('brand', 'string');
 
-        $filter = array();
+        $filter = [];
         $filter['visible'] = 1;
 
-        $prices = array();
+        $prices = [];
+
         $prices['current'] = $this->request->get('p');
+
         if (isset($prices['current']['min']) && isset($prices['current']['max']) && $prices['current']['max'] != '' && $prices['current']['min'] != '') {
             $filter['price'] = $prices['current'];
         } else {
@@ -501,6 +507,7 @@ class ProductsView extends View {
             if (!$this->category->visible && empty($_SESSION['admin'])) {
                 return false;
             }
+
             $this->design->assign('category', $this->category);
            if($this->category->id != 113)  {
                $filter['category_id'] = $this->category->children;
@@ -512,6 +519,7 @@ class ProductsView extends View {
         }
 
         $price_filter = $this->reset_price_filter();
+
         if (isset($_COOKIE['price_filter'])) {
             $price_filter = unserialize($_COOKIE['price_filter']);
         }
@@ -559,6 +567,8 @@ class ProductsView extends View {
         }
 
         $mode = $this->request->get('mode');
+
+        l($mode);
         if (!empty($mode)) {
             if ($mode == 'bestsellers') {
                 $filter['featured'] = 1;
@@ -575,11 +585,13 @@ class ProductsView extends View {
         if($sort = $this->request->get('sort', 'string')) {
             $_SESSION['sort'] = $sort;
         }
+
         if (!empty($_SESSION['sort'])) {
             $filter['sort'] = $_SESSION['sort'];
         } else {
             $filter['sort'] = 'price';
         }
+
         $this->design->assign('sort', $filter['sort']);
 
         // Свойства товаров
@@ -779,23 +791,27 @@ class ProductsView extends View {
             return false;
         }
         //lastModify
-        $last_modify = array();
+        $last_modify = [];
         $brand_id_filter = '';
         $category_id_filter = '';
+
         if(!empty($filter['brand_id'])) {
             $brand_id_filter = $this->db->placehold('AND p.brand_id in(?@)', (array)$filter['brand_id']);
             if(!empty($brand)){
                 $last_modify[] = $brand->last_modify;
             }
         }
+
         if(!empty($filter['category_id'])) {
             $category_id_filter = $this->db->placehold('INNER JOIN __products_categories pc ON pc.product_id = p.id AND pc.category_id in(?@)', (array)$filter['category_id']);
             $last_modify[] = $this->category->last_modify;
         }
+
         $this->db->query("SELECT MAX(p.last_modify) as last_modify
             FROM __products p
             $category_id_filter
             WHERE 1 $brand_id_filter");
+
         $res = $this->db->result('last_modify');
         if (!empty($res)) {
             $last_modify[] = $res;
@@ -808,10 +824,16 @@ class ProductsView extends View {
         /*Постраничная навигация END*/
 
         // Товары
-        $products = array();
+        $products = [];
+
+		//$filter['empty'] = false;
+		//l($filter);
+
         foreach($this->products->get_products($filter) as $p) {
             $products[$p->id] = $p;
         }
+
+        //echo count($products);
         
         // Если искали товар и найден ровно один - перенаправляем на него
        // if(!empty($keyword) && $products_count == 1 && !$this->request->get('ajax','boolean')) {
@@ -820,31 +842,49 @@ class ProductsView extends View {
         
         if(!empty($products)) {
             $products_ids = array_keys($products);
-            $images_ids = array();
+            $images_ids = [];
+
             foreach($products as $product) {
-                $product->variants = array();
-                $product->properties = array();
+                $product->variants = [];
+                $product->properties = [];
+
                 $images_ids[] = $product->main_image_id;
             }
 
-			$filter_var = ['product_id'=>$products_ids, 'in_stock' => 1];
+			$filter_var = ['product_id'=>$products_ids];
+
+			/*if (isset($filter['no_stock'])) {
+				$filter_var['no_stock'] = 1;
+			} else {
+				$filter_var['in_stock'] = 1;
+			}*/
 
             if (!empty($filter['sort']) && in_array($filter['sort'], ['price', 'price_desc'])) {
 				$filter_var['sort'] = $filter['sort'];
 			}
-//l($filter);
-			if (isset($filter['no_stock'])) {
-				$filter_var = ['no_stock' => 1, 'product_id' => $products_ids];
-			}
+
 
             $variants = $this->variants->get_variants($filter_var);
 
-			//l($variants);
+			$emptyVar = [];
 
             foreach($variants as $variant) {
                 $products[$variant->product_id]->variants[] = $variant;
+
+				$emptyVar[] = $variant->product_id;
             }
-           // l($product->variants);
+
+            /*if (!empty($emptyVar) && $diff = array_diff($products_ids, $emptyVar)) {
+
+				$filter_var = ['no_stock' => 1, 'product_id' => $diff];
+
+				$empty_variants = $this->variants->get_variants($filter_var);
+
+				foreach ($empty_variants as $v) {
+					$products[$v->product_id]->variants[] = $v;
+				}
+			}*/
+
 
             if (!empty($images_ids)) {
                 $images = $this->products->get_images(array('id'=>$images_ids));

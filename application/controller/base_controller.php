@@ -32,14 +32,15 @@ abstract class base_controller extends controller {
 	 */
 	protected function execute_after_action() {
 		// if action is success completed, add allow origin header for cross domain requests
-		$this->response->set_header('Access-Control-Allow-Origin', '*');
-		$this->response->set_header('Vary', empty($this->request->headers['Vary']) ? 'Origin' : $this->request->headers['Vary'] . ', Origin');
+		//$this->response->set_header('Access-Control-Allow-Origin', '*');
+		//$this->response->set_header('Vary', empty($this->request->headers['Vary']) ? 'Origin' : $this->request->headers['Vary'] . ', Origin');
 	}
 
 	/**
 	 * Execute action logic. Rewrite parent method to format response by application standards
 	 */
-	public function execute() {
+	public function execute(): response
+	{
 		$answer = null;
 
 		try {

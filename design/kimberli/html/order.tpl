@@ -2,7 +2,23 @@
 
 {* The page title *}
 {$meta_title = "`$lang->email_order_title` `$order->id`" scope=parent}
+
 <div class="page_container">
+
+    {*Вывод ошибок*}
+    {if $message_error}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="boxed boxed_warning">
+                    <div class="heading_box">
+                        {$message_error|escape}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {*Вывод успешных сообщений*}
+    {/if}
+
     {* The page heading *}
     <div class="wrap_blog_heading_page">
         <h1 class="heading_page">

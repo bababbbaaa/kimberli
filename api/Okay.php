@@ -4,8 +4,64 @@
 
 require_once(dirname(__DIR__).'/vendor/autoload.php');
 
+/**
+ * Class Okay
+ */
+
 class Okay {
 	private $debug = false;
+
+	/*public $config = null;
+	public $request = null;
+	public $db = null;
+	public $settings = null;
+	public $design = null;
+	public $products = null;
+	public $variants = null;
+	public $categories = null;
+	public $brands = null;
+	public $features = null;
+	public $money = null;
+	public $pages = null;
+	public $blog = null;
+	public $cart = null;
+	public $image = null;
+	public $delivery = null;
+	public $payment = null;
+	public $orders = null;
+	public $users = null;
+	public $coupons = null;
+	public $comments = null;
+	public $feedbacks = null;
+	public $notify = null;
+	public $managers = null;
+	public $languages = null;
+	public $translations = null;
+	public $comparison = null;
+	public $subscribes = null;
+	public $banners = null;
+	public $callbacks = null;
+	public $reportstat = null;
+	public $validate = null;
+	public $orderlabels = null;
+	public $orderstatus = null;
+	public $supportinfo = null;
+	public $support = null;
+	public $import = null;
+	public $menu = null;
+	public $backend_translations = null;
+	public $front_translations = null;
+	public $seo_filter_patterns = null;
+	public $features_aliases = null;
+	public $features_values = null;
+	public $insertions = null;
+	public $dropbox = null;
+	public $bug = null;
+	public $lead = null;
+	public $compilation = null;
+	public $sms = null;
+	public $vacancy = null;*/
+
     
     private $classes = array(
         'config'        => 'Config',
@@ -147,7 +203,7 @@ class Okay {
         $class = $this->classes[$name];
 
         // Подключаем его
-        include_once(dirname(__FILE__).'/'.$class.'.php');
+		require_once(dirname(__FILE__).'/'.$class.'.php');
 
         // Сохраняем для будущих обращений к нему
         self::$objects[$name] = new $class();

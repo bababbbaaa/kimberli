@@ -3,20 +3,13 @@ namespace cron;
 
 require_once('bootstrap.php');
 
-use rest\api\Okay;
+$cron = new cron();
+$cron->setFile(__DIR__ . '/files/Saitv.dbf');
 
-require_once('function_cron.php');
-$okay = new Okay();
+try {
+	$table = $cron->readFile();
 
-use XBase\TableReader;
-
-$dbProductsPath = 'files/Saitv.dbf';
-
-try
-{
-	$table = new TableReader($dbProductsPath, ['encoding' => 'CP1251']);
-
-	echo 'Record count: '.$table->getRecordCount() . PHP_EOL;
+	//echo 'Record count: '.$table->getRecordCount() . PHP_EOL;
 
     $shtr = [];
 
@@ -31,7 +24,7 @@ try
         ];
     }
 
-    $okay->db->query("TRUNCATE TABLE `ok_insertions_file`");
+	$cron->query("TRUNCATE TABLE `ok_insertions_file`");
 
     $i = 0;
     $error = [];
@@ -57,19 +50,16 @@ try
 		if (count($values) > 0) {
 		$sqlValues = implode(', ', $values);
 
-		$sql = "INSERT INTO `ok_insertions_file`(`shtr`, `name_uk`, `name_ru`, `name_en`, `kol`, `mas`) VALUES " . $sqlValues;
-
-		$okay->db->query($sql);
+		$cron->query("INSERT INTO `ok_insertions_file`(`shtr`, `name_uk`, `name_ru`, `name_en`, `kol`, `mas`) VALUES " . $sqlValues);
 	}
 
     }
-    echo '<br>' . $i;
+
 
     if (count($error) > 0) {
-    	echo '<pre>';
-    	print_r($error);
-		echo '</pre>';
+    	$cron->printLog($i);
+    	$cron->printLog($error);
 	}
-} catch (Exception $e) {
+} catch (\Exception $e) {
     echo $e->getMessage();
 }

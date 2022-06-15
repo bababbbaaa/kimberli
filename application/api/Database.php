@@ -83,10 +83,9 @@ class Database {
     
         $args = func_get_args();
         $q = call_user_func_array(array($this, 'placehold'), $args);
-            if ($_SERVER['REMOTE_ADDR'] == '195.38.11.96') {
-            //l($q);
-        }
+
         $this->res = $this->mysqli->query($q);
+
         if ($this->config->sql_debug && $this->res == false) {
         
             if (!is_dir($this->log_dir)) {
@@ -157,24 +156,29 @@ class Database {
         }
         return $results;
     }
-    
-    /**
-     * Возвращает первый результат запроса. Необязательный второй аргумент указывает какую колонку возвращать вместо всего массива колонок
-     */
+
+	/**
+	 * Возвращает первый результат запроса. Необязательный второй аргумент указывает какую колонку возвращать вместо всего массива колонок
+	 * @param null $field
+	 * @return false|int
+	 */
     public function result($field = null) {
-        $result = array();
+
         if(!$this->res)
         {
             $this->error_msg = "Could not execute query to database";
             return 0;
         }
+
         $row = $this->res->fetch_object();
-        if(!empty($field) && isset($row->$field))
-            return $row->$field;
-        elseif(!empty($field) && !isset($row->$field))
-            return false;
-        else
-            return $row;
+
+        if (!empty($field) && isset($row->$field)) {
+			return $row->$field;
+		} else if (!empty($field) && !isset($row->$field)) {
+			return false;
+		}
+
+        return $row;
     }
     
     /**

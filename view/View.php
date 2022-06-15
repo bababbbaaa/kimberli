@@ -295,7 +295,7 @@ class View extends Okay {
                 // Выбираем варианты товаров
                 $variants = $this->variants->get_variants(array('product_id'=>$browsed_products_ids));
                 // Для каждого варианта
-                foreach($variants as $variant) {
+				foreach($variants as $variant) {
                     if ($products[$variant->product_id]) {
                         $products[$variant->product_id]->variants[] = $variant;
                     }
@@ -314,6 +314,7 @@ class View extends Okay {
                     if (isset($products[$id])) {
                         if (isset($products[$id]->variants[0])) {
                             $products[$id]->variant = $products[$id]->variants[0];
+							$products[$id]->variants = [];
                         }
                         $result[] = $products[$id];
                     }
@@ -329,6 +330,8 @@ class View extends Okay {
         }
         $params['in_stock'] = 1;
         $params['featured'] = 1;
+        $params['sort'] = 'last_update_desc';
+
         if(!empty($params['var'])) {
             $images_ids = array();
             foreach($this->products->get_products($params) as $p) {
@@ -362,6 +365,7 @@ class View extends Okay {
                 foreach($products as $product) {
                     if(isset($product->variants[0])) {
                         $product->variant = $product->variants[0];
+						$product->variants = [];
                     }
                 }
             }
@@ -389,7 +393,7 @@ class View extends Okay {
                 $products_ids = array_keys($products);
                 
                 // Выбираем варианты товаров
-                $variants = $this->variants->get_variants(array('product_id'=>$products_ids));
+                $variants = $this->variants->get_variants(['product_id'=>$products_ids, 'in_stock' => 1]);
                 
                 // Для каждого варианта
                 foreach($variants as $variant) {
@@ -410,6 +414,8 @@ class View extends Okay {
                 foreach($products as $product) {
                     if(isset($product->variants[0])) {
                         $product->variant = $product->variants[0];
+
+						$product->variants = [];
                     }
                 }
             }
@@ -456,6 +462,7 @@ class View extends Okay {
                 foreach($products as $product) {
                     if(isset($product->variants[0])) {
                         $product->variant = $product->variants[0];
+						$product->variants = [];
                     }
                 }
             }

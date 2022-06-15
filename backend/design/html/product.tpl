@@ -310,6 +310,15 @@
                                                 {/foreach}
                                             </select>
                                         </div>
+                                        <div class="okay_list_boding variants_item_certificate">
+                                            <div class="heading_label">{$btr->general_certificate|escape}</div>
+                                            <select name="variants[certificate][]" class="selectpicker">
+                                                <option value="0">-</option>
+                                                {foreach $certificates as $certificate}
+                                                    <option value="{$certificate}" {if $certificate == $variant->certificate}selected=""{/if}>{$certificate|escape}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
                                         <div class="okay_list_boding variants_item_weight">
                                             <div class="heading_label">{$btr->general_weight|escape}</div>
                                             <input class="variant_input" name="variants[weight][]" type="text" value="{$variant->weight|escape}"/>

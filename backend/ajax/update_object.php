@@ -130,6 +130,10 @@ switch ($object) {
         if($okay->managers->access('compilations')) {
             $result = $okay->compilation->updateCompilation($id, $values);
         }
+	case 'vacancy':
+		if($okay->managers->access('vacancies')) {
+			$result = $okay->vacancy->update_vacancy($id, $values);
+		}
         break;
 }
 

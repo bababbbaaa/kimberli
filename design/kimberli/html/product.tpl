@@ -135,16 +135,11 @@
                                     <span data-language="product_shtr">{$lang->product_shtr}:</span>
                                     <span class="fn_sku sku_nubmer" {if $product->variant->sku}itemprop = "sku"{/if}>{$product->variant->sku|escape}</span>
                                 </div>
-                                {if $product->gia || $product->hrd}
+                                {if $product->variant->certificate}
                                 <div class="product_sku  clearfix">
                                     <span data-language="certificate_gia_hrd">{$lang->certificate_gia_hrd}:</span>
                                     <span class="fn_shtr sku_nubmer">
-                                        {if $product->gia && $product->hrd}
-                                            GIA/HRD
-                                        {else}
-                                            {if $product->gia}GIA{/if}
-                                            {if $product->hrd}HRD{/if}
-                                        {/if}
+                                        {$product->variant->certificate}
                                     </span>
                                 </div>
                                 {/if}
@@ -217,7 +212,7 @@
                                     {else}
                                         {* Preorder *}
                                         <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if}">
-                                            <button class="product_button" type="submit"
+                                            <button class="btn btn_white btn_green btn_cart px-2 py-1" type="submit"
                                                     onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
@@ -231,7 +226,7 @@
                                     {/if}
                                     {* Submit button *}
                                     <div class="col-sm-12 col-lg-6 {if $product->variant->stock < 1} hidden{/if}">
-                                        <button class="fn_is_stock product_button1  btn btn_green btn-block btn_cart px-2 py-1"
+                                        <button class="fn_is_stock btn btn_green btn-block btn_cart px-2 py-1"
                                                 onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
@@ -303,7 +298,7 @@
                                                 {include file="svg.tpl" svgId="comparison"}
                                             </a>
                                         {/if}
-                                        <a class="phone product_comparison binct-phone-number-2" href="tel:0800335972"  title="Phone"
+                                        <a class="phone product_comparison binct-phone-number-2" href="tel:0932537677"  title="Phone"
                                            onClick="fbq('track', 'СallProduct', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
@@ -669,7 +664,8 @@
 {literal}      
 <script>
 fbq('track', 'ViewContent', {
-   value: {/literal}{$product->variant->price|escape}{literal},
+    event_id: (new Date()).getTimezoneOffset()/1000,
+    value: {/literal}{$product->variant->price|escape}{literal},
    currency: 'UAH',
    content_ids: {/literal}{$product->variant->sku|escape}{literal},
    content_type: 'product',

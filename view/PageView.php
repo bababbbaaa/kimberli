@@ -28,8 +28,8 @@ class PageView extends View {
             break;
 			default : break;
         }
-      
-      if (file_exists(BASE_DIR . '/design/kimberli/html/page/' . $url . '.tpl')) {
+
+      if (file_exists(BASE_DIR . '/design/kimberli/html/page/' .$this->language->label . '/' . $url . '.tpl')) {
 
 		  switch($url) {
 			  case 'vacancy':
@@ -40,7 +40,7 @@ class PageView extends View {
 			  default : break;
 		  }
 
-			$page->content = $this->design->fetch('page/' . $url . '.tpl');
+		  $page->content = $this->design->fetch('page/' . $this->language->label . '/'. $url . '.tpl');
 		}
         
         if (!empty($page->compilation_id)) {

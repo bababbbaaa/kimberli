@@ -81,8 +81,10 @@
                         <label class="okay_ckeckbox" for="check_all_1"></label>
                     </div>
                     <div class="okay_list_heading okay_list_coupon_name">{$btr->coupons_name|escape}</div>
+                    <div class="okay_list_heading okay_list_coupon_phone">{$btr->coupons_phone|escape}</div>
                     <div class="okay_list_heading okay_list_coupon_sale">{$btr->general_discount|escape}</div>
                     <div class="okay_list_heading okay_list_coupon_condit">{$btr->general_conditions|escape}</div>
+                    <div class="okay_list_heading okay_list_coupon_added">{$btr->coupons_added|escape}</div>
                     <div class="okay_list_heading okay_list_coupon_validity">{$btr->coupons_terms|escape}</div>
                     <div class="okay_list_heading okay_list_coupon_disposable">{$btr->coupons_one_off|escape}</div>
                     <div class="okay_list_heading okay_list_coupon_count">{$btr->coupons_qty_uses|escape}</div>
@@ -172,6 +174,9 @@
                                     </div>
                                 </div>
                                 <div class="okay_list_boding okay_list_coupon_sale">
+                                    {$coupon->phone|escape}
+                                </div>
+                                <div class="okay_list_boding okay_list_coupon_sale">
                                     {$coupon->value*1}
                                     {if $coupon->type=='absolute'}
                                         {$currency->sign|escape}
@@ -185,6 +190,15 @@
                                             {$btr->coupons_order_from|escape} {$coupon->min_order_price|escape} {$currency->sign|escape}
                                         </div>
                                     {/if}
+                                </div>
+                                <div class="okay_list_boding okay_list_coupon_sale">
+                                    <div class="">
+                                        {if $coupon->date_add}
+                                            {$coupon->date_add|date}
+                                        {else}
+                                            {include file='svg_icon.tpl' svgId='infinity'}
+                                        {/if}
+                                    </div>
                                 </div>
                                 <div class="okay_list_boding okay_list_coupon_validity">
                                     <div class="">

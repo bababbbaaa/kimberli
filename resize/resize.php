@@ -49,6 +49,7 @@ if (empty($original_img_dir) && empty($resized_img_dir) && $_GET['object'] != 'p
 }
 
 $resized_filename =  $okay->image->resize($filename, $original_img_dir, $resized_img_dir);
+
 if(is_readable($resized_filename)) {
     header('Content-type: image');
     print file_get_contents($resized_filename);

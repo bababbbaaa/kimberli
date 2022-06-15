@@ -25,7 +25,7 @@
         
         {* Submit button *}
         <div class="boxed_button">
-            <button class="btn btn_black btn_account submit"  type="submit" name="callback_page" data-language="callback_order">{$lang->callback_order}</button>
+            <button class="btn btn_black btn_account submit"  style="padding-top: inherit;" type="submit" name="callback_page" data-language="callback_order">{$lang->callback_order}</button>
         </div>
 
     </form>

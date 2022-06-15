@@ -5,7 +5,9 @@
         "mobiledetect/mobiledetectlib": "2.8.37",
         "phpmailer/phpmailer": "6.5.0",
         "inok/dbf": "1.0.7",
-        "hisamu/php-xbase": "2.0.1"
+        "hisamu/php-xbase": "2.0.1",
+        "facebook/php-business-sdk": "11.0",
+        "privatbank/payparts":"1.0.0"
     },
     "autoload": {
         "psr-4": {

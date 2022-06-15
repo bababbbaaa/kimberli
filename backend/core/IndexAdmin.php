@@ -279,14 +279,18 @@ class IndexAdmin extends Okay {
 
         // Перевод админки
         $backend_translations = $this->backend_translations;
-        $file = "backend/lang/".$this->manager->lang.".php";
+
+        $file = isset($this->manager->lang) ? "backend/lang/".$this->manager->lang.".php" : '';
+
         if (!file_exists($file)) {
             foreach (glob("backend/lang/??.php") as $f) {
                 $file = "backend/lang/".pathinfo($f, PATHINFO_FILENAME).".php";
                 break;
             }
         }
+
         require_once($file);
+
         $this->design->assign('btr', $backend_translations);
         
         // Создаем соответствующий модуль

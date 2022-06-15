@@ -13,7 +13,7 @@
         <div class="signin-sms__wrap">
             <input class="sms-input" id="sms_code_run" type="tel" maxlength="4" onkeyup="this.value = this.value.replace (/[^\d,]/g, '')">
         </div>
-        <input class="btn btn_big btn btn_black btn_cart send_code_button" style="margin-top: 20px;" disabled="true" type="submit" name="submit2" data-method="confirm"  data-language="sms_code_checkout"  value="{$lang->sms_code_checkout}">
+        <input class="btn btn_big btn btn_black btn_cart send_code_button" style="margin-top: 20px;" disabled="true" type="submit" name="submit2" data-method="confirm" onclick="return checkVerifiCode();"  data-language="sms_code_checkout"  value="{$lang->sms_code_checkout}">
 
     </div>
 </div>

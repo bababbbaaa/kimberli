@@ -25,6 +25,7 @@
         array_push($products_ids, $id);
         $products_ids = array_unique($products_ids);
     }
+
     $products_ids = array_slice($products_ids, 0, $limit);
     $products_ids = array_reverse($products_ids);
 
@@ -35,6 +36,7 @@
     } else {
         setcookie('wished_products', implode(',', $products_ids), time()+30*24*3600, '/');
     }
+
     $okay->design->assign('wished_products', $products_ids);
 
     /*Определяем язык*/

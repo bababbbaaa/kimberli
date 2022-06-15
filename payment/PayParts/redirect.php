@@ -1,17 +1,26 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+chdir ('../../');
 
 session_start();
+
+require_once("payment/PayParts/PayParts.php");
 
 $pp = new PayParts($_SESSION['StoreId'], $_SESSION['Password']);
 $getState = $pp->getState($_SESSION['OrderID'], false); //orderId, showRefund
 
 /*можно ожидать результат платежа который пришёл в ResponseUrl*/
-var_dump($_SESSION['OrderID']);
+//var_dump($_SESSION['OrderID']);
 
 if ($getState['paymentState'] === 'SUCCESS') {
-    echo 'SUCCESS';
+
+	require_once('api/Okay.php');
+	$okay = new Okay();
+    //echo 'SUCCESS';
+
+	$order = $okay->orders->get_order((int) $_SESSION['OrderID']);
+
+	header('Location: https://kimberli.ua/order/'.$order->url. '/', 302);
     /*проводим проводки на магазине оплата прошла
     если был создан Отложенный платеж то делаем подтверждение
     $ConfirmHold=$pp->ConfirmHold($_SESSION['OrderID']);

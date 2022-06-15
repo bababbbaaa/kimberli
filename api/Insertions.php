@@ -209,7 +209,6 @@ class Insertions extends Okay
                   AND v.title != ''
                 $shtr_filter
                 $insertion_id_filter
-		LIMIT {$this->settings->max_order_amount}
         ";
 
 		$this->db->query($query);

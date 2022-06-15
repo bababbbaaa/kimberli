@@ -40,7 +40,8 @@ class Orders extends Okay {
                 o.note, 
                 o.ip, 
                 o.lang_id,
-       			o.utm
+       			o.utm,
+       			o.pay_token
             FROM __orders o 
             WHERE 
                 1 

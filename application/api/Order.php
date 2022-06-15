@@ -2,27 +2,45 @@
 
 namespace rest\api;
 
+use rest\providers\facebook;
 use rest\validation\errors;
 use rest\validation\ValidationException;
+use Exception;
+use stdClass;
+use Throwable;
 
 class Order extends Okay {
 
-	public function __construct()
+	private $order = null;
+
+	public function __construct($id = null)
 	{
 		parent::__construct();
+
+		if (null != $id) {
+			$order = $this->orders->get_order($id);
+
+			if ($order) {
+				$this->order = $order;
+			}
+		}
 	}
 
-	public function create(array $data = [])
+	/**
+	 * @param array $data
+	 * @return array
+	 */
+	public function create(array $data = []): array
 	{
-		$order = new \stdClass;
-		$order->payment_method_id = isset($data['payment_method_id']) ? $data['payment_method_id'] : '';
-		$order->delivery_id = isset($data['delivery_id']) ? $data['delivery_id'] : '';
-		$order->name        = isset($data['name']) ? $data['name'] : '';
-		$order->email       = isset($data['email']) ? $data['email'] : '';
-		$order->address     = isset($data['address']) ? $data['address'] : '';
-		$order->phone       = isset($data['phone']) ? $data['phone'] : '';
-		$order->comment     = isset($data['comment']) ? $data['comment'] : '';
-		$order->ip          = $_SERVER['REMOTE_ADDR'];
+		$order = new stdClass;
+		$order->payment_method_id = $data['payment_method_id']?? '';
+		$order->delivery_id = $data['delivery_id']?? '';
+		$order->name        = $data['name']?? '';
+		$order->email       = $data['email']?? '';
+		$order->address     = $data['address']?? '';
+		$order->phone       = $data['phone']?? '';
+		$order->comment     = $data['comment']?? '';
+		$order->ip          = $_SERVER['REMOTE_ADDR']?? '';
 		$order->utm			= '';
 
 		// Скидка
@@ -58,6 +76,10 @@ class Order extends Okay {
 
 		if (empty($data['amounts'])) {
 			throw new ValidationException(errors::create(['amounts' => 'Variants not be empty']));
+		}
+
+		if ($order->phone == '+38 (096) 817-13-30') {
+			$order->comment = 'test order';
 		}
 
 			// Добавляем заказ в базу
@@ -96,23 +118,6 @@ class Order extends Okay {
 				$this->orders->update_order($order->id, array('separate_delivery'=>$delivery->separate_payment));
 			}
 
-			// Создаем лид в битрикс
-			$this->lead->add_lead_bitrix(
-				[
-					'title' => 'NEW ORDER#' . $order->id,
-					'id' => $order->id,
-					'name' => $order->name,
-					'address' => $order->address,
-					'currency' => isset($data['currency']) ? $data['currency'] : 'UAH',
-					'total_price' => $order->total_price,
-					'comment' => $order->comment,
-					'phone' => $order->phone,
-					'email' => $order->email,
-					'source' => 'STORE',
-				],
-				'Новый заказ на сайте'
-			);
-
 			// Отправляем письмо пользователю
 			$this->notify->email_order_user($order->id);
 
@@ -133,36 +138,190 @@ class Order extends Okay {
 				}
 
 				$this->sms->send($phone, $message);
-			} catch (\Throwable $e) {
-
-			}
+			} catch (Throwable $e) {}
 
 			// Очищаем корзину (сессию)
 			$this->cart->empty_cart();
+
+		try {
+			(new LeadBitrix())
+				->add_lead_bitrix(
+					[
+						'title' => 'NEW ORDER#' . $order->id,
+						'id' => $order->id,
+						'total_price' => $order->total_price,
+						'comment' => $order->comment,
+						'phone' => $order->phone,
+					]
+				);
+		} catch (Exception $e) {}
+
+		try {
+			facebook::send(['event' => 'Purchase', 'orderId' => $order->id, 'currency' => ($data['currency'] ?? 'UAH'), 'url' => 'order']);
+		} catch (Exception $e) {}
 
 			return [
 				'orderId' => $order->id,
 				'type' => 'order',
 				'url' => '/'.$this->languages->get_lang_link . 'order/' . $order->url,
 				'value' => $order->total_price,
-				'currency' => isset($data['currency']) ? $data['currency'] : 'UAH',
+				'currency' => $data['currency']?? 'UAH',
 			];
 
 	}
 
-	public function get($orderId)
+	/**
+	 * @return array
+	 */
+	public function shopping()
 	{
-		return $this->orders->get_order($orderId);
+		$cart = $this->cart->get_cart();
+
+		$this->design->assign('cart', $cart);
+
+		/*Определяем валюту*/
+		$currencies = $this->money->get_currencies(array('enabled'=>1));
+		if(isset($_SESSION['currency_id'])) {
+			$currency = $this->money->get_currency($_SESSION['currency_id']);
+		} else {
+			$currency = reset($currencies);
+		}
+		$this->design->assign('currency',	$currency);
+
+		/*Определяем язык*/
+		$language = $this->languages->get_language($this->languages->lang_id());
+		//$this->design->assign('language', $language);
+		//$this->design->assign('lang_link', $this->languages->get_lang_link());
+
+		$this->design->assign('lang', $this->translations->get_translations(array('lang'=>$language->label)));
+
+		return [
+			//'products' => $cart,
+			'message' => $this->design->fetch('cart/continue_shopping.tpl'),
+		];
+	}
+
+	public function fitting($data): array
+	{
+		if (empty($data['phone'])) {
+			throw new ValidationException(errors::create(['phone' => 'Phone not be empty']));
+		}
+
+		$order = new stdClass;
+		$order->payment_method_id = '';
+		$order->delivery_id = '';
+		$order->name        = '';
+		$order->email       = '';
+		$order->address     = '';
+		$order->phone       = $data['phone'];
+		$order->comment     = isset($data['dop_variant']) ? 'Хочу подобрать больше украшений' : '';
+		$order->ip          = $_SERVER['REMOTE_ADDR'];
+		$order->utm			= '';
+
+		// Скидка
+		$cart = $this->cart->get_cart();
+		$order->discount = $cart->discount;
+
+		if($cart->coupon) {
+			$order->coupon_discount = $cart->coupon_discount;
+			$order->coupon_code = $cart->coupon->code;
+		}
+
+		if(!empty($this->user->id)) {
+			$order->user_id = $this->user->id;
+		}
+
+		// Добавляем заказ в базу
+		$order->lang_id = $this->languages->lang_id();
+
+		// Добавляем метку к заказу
+
+		if (isset($_COOKIE["utm_source"])) {
+			$order->utm .= $_COOKIE["utm_source"];
+		}
+
+		if (isset($_COOKIE["utm_campaign"])) {
+			$order->utm .= ':' .$_COOKIE["utm_campaign"];
+		}
+
+		$order_id = $this->orders->add_order($order);
+		$_SESSION['order_id'] = $order_id;
+
+		if (!empty($order->utm)) {
+			$this->orderlabels->add_order_labels($order_id, [4]);
+		}
+
+		$this->orderlabels->add_order_labels($order_id, [5]);
+
+		// Добавляем товары к заказу
+		foreach($cart->purchases as $purchase) {
+			$this->orders->add_purchase(array('order_id'=>$order_id, 'variant_id'=> intval($purchase->variant->id), 'amount'=>intval($purchase->amount)));
+		}
+
+		$order = $this->orders->get_order($order_id);
+
+		// Создаем лид в битрикс
+		(new LeadBitrix())
+			->add_lead_bitrix(
+			[
+				'title' => 'NEW FITTING ORDER#' . $order->id,
+				'id' => $order->id,
+				'total_price' => $order->total_price,
+				'comment' => $order->comment,
+				'phone' => $order->phone,
+			],
+			'Новый заказ на примерку'
+		);
+
+		try {
+			facebook::send(['event' => 'Fitting', 'orderId' => $order->id, 'currency' => ($data['currency'] ?? 'UAH'), 'url' => $_SERVER['HTTP_REFERER'] ?? '']);
+		} catch (Exception $e) {}
+
+		/*Определяем язык*/
+		$language = $this->languages->get_language($this->languages->lang_id());
+		$this->design->assign('lang', $this->translations->get_translations(array('lang'=>$language->label)));
+
+
+		return [
+			'message' => $this->design->fetch('cart/fitting_result.tpl'),
+		];
+	}
+
+	public function get($orderId = null)
+	{
+		if (null != $orderId) {
+			$order = $this->orders->get_order($orderId);
+
+			if (!$order) {
+				return null;
+			}
+
+			return $order;
+		}
+
+		return $this->order;
+	}
+
+	public function getOrderProducts($orderId = null)
+	{
+		if (null !== $orderId) {
+			return $this->orders->get_purchases(['order_id' => $orderId]);
+		} else if (null != $this->order) {
+			return $this->orders->get_purchases(['order_id' => $this->order->id]);
+		}
+
+		return [];
 	}
 
 	public function quickOrder(array $data = [])
 	{
-		$order = new \stdClass;
+		$order = new stdClass;
 		$order->payment_method_id = '';
 		$order->delivery_id = '';
-		$order->phone       = isset($data['phone']) ? $data['phone'] : '';
+		$order->phone       = $data['phone'] ?? '';
 		$order->ip          = $_SERVER['REMOTE_ADDR'];
 		$order->utm			= '';
+		$order->url			= $_SERVER['HTTP_REFERER'] ?? '';
 
 		if(!empty($this->user->id)) {
 			$order->user_id = $this->user->id;
@@ -209,18 +368,14 @@ class Order extends Okay {
 		$order = $this->orders->get_order($order_id);
 
 		// Создаем лид в битрикс
-		$this->lead->add_lead_bitrix(
+		(new LeadBitrix())
+			->add_lead_bitrix(
 			[
 				'title' => 'NEW ORDER#' . $order->id,
 				'id' => $order->id,
-				'name' => $order->name,
-				'address' => $order->address,
-				'currency' => isset($data['currency']) ? $data['currency'] : 'UAH',
 				'total_price' => $order->total_price,
 				'comment' => $order->comment,
 				'phone' => $order->phone,
-				'email' => $order->email,
-				'source' => 'STORE',
 			],
 			'Быстрый заказ на сайте'
 		);
@@ -242,7 +397,13 @@ class Order extends Okay {
 			}
 
 			$this->sms->send($phone, $message);
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
+
+		}
+
+		try {
+			facebook::send(['event' => 'quickOrder', 'orderId' => $order->id, 'currency' => ($data['currency'] ?? 'UAH'), 'url' => $order->url]);
+		} catch (Exception $e) {
 
 		}
 
@@ -255,7 +416,7 @@ class Order extends Okay {
 			'orderId' => $order->id,
 			'type' => 'quick',
 			'value' => $order->total_price,
-			'currency' => isset($data['currency']) ? $data['currency'] : 'UAH',
+			'currency' => $data['currency']?? 'UAH',
 			'message' => $result,
 		];
 

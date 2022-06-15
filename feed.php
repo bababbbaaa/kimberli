@@ -1,7 +1,4 @@
 <?php
-
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
 require_once('api/Okay.php');
 $okay = new Okay();
 
@@ -222,11 +219,9 @@ foreach($products as $p) {
         $ps = '++++';//stristr($p->product_name, '-', true);
     }*/
 
-    $str = ucfirst(mb_strtolower(trim($p->product_name . ' ('.$p->sku.')'.' '.implode(" ", $pn))));
+    $str = mb_strtolower(trim($p->product_name . ' ('.$p->sku.')'.' '.implode(" ", $pn)),'UTF8');
 
-    if (isset($str[0], $str[1])) {
-    	list($str[0], $str[1]) = mb_strtoupper($str[0].$str[1], 'UTF8');
-	}
+	$str = ucfirst($str);
 
     $p->product_name = $str;
     

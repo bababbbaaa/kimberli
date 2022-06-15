@@ -52,14 +52,20 @@ if($res !== false) {
 }
 
 } catch (\Throwable $e) {
-	if ($_SERVER['REMOTE_ADDR'] == '195.38.11.96') {
+
+	$view->bug->add_exception($e);
+
+	if ($view->config->debug_mode) {
 		l($e);
+		exit;
 	}
+
+	header('location: '.$view->config->root_url);
 }
 
-  function l($var)
+function l($var)
   {
-	  if ($_SERVER['REMOTE_ADDR'] == '195.38.11.96') {
+	  if (true) {
 	  if (is_array($var)) {
 		  echo '<pre>';
 		  print_r($var);

@@ -5,7 +5,6 @@ namespace rest\entity;
 use rest\api\Okay;
 use rest\validation\errors;
 use rest\validation\ValidationException;
-use RuntimeException;
 
 class Argo extends Okay
 {
@@ -15,29 +14,28 @@ class Argo extends Okay
 		parent::__construct();
 	}
 
-	public function create(array $data)
+	public function create($сheck, $phone)
 	{
-		$сheck = $data['cupon'];
+		if (null !== $this->getArgo($сheck)) {
+			throw new ValidationException(errors::create(['code' => 'This check is already registered.']));
 
-		if (null === $this->getArgo($сheck)) {
-			return $this->add($сheck);
 		}
 
-		throw new RuntimeException('This check is already registered.');
+		return $this->add($сheck, $phone);
 	}
 
-	public function getArgo($сheck)
+	public function getArgo(string $check)
 	{
-		$query = "SELECT сheck FROM ok_argo WHERE сheck = " . $сheck;
+		$query = "SELECT сheck FROM ok_argo WHERE сheck  like '{$check}'";
 
 		$this->db->query($query);
 
 		return $this->db->result();
 	}
 
-	private function add($сheck): int
+	private function add($check, $phone): int
 	{
-		$this->db->query("INSERT INTO `ok_argo`(`сheck`) VALUES ({$сheck})");
+		$this->db->query("INSERT INTO `ok_argo`(`сheck`, `phone`) VALUES ('$check', '$phone')");
 
 		return $this->db->insert_id();
 	}

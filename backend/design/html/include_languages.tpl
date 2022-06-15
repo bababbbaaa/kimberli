@@ -33,7 +33,10 @@
     {$id = $translation->id}
 {elseif $menu->id}
     {$id = $menu->id}
+{elseif $vacancy->id}
+    {$id = $vacancy->id}
 {/if}
+
 
 {*Список языков*}
 {if $languages}

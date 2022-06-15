@@ -23,6 +23,7 @@
     {* Fonts *}
     {*<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i&amp;subset=cyrillic" rel="stylesheet">*}
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
 
     {* CSS *}
 
@@ -86,6 +87,7 @@
     <div class="top_header">
         <div class="container-fluid">
             <div class="row">
+                {if $is_mobile !== true }
                 <div class="leftbar col-lg-5">
                     <div class="inner">
                         <div class="clone_menu"></div>
@@ -109,6 +111,7 @@
                         *}
                     </div>
                 </div>
+                {/if}
                 <div class="centerbar hidden-md-down col-lg-2">
                     <div class="inner">
                         {* Logo *}
@@ -193,8 +196,8 @@
                         {* Call *}
                         <div class="phone informer hidden-md-down">
                             {include file="svg.tpl" svgId="phone"}
-                            <a class="phone binct-phone-number-1" href="tel:0800335972" target="_blank" title="Phone">
-                                <span class="">0800335972</span>
+                            <a class="phone binct-phone-number-1" href="tel:0932537677" target="_blank" title="Phone">
+                                <span class="">0932537677</span>
                             </a>
                         </div>
                         <div class="account informer hidden-md-down">
@@ -217,7 +220,7 @@
                         </div>
 
                         {* Callback *}
-                        <a class="callback informer binct-phone-number" target="_blank" title="{$lang->index_back_call}" href="tel:0800335972" data-language="index_back_call">
+                        <a class="callback informer binct-phone-number" target="_blank" title="{$lang->index_back_call}" href="tel:0932537677" data-language="index_back_call">
                             {include file="svg.tpl" svgId="callback"}
                         </a>
 
@@ -367,7 +370,7 @@
 
             {* Social buttons *}
             <div class="foot_social">
-                <a class="phone binct-phone-number-1" href="tel:0800335972" target="_blank" title="Phone">
+                <a class="phone binct-phone-number-1" href="tel:0932537677" target="_blank" title="Phone">
                     {include file="svg.tpl" svgId="callicon"}
                 </a>
                 <a class="fb" href="https://facebook.com/Kimberli-Jewellery-House-155258051160989" target="_blank" title="Facebook">

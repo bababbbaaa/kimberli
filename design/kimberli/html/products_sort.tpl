@@ -9,9 +9,9 @@
             <option class="option{if $sort=='name'} active{/if}" value="{furl sort=name page=null}">{$lang->products_by_name_down}</option>
             <option class="option{if $sort=='name_desc'} active{/if}" value="{furl sort=name_desc page=null}">{$lang->products_by_name_up}</option>
             <option class="option{if $sort=='rating'} active{/if}" value="{furl sort=rating page=null}">{$lang->products_by_rating}</option>
-            <option class="option{if $sort=='sku'} active{/if}" value="{furl sort=sku page=null}">{$lang->products_by_sku}</option>
+            {*<<option class="option{if $sort=='sku'} active{/if}" value="{furl sort=sku page=null}">{$lang->products_by_sku}</option>
             <option class="option{if $sort=='sku_desc'} active{/if}" value="{furl sort=sku_desc page=null}">{$lang->products_by_sku_up}</option>
-            {*<option class="option{if $sort=='rating_desc'} active{/if}" value="{furl sort=rating_desc page=null}">{$lang->products_by_rating_desc}</option>*}
+            option class="option{if $sort=='rating_desc'} active{/if}" value="{furl sort=rating_desc page=null}">{$lang->products_by_rating_desc}</option>*}
         </select>
     </div>
 {/if}

@@ -1,11 +1,28 @@
 <?php
 
-require_once('Okay.php');
+namespace rest\api;
 
-class Bug extends Okay { 
+class Bug extends Okay {
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	/**
+	 * @param $e
+	 * @return bool
+	 */
+	public static function addException($e): bool
+	{
+		$b = new self();
+		return $b->add_exception($e);
+	}
+
     
     public function bug_add($errno, $errstr, $errfile, $errline) {
         if(!$this->config->bug_track) return false;
+
        $query  =  "SELECT b.`id`, b.`count` FROM __bug b
             WHERE 
                 code = $errno
@@ -13,6 +30,7 @@ class Bug extends Okay {
                     and type like '".self::error($errno)."'
                     and message like '$errstr'
             LIMIT 1";
+
          $this->db->query($query);
          $results = $this->db->results();
          $id = isset($results[0]->id) ? $results[0]->id : 0;
@@ -45,8 +63,12 @@ class Bug extends Okay {
         }
  
     }
-    public function add_exception($e) {
-         if(!$this->config->bug_track) return false;
+
+    public function add_exception($e): bool
+	{
+         if(!$this->config->bug_track) {
+			 return false;
+		 }
         
          $query  =  "SELECT b.`id`, b.`count` FROM __bug b
             WHERE 
@@ -55,10 +77,12 @@ class Bug extends Okay {
                     and type = '".self::error('EXCEPTION')."'
                     and message like '{$e->getMessage()}'
             LIMIT 1";
-                    $this->db->query($query);
+
+         $this->db->query($query);
          $results = $this->db->results();
          $id = isset($results[0]->id) ? $results[0]->id : 0;
          $count = isset($results[0]->count) ? $results[0]->count : 0;
+
         if($id){
             $bug = (object)[];
              $bug->count = ($count+1);
@@ -66,15 +90,15 @@ class Bug extends Okay {
              $bug->utime = date("Y-m-d H:i:s");
              $query = $this->db->placehold("UPDATE __bug SET ?% WHERE id=? LIMIT 1", $bug, intval($id));
                 $this->db->query($query);
-        }else{
-       $bug = (object)[];
-       $bug->utime = date("Y-m-d H:i:s");
+        } else {
+
+       		$bug = new \stdClass();
             $bug->class = get_class($e);
             $bug->message = $e->getMessage();
             $bug->code = $e->getCode();
-            $bug->file = (string)$e->getFile();
-            $bug->line = (int)$e->getLine();
-            $bug->trace = serialize($e->getTrace());
+            $bug->file = (string) $e->getFile();
+            $bug->line = (int) $e->getLine();
+            //$bug->trace = $e->getTrace();
             $bug->type = 'EXCEPTION';
             $bug->count = 1;
             $bug->get = serialize($_GET);
@@ -83,13 +107,19 @@ class Bug extends Okay {
             $bug->files = serialize($_FILES);
             $bug->server = serialize($_SERVER);
             $bug->request = serialize($_REQUEST);
+
            $this->db->query("INSERT INTO __bug SET ?%", $bug);
         }
-       
+
+		@file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=' . urlencode($e->getMessage())).'&parse_mode=HTML';
+
+        return true;
     }
     
     public function add_log(array $e) {
+
          if(!$this->config->bug_track) return false;
+
         $e = (object)$e;
          $bug = (object)[];
        $bug->utime = date("Y-m-d H:i:s");

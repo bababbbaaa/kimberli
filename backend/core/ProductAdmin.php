@@ -12,11 +12,12 @@ class ProductAdmin extends Okay {
                 
         /*Прием данных о товаре*/
         if($this->request->method('post') && !empty($_POST)) {
+
             $product = new stdClass;
             $product->id = $this->request->post('id', 'integer');
             $product->name = $this->request->post('name');
             $product->visible = $this->request->post('visible', 'integer');
-            $product->featured = $this->request->post('featured');
+            $product->featured = $this->request->post('featured', 'integer');
             $product->brand_id = $this->request->post('brand_id', 'integer');
             
             $product->url = trim($this->request->post('url', 'string'));
@@ -504,6 +505,8 @@ foreach ($this->categories->get_categories_xml() as $x){
         $categories = $this->categories->get_categories_tree();
         $this->design->assign('categories', $categories);
         $this->design->assign('currencies', $this->money->get_currencies());
+
+		$this->design->assign('certificates', ['GIA' => 'GIA', 'HRD' => 'HRD']);
         
         // Все свойства товара
         $category = reset($product_categories);

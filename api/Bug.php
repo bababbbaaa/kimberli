@@ -2,7 +2,17 @@
 
 require_once('Okay.php');
 
-class Bug extends Okay { 
+class Bug extends Okay {
+
+	/**
+	 * @param $e
+	 * @return bool
+	 */
+	public static function addException($e): bool
+	{
+		$b = new self();
+		return $b->add_exception($e);
+	}
     
     public function bug_add($errno, $errstr, $errfile, $errline) {
         if(!$this->config->bug_track) return false;
@@ -45,6 +55,7 @@ class Bug extends Okay {
         }
  
     }
+
     public function add_exception($e) {
          if(!$this->config->bug_track) return false;
         
@@ -85,8 +96,11 @@ class Bug extends Okay {
             $bug->request = serialize($_REQUEST);
            $this->db->query("INSERT INTO __bug SET ?%", $bug);
         }
-       
-    }
+
+		@file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=' . urlencode($e->getMessage())).'&parse_mode=HTML';
+
+
+	}
     
     public function add_log(array $e) {
          if(!$this->config->bug_track) return false;

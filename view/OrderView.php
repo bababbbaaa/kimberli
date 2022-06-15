@@ -31,11 +31,16 @@ class OrderView extends View {
         if(!$order) {
             return false;
         }
+
+        if ($this->request->get('error')) {
+			$this->design->assign('message_error', $this->request->get('error'));
+		}
         
         $purchases = $this->orders->get_purchases(array('order_id'=>intval($order->id)));
         if(!$purchases) {
             return false;
         }
+
         /*Выбор другого способа оплаты*/
         if($this->request->method('post')) {
             if($payment_method_id = $this->request->post('payment_method_id', 'integer')) {
@@ -84,8 +89,10 @@ class OrderView extends View {
                 $purchase->variant = $variants[$purchase->variant_id];
             }
         }
+
         $order->coupon = $this->coupons->get_coupon($order->coupon_code);
-        if($order->coupon && $order->coupon->valid && $order->total_price>=$order->coupon->min_order_price) {
+
+        if($order->coupon && $order->coupon->valid && $order->total_price >= $order->coupon->min_order_price) {
             if($order->coupon->type=='absolute') {
                 // Абсолютная скидка не более суммы заказа
                 $order->coupon->coupon_percent = round(100-($order->total_price*100)/($order->total_price+$order->coupon->value),2);

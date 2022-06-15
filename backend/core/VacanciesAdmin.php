@@ -12,7 +12,7 @@ class VacanciesAdmin extends Okay {
             $ids = array_keys($positions);
             sort($positions);
             foreach($positions as $i=>$position) {
-                $this->pages->update_vacancy($ids[$i], array('position'=>$position));
+                $this->vacancy->update_vacancy($ids[$i], array('position'=>$position));
             }
 
             // Действия с выбранными
@@ -21,19 +21,19 @@ class VacanciesAdmin extends Okay {
                 switch($this->request->post('action')) {
                     case 'disable': {
                         /*Выключить страницу*/
-                        $this->pages->update_page($ids, array('visible'=>0));
+                        $this->vacancy->update_vacancy($ids, array('visible'=>0));
                         break;
                     }
                     case 'enable': {
                         /*Включить страницу*/
-                        $this->pages->update_page($ids, array('visible'=>1));
+                        $this->vacancy->update_vacancy($ids, array('visible'=>1));
                         break;
                     }
                     case 'delete': {
                         /*Удалить страницу*/
                         foreach($ids as $id) {
-                            if (!$this->pages->delete_vacancy($id)) {
-                               // $this->design->assign('message_error', 'url_system');
+                            if (!$this->vacancy->delete_vacancy($id)) {
+                                $this->design->assign('message_error', 'url_system');
                             }
                         }
                         break;

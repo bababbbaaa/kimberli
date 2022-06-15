@@ -8,7 +8,6 @@ class Request extends Okay {
         parent::__construct();
         $_POST = $this->stripslashes_recursive($_POST);
         $_GET = $this->stripslashes_recursive($_GET);
-      // print_r($_GET);
     }
     
     /**
@@ -125,7 +124,6 @@ class Request extends Okay {
      * Рекурсивная чистка магических слешей
      */
     private function stripslashes_recursive($var) {
-        if(get_magic_quotes_gpc()) {
             $res = null;
             if(is_array($var)) {
                 foreach($var as $k=>$v) {
@@ -134,9 +132,7 @@ class Request extends Okay {
             } else {
                 $res = stripcslashes($var);
             }
-        } else {
-            $res = $var;
-        }
+
         return $res;
     }
     
@@ -159,14 +155,12 @@ class Request extends Okay {
     public function url($params = array()) {
         $url = @parse_url($_SERVER["REQUEST_URI"]);
         parse_str($url['query'], $query);
-        
-        if(get_magic_quotes_gpc()) {
+
             foreach($query as &$v) {
                 if(!is_array($v)) {
                     $v = stripslashes(urldecode($v));
                 }
             }
-        }
         
         foreach($params as $name=>$value) {
             $query[$name] = $value;

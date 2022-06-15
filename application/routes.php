@@ -12,4 +12,6 @@ include_once 'routes/rest.php';
 
 include_once 'routes/order.php';
 
+include_once 'routes/cart.php';
+
 include_once 'routes/bitrix.php';

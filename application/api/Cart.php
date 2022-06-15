@@ -4,8 +4,15 @@ namespace rest\api;
 
 class Cart extends Okay {
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+
     /*Выбираем содержимое корзины*/
     public function get_cart() {
+
         $cart = new \stdClass();
         $cart->purchases = array();
         $cart->total_price = 0;

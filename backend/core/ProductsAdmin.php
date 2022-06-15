@@ -360,8 +360,10 @@ class ProductsAdmin extends Okay {
                 }
             }
             }
+
+            $filterVariant = array_merge(['product_id'=>$products_ids], $filter);
             
-            $variants = $this->variants->get_variants(array('product_id'=>$products_ids));
+            $variants = $this->variants->get_variants($filterVariant);
             
             foreach($variants as $variant) {
                 $products[$variant->product_id]->variants[] = $variant;

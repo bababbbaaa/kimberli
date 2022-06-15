@@ -20,110 +20,6 @@ class CartView extends View {
                 header('location: '.$this->config->root_url.'/'.$this->lang_link.'cart/');
             }
         }
-        /*Оформление заказа*/
-     /*   if(isset($_POST['checkout'])) {
-            $order = new stdClass;
-            $order->payment_method_id = $this->request->post('payment_method_id', 'integer');
-            $order->delivery_id = $this->request->post('delivery_id', 'integer');
-            $order->name        = $this->request->post('name');
-            $order->email       = $this->request->post('email');
-            $order->address     = $this->request->post('address');
-            $order->phone       = $this->request->post('phone');
-            $order->comment     = $this->request->post('comment');
-            $order->ip          = $_SERVER['REMOTE_ADDR'];
-            $order->utm			= '';
-
-            $this->design->assign('delivery_id', $order->delivery_id);
-            $this->design->assign('name', $order->name);
-            $this->design->assign('email', $order->email);
-            $this->design->assign('phone', $order->phone);
-            $this->design->assign('address', $order->address);
-
-            $captcha_code =  $this->request->post('captcha_code', 'string');
-
-            // Скидка
-            $cart = $this->cart->get_cart();
-            $order->discount = $cart->discount;
-
-            if($cart->coupon) {
-                $order->coupon_discount = $cart->coupon_discount;
-                $order->coupon_code = $cart->coupon->code;
-            }
-
-            if(!empty($this->user->id)) {
-                $order->user_id = $this->user->id;
-            }
-
-            /*Валидация данных клиента*/
-       /*     if(!$this->validate->is_name($order->name, true)) {
-                $this->design->assign('error', 'empty_name');
-            } elseif(!$this->validate->is_email($order->email, true)) {
-                $this->design->assign('error', 'empty_email');
-            } elseif(!$this->validate->is_phone($order->phone)) {
-                $this->design->assign('error', 'empty_phone');
-            } elseif(!$this->validate->is_address($order->address)) {
-                $this->design->assign('error', 'empty_address');
-            } elseif(!$this->validate->is_comment($order->comment)) {
-                $this->design->assign('error', 'empty_comment');
-            } elseif($this->settings->captcha_cart && !$this->validate->verify_captcha('captcha_cart', $captcha_code)) {
-                $this->design->assign('error', 'captcha');
-            } else {
-                // Добавляем заказ в базу
-                $order->lang_id = $this->languages->lang_id();
-
-                // Добавляем метку к заказу
-
-				if (isset($_COOKIE["Source"])) {
-					$order->utm .= $_COOKIE["Source"];
-				}
-
-				if (isset($_COOKIE["Campaign"])) {
-					$order->utm .= ':' .$_COOKIE["Campaign"];
-				}
-
-                $order_id = $this->orders->add_order($order);
-                $_SESSION['order_id'] = $order_id;
-
-                if (!empty($order->utm)) {
-					$this->orderlabels->add_order_labels($order_id, [4]);
-				}
-
-                // Если использовали купон, увеличим количество его использований
-                if($cart->coupon) {
-                    $this->coupons->update_coupon($cart->coupon->id, array('usages'=>$cart->coupon->usages+1));
-                }
-
-                // Добавляем товары к заказу
-                foreach($this->request->post('amounts') as $variant_id=>$amount) {
-                    $this->orders->add_purchase(array('order_id'=>$order_id, 'variant_id'=>intval($variant_id), 'amount'=>intval($amount)));
-                }
-
-                $order = $this->orders->get_order($order_id);
-
-                // Стоимость доставки
-                $delivery = $this->delivery->get_delivery($order->delivery_id);
-                if(!empty($delivery) && $delivery->free_from > $order->total_price) {
-                    $this->orders->update_order($order->id, array('delivery_price'=>$delivery->price, 'separate_delivery'=>$delivery->separate_payment));
-                } elseif ($delivery->separate_payment) {
-                    $this->orders->update_order($order->id, array('separate_delivery'=>$delivery->separate_payment));
-                }
-                
-                // Создаем лид в битрикс
-                $this->lead->add_lead_bitrix($order_id, $quick = '');
-
-                // Отправляем письмо пользователю
-                $this->notify->email_order_user($order->id);
-
-                // Отправляем письмо администратору
-                $this->notify->email_order_admin($order->id);
-
-                // Очищаем корзину (сессию)
-                $this->cart->empty_cart();
-                  
-                // Перенаправляем на страницу заказа
-                header('location: '.$this->config->root_url.'/'.$this->lang_link.'order/'.$order->url);
-            }
-        } else {*/
             // Если нам запостили amounts, обновляем их
             if($amounts = $this->request->post('amounts')) {
                 foreach($amounts as $variant_id=>$amount) {
@@ -145,7 +41,6 @@ class CartView extends View {
                     }
                 }
             }
-      // }
     }
 
     /*Отображение заказа*/
@@ -179,52 +74,9 @@ class CartView extends View {
         if($this->coupons->count_coupons(array('valid'=>1))>0) {
             $this->design->assign('coupon_request', true);
         }
-        
+
         // Выводим корзину
         return $this->design->fetch('cart.tpl');
     }
-    
-     /*Скачивание цифрового товара*/
-  /*  private function add_lead_bitrix($id) {
-        
-        if(!empty($id) && $order = $this->orders->get_order((int)$id)) {
-            
-            // Способ оплаты
-            $payment_method = $this->payment->get_payment_method($order->payment_method_id);
-            
-            if(!empty($payment_method)) {
-                // Валюта оплаты
-                $currency = $this->money->get_currency(intval($payment_method->currency_id))->code;
-            }
-            try {
-                $param = [
-                    "TITLE" => "NEW ORDER#".$order->id ,
-                    "NAME" => $order->name,
-                    "SOURCE_ID" => "STORE",
-                    "STATUS_ID" => "NEW",
-                    "STATUS_DESCRIPTION" => "Создан новій заказ на сайте",
-                    "ADDRESS" => $order->address,
-                    "CURRENCY_ID" => !empty($currency) ? $currency : 'UAH',
-                    "OPPORTUNITY" => $order->total_price,
-                    "COMMENTS" => $order->comment,
-                    "PHONE" => $order->phone,
-                    "EMAIL" => $order->email,
-                    //"CONTACT_ID" => $order->user_id,
-                    "WEB" => "kimberli.ua",
-                    "UF_CRM_1591106755997" => 168
-                ];
-                
-                $lead = file_get_contents("https://leads.devrise.com.ua/lead_add.php?token=adc76c792dde5305f95adf91d17d9a&".http_build_query($param));
-                if($lead) {
-                switch ($lead->code) {
-                    case '200':  $this->orders->update_order($order->id, ['lead_id'=>(int)substr($lead->description, 11, -1)]);  break;
-                    default: break;
-                }
-            }
-            } catch (Exception $e) {
-                $this->bug->add_exception($e);
-            } 
-        }
-    }*/
     
 }

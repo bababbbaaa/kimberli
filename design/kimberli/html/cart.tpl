@@ -93,7 +93,6 @@
                             {/if}
                         {/if}
                         {include file='popap/sms.tpl'}
-                        {include file='popap/sms.tpl'}
                         <input type="hidden" name="checkout" value="1">
                         <input type="hidden" name="currency" value="{$currency->code}">
                     </div>
@@ -103,7 +102,7 @@
                             {include file='cart_purchases.tpl'}
                         </div>
                         {* Submit button *}
-                        <button type="submit" class="order_submit desk btn_cart g-recaptcha" name="submit1" data-method="create" data-language="cart_checkout" {if $settings->captcha_type == "invisible"}data-sitekey="{$settings->public_recaptcha_invisible}" data-badge='bottomleft' data-callback="onSubmit"{/if}>{$lang->cart_checkout}</button>
+                        <input type="submit" class="order_submit desk btn_cart" name="submit1" data-method="create" data-language="cart_checkout"  value="{$lang->cart_checkout}"/>
                     </div>
                 </div>
             </form>

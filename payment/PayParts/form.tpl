@@ -3,7 +3,7 @@
             <input type="hidden" value="{$merchantType}" name="merchantType">
             <input type="hidden" value="{$order->payment_method_id}" name="payment_method_id">
             <input type="hidden" value="{$order->id}" name="orderId">
-                {foreach $purchases as $product}
+  {foreach $purchases as $product}
     <input type="hidden" value="{$product->product->name}" name="products[{$product->product->id}][name]">
     <input type="hidden" value="{$product->amount}" name="products[{$product->product->id}][count]">
     <input type="hidden" value="{$product->variant->price}" name="products[{$product->product->id}][price]">

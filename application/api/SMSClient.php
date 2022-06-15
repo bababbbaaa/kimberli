@@ -399,8 +399,8 @@ class SMSClient extends Pest {
 	 * @return
 	 * @throws SMSError_Exception
 	 */
-	public function send($destinationAddress, $data, $sendDate=null, $validity=0 ) {
-		$result = SMSClient::send_St( $this->m_sessionID, $this->sourceAddres, $destinationAddress, $data, $sendDate, $validity );
+	public function send($destinationAddress, $data, $sendDate = null, $validity=0 ) {
+		$result = SMSClient::send_St($this->m_sessionID, $this->sourceAddres, $destinationAddress, $data, $sendDate, $validity );
 
 		return (int) $result[0];
 	}

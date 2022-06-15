@@ -47,7 +47,7 @@ class Variants extends Okay {
         
         if(!empty($filter['in_stock']) && $filter['in_stock']) {
            // $instock_filter = $this->db->placehold(' AND v.stock > 0');
-			$instock_filter = " AND v.stock>0 ";
+			$instock_filter = " AND v.stock > 0 ";
         } else if (!empty($filter['no_stock'])) {
 			$instock_filter = " AND (v.stock = 0 or v.stock is NULL) ";
 		}
@@ -66,6 +66,8 @@ class Variants extends Okay {
                 v.sku,
        			v.new_sku,    
        			v.url,
+       			v.size,
+       			v.certificate,
        			v.sku2 as shtr,
                 IFNULL(v.stock, ?) as stock, 
                 (v.stock IS NULL) as infinity, 
@@ -91,6 +93,7 @@ class Variants extends Okay {
        //echo $query;
         $this->db->query($query);
         $variants = $this->db->results();
+
         if (defined('IS_CLIENT') && !empty($variants)) {
             foreach($variants as $row) {
                 if ($row->rate_from != $row->rate_to && $row->currency_id) {
@@ -99,6 +102,7 @@ class Variants extends Okay {
                 }
             }
         }
+
         return $variants;
     }
 
@@ -115,6 +119,8 @@ class Variants extends Okay {
                 v.product_id,
                 v.weight,
                 v.price, 
+       			v.size,
+       			v.certificate,
                 NULLIF(v.compare_price, 0) as compare_price, 
                 v.sku,
        			v.new_sku,

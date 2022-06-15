@@ -103,8 +103,11 @@ class Vacancy extends Okay {
         $result = $this->languages->get_description($vacancy, 'vacancy');
 
 		$vacancyAll =  new stdClass;
-		$vacancyAll->visible = $vacancy->visible;
-		$vacancyAll->date_vacancy = $vacancy->date_vacancy;
+		$vacancyAll->visible = (int) $vacancy->visible;
+
+		if (null !== $vacancy->date_vacancy) {
+			$vacancyAll->date_vacancy = $vacancy->date_vacancy;
+		}
 
         $query = $this->db->placehold('UPDATE __vacancy SET ?% WHERE id in (?@)', $vacancyAll, (array)$id);
         if(!$this->db->query($query)) {
@@ -123,11 +126,11 @@ class Vacancy extends Okay {
     public function delete_vacancy($id) {
         if(!empty($id)) {
             // Запретим удаление системных ссылок
-            $vacancy = $this->get_page(intval($id));
+            $vacancy = $this->get_vacancy(intval($id));
 
             $query = $this->db->placehold("DELETE FROM __vacancy WHERE id=? LIMIT 1", intval($id));
             if($this->db->query($query)) {
-                $this->db->query("DELETE FROM __lang_vacancy WHERE page_id=?", intval($id));
+                $this->db->query("DELETE FROM __lang_vacancy WHERE 	vacancy_id=?", intval($id));
                 return true;
             }
         }

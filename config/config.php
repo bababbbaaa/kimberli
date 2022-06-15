@@ -49,7 +49,7 @@ smarty_debugging = false
 smarty_html_minify = true
 smarty_security = true
 debug_translation = false
-bug_track = false
+bug_track = true
 
 [images]
 ;Указываем какую библиотеку использовать для нарезки изображений. Варианты: gregwar_image, imagick или gd

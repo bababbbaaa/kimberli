@@ -5,7 +5,8 @@ require_once('Okay.php');
 class Languages extends Okay {
 
     /*Создание списка мультиязычных таблиц в БД*/
-    public $tables = array('product'  => 'products',
+    public $tables = array(
+    	'product'  => 'products',
         'variant'  => 'variants',
         'brand'    => 'brands',
         'category' => 'categories',

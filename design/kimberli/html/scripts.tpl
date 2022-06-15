@@ -118,19 +118,7 @@
         });
     }
 
-    if($(".coupon_form").size()>0) {
-        $(".coupon_form").validate({
-            rules: {
-                phone: {
-                    required: true,
 
-                }
-            },
-            messages: {
-                phone: form_enter_phone,
-            }
-        });
-    }
 
     if($(".fn_validate_subscribe").size()>0) {
         $(".fn_validate_subscribe").validate({

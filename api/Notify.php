@@ -5,7 +5,14 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Notify extends Okay {
 
     /* SMTP отправка емейла*/
-    public function SMTP($to, $subject, $message) {
+	/**
+	 * @param $to
+	 * @param $subject
+	 * @param $message
+	 * @param array $file
+	 * @throws \PHPMailer\PHPMailer\Exception
+	 */
+    public function SMTP($to, $subject, $message, $file = []) {
         $mail = new PHPMailer();
         $mail->IsSMTP(); // telling the class to use SMTP
         $mail->Host       = $this->settings->smtp_server;
@@ -36,13 +43,22 @@ class Notify extends Okay {
             $mail->AddAddress($to);
         }
 
+		// Прикрипление файлов к письму
+		if (!empty($file)) {
+				$uploadfile = tempnam(sys_get_temp_dir(), sha1($file['name']));
+				$filename = $file['name'];
+				if (move_uploaded_file($file['tmp_name'], $uploadfile)) {
+					$mail->addAttachment($uploadfile, $filename);
+				}
+		}
+
         if (!$mail->Send()) {
             //file_put_contents('error_log.txt',$mail->ErrorInfo);
         }
     }
 
     /*Отправка емейла*/
-    public function email($to, $subject, $message, $from = '', $reply_to = '') {
+    public function email($to, $subject, $message, $from = '', $reply_to = '', $file = []) {
         $headers = "MIME-Version: 1.0\n" ;
         $headers .= "Content-type: text/html; charset=utf-8; \r\n";
         $headers .= "From: $from\r\n";
@@ -53,7 +69,7 @@ class Notify extends Okay {
         $subject = "=?utf-8?B?".base64_encode($subject)."?=";
 
         if ($this->settings->use_smtp) {
-            $this->SMTP($to, $subject, $message);
+            $this->SMTP($to, $subject, $message, $file);
         } else {
             mail($to, $subject, $message, $headers);
         }

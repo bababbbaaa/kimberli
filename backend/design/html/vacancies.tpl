@@ -80,7 +80,7 @@
                                         <div class="okay_list_boding okay_list_status">
                                             {*visible*}
                                             <label class="switch switch-default ">
-                                                <input class="switch-input fn_ajax_action {if $vacancy->visible}fn_active_class{/if}" data-module="page" data-action="visible" data-id="{$page->id}" name="visible" value="1" type="checkbox"  {if $vacancy->visible}checked=""{/if}/>
+                                                <input class="switch-input fn_ajax_action {if $vacancy->visible}fn_active_class{/if}" data-module="vacancy" data-action="visible" data-id="{$vacancy->id}" name="visible" value="1" type="checkbox"  {if $vacancy->visible}checked=""{/if}/>
                                                 <span class="switch-label"></span>
                                                 <span class="switch-handle"></span>
                                             </label>

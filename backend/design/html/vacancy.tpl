@@ -15,6 +15,14 @@
                     {$vacancy->name|escape}
                 {/if}
             </div>
+            {if $vacancy->id}
+                <div class="box_btn_heading">
+                    <a class="btn btn_small btn-info add" target="_blank" href="../{$lang_link}vacancy/">
+                        {include file='svg_icon.tpl' svgId='icon_desktop'}
+                        <span>{$btr->general_open|escape}</span>
+                    </a>
+                </div>
+            {/if}
         </div>
     </div>
     <div class="col-md-12 col-lg-12 col-sm-12 float-xs-right"></div>

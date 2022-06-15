@@ -35,8 +35,13 @@ class ProductView extends View {
         }
         
         $variants = array();
+        $variantsData = $this->variants->get_variants(array('sku'=>$product->new_sku, 'in_stock' => 1));
 
-        foreach($this->variants->get_variants(array('sku'=>$product->new_sku, 'in_stock' => 1)) as $v) {
+        if (empty($variantsData)) {
+			$variantsData = $this->variants->get_variants(array('sku'=>$product->new_sku, 'in_stock' => 0));
+		}
+
+        foreach($variantsData as $v) {
             $variants[$v->sku] = $v;
         }
        // l($variants);
@@ -44,7 +49,7 @@ class ProductView extends View {
         $product->variants = $variants;
         
         // Вариант по умолчанию
-        if(($v_id = $this->request->get('variant', 'integer'))>0 && isset($variants[$v_id])) {
+        if(($v_id = $this->request->get('variant', 'integer')) > 0 && isset($variants[$v_id])) {
             $product->variant = $variants[$v_id];
         } elseif (in_array($productShtr, array_keys($variants))) {
 			$product->variant = $variants[$productShtr];
@@ -56,11 +61,40 @@ class ProductView extends View {
 
         if ($product_values = $this->features_values->get_features_values(array('product_id'=>$product->id))) {
             foreach ($product_values as $pv) {
+				if ($pv->id == 356 && $product->variant->size > 0) {
+					$pv->value = $product->variant->size;
+				}
+
                 if (!isset($product->features[$pv->feature_id])) {
                     $product->features[$pv->feature_id] = $pv;
                 }
+
                 $product->features[$pv->feature_id]->values[] = $pv;
             }
+
+            if (!isset($product->features[74]) && $product->variant->size > 0) {
+				$product->features[74] = (object) [
+					'id' => 356,
+            'feature_id' => 74,
+            'position' => 347,
+            'count' => 1,
+            'auto_name_id' => '',
+            'auto_value_id' => '',
+            'url' => 'size',
+			'in_filter' => 1,
+            'yandex' => 1,
+            'url_in_product' => 1,
+            'to_index' => 0,
+            'value' => $product->variant->size,
+            'translit' => '',
+			'name' => 'Розмір',
+			'values' => []
+					];
+				$product->features[74]->values[] = $product->features[74];
+			}
+           // echo '<pre>';
+         //print_r($product->features);
+			//echo '</pre>';
         }
         
         // Автозаполнение имени для формы комментария
@@ -310,6 +344,15 @@ class ProductView extends View {
         $this->design->assign('meta_title', $auto_meta_title);
         $this->design->assign('meta_keywords', $auto_meta_keywords);
         $this->design->assign('meta_description', $auto_meta_description);
+
+		$url = $_SERVER['REQUEST_URI'];
+		$url = explode('?', $url);
+		$url = $url[0];
+
+		try {
+			\rest\providers\facebook::send(['event' => 'ViewContent', 'product' => $product, 'category' => $category, 'currency' => 'UAH', 'url' => $url]);
+		} catch (\Exception $e) {}
+
         
         return $this->design->fetch('product.tpl');
     }

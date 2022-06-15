@@ -20,7 +20,7 @@
             <tr>
                 {* Product image *}
                 <td class="purchase_image">
-                    <a href="{$lang_link}products/{$purchase->variant->url}">
+                    <a href="products/{$purchase->variant->url}">
                         {if $purchase->product->image}
                             <img src="{$purchase->product->image->filename|resize:90:90}" alt="{$purchase->product->name|escape}" title="{$purchase->product->name|escape}">
                         {else}
@@ -34,11 +34,11 @@
                     <a class="purchase_name" href="{$lang_link}products/{$purchase->variant->url}">{$purchase->product->name|escape}</a>
                     {if $purchase->variant->stock > 0}
                         {* Price per unit *}
-                        <div class="purchase_name_price hidden-sm-down">{($purchase->variant->price)|convert} {$currency->sign} {if $purchase->variant->units}/ {$purchase->variant->units|escape}{/if}</div>
+                        <div class="purchase_name_price hidden-sm-down">{($purchase->variant->price)} {$currency->sign} {if $purchase->variant->units}/ {$purchase->variant->units|escape}{/if}</div>
 
                         {* Extended price *}
                         <div class="purchase_sum hidden-md-up">
-                            <span class="nowrap">{($purchase->variant->price*$purchase->amount)|convert} {$currency->sign}</span>
+                            <span class="nowrap">{($purchase->variant->price*$purchase->amount)} {$currency->sign}</span>
                         </div>
                     {/if}
                 </td>
@@ -53,7 +53,7 @@
                 {* Extended price *}
                 <td class="purchase_sum hidden-sm-down">
                     {if $purchase->variant->stock > 0}
-                        <span class="nowrap">{($purchase->variant->price*$purchase->amount)|convert} {$currency->sign}</span>
+                        <span class="nowrap">{($purchase->variant->price*$purchase->amount)} {$currency->sign}</span>
                     {else}
                         <div class="preorder_label">{$lang->product_pre_order}</div>
                     {/if}
@@ -82,10 +82,13 @@
     </div>
 {/if}
 <div class="row product_buttons1">
-    <div class="col-sm-12 {if $cart->total_products > 0} col-md-6 {else} col-md-12 {/if} text-center">
-        <button data-fancybox-close="" class="btn btn_white btn-block btn_cart px-2 py-1" title="Close">{$lang->close_cart_popap}</button>
+    <div class="col-sm-12 {if $cart->total_products > 0} col-md-4 {else} col-md-12 {/if} text-center">
+        <button class="btn btn_white btn-block btn_cart px-2 py-1 " data-fancybox-close=""  data-language="close_cart_popap" title="Close">{$lang->close_cart_popap}</button>
     </div>
-    <div class="col-sm-12 col-md-6 text-center">
+    <div class="col-sm-12 {if $cart->total_products > 0} col-md-4 {else} col-md-12 {/if} text-center">
+        <button class="btn btn_white btn-block btn_cart px-2 py-1 " onclick="continue_shopping('fn_cart')" data-language="close_cart_popap" title="Close">Замовити примірку</button>
+    </div>
+    <div class="col-sm-12 col-md-4 text-center">
         {if $cart->total_products > 0}
             <a href="{$lang_link}cart" class="btn btn_white btn-block btn_cart px-2 py-1" data-language="index_cart" style="" title="{$lang->go_to_cart}">
                 {$lang->go_to_cart}

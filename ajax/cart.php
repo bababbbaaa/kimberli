@@ -20,6 +20,7 @@
     } else {
         $currency = reset($currencies);
     }
+
     $okay->design->assign('currency',	$currency);
 
     /*Определяем язык*/

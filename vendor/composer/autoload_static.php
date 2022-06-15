@@ -6,6 +6,13 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
 {
+    public static $files = array (
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'r' => 
         array (
@@ -21,6 +28,9 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
         ),
         'P' => 
         array (
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
+            'PayParts\\' => 9,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'K' => 
@@ -30,6 +40,16 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
         'I' => 
         array (
             'Inok\\Dbf\\' => 9,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
+        ),
+        'F' => 
+        array (
+            'FacebookAds\\' => 12,
         ),
     );
 
@@ -46,6 +66,19 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
         array (
             0 => __DIR__ . '/..' . '/hisamu/php-xbase/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'PayParts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/privatbank/payparts/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -58,9 +91,32 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
         array (
             0 => __DIR__ . '/..' . '/inok/dbf/src',
         ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FacebookAds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/php-business-sdk/src/FacebookAds',
+        ),
     );
 
     public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PayParts' => 
+            array (
+                0 => __DIR__ . '/..' . '/privatbank/payparts/src',
+            ),
+        ),
         'G' => 
         array (
             'Gregwar\\Image' => 
@@ -81,8 +137,13 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
         ),
     );
 
+    public static $fallbackDirsPsr0 = array (
+        0 => __DIR__ . '/..' . '/privatbank/payparts/src',
+    );
+
     public static $classMap = array (
         'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
+        'PayParts\\PayParts' => __DIR__ . '/..' . '/privatbank/payparts/src/PayParts/PayParts.php',
         'Smarty' => __DIR__ . '/..' . '/smarty/smarty/libs/Smarty.class.php',
         'SmartyBC' => __DIR__ . '/..' . '/smarty/smarty/libs/SmartyBC.class.php',
         'SmartyCompilerException' => __DIR__ . '/..' . '/smarty/smarty/libs/sysplugins/smartycompilerexception.php',
@@ -264,6 +325,7 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
             $loader->prefixLengthsPsr4 = ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0::$fallbackDirsPsr0;
             $loader->classMap = ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0::$classMap;
 
         }, null, ClassLoader::class);

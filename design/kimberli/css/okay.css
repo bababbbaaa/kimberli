@@ -5320,7 +5320,7 @@ body #bingc-active {
     justify-content: center;
 }
 .coupon-popup .coupon_form  .form_group input {
-    max-width: 320px;
+   /* max-width: 320px;*/
 }
 
 .coupon-popup .coupon_form  .form_group .btn_black {
@@ -5339,8 +5339,7 @@ body #bingc-active {
 
 .coupon-popup .coupon_form .form_group label.error {
     position: absolute;
-    margin-top: 15px;
-    margin-right: -30px;
+    margin-top: 50px;
 }
 
 
@@ -6994,7 +6993,7 @@ body #bingc-active {
 .vacancy_descr{
     margin-bottom: 30px;
 }
-.vacancy_descr p{
+.vacancy_descr p, .vacancy_info p {
     font-size: 18px;
     line-height: 28px;
 }
@@ -7133,3 +7132,24 @@ body #bingc-active {
     background-repeat: no-repeat;
 }
 .contacts_socials .phone:before {}
+.atelier-request_form_result {
+    text-align: center;
+    color: green;
+    font-size: 20px;
+}
+
+.shopping_popup label{
+
+}
+
+.shopping_popup label input{
+    margin-right: 5px;
+    width: 20px;
+}
+.shopping_popup label span{
+    position: relative;
+    top: -18px;
+}
+/*-------------------*/
+
+

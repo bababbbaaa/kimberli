@@ -1,6 +1,8 @@
 <?php
+
 require_once('api/Okay.php');
-class PayParts extends Okay{
+
+class PayParts extends Okay {
     
     private $prefix = 'ORDER';
     private $orderID;              //Уникальный номер платежа
@@ -129,12 +131,14 @@ class PayParts extends Okay{
                 throw new InvalidArgumentException($variable . ' is necessary');
             }
         }
+
         if ($flag === count($this->options)) {
             $this->options['SUCCESS'] = true;
         } else {
             $this->options['SUCCESS'] = false;
         }
     }
+
     public function pp($PartsCount = 4, $order = false, $products){
         $this->setPartsCount($PartsCount);
         $form = '<form action="" method="POST" xmlns="http://www.w3.org/1999/html"  name="myForm" >
@@ -223,17 +227,18 @@ function pay() {
 ';
         return $form;
     }
-    
-/**
-     * PayParts Create.
-     * Создание платежа
-     *
-     * @param string $method
-     * <a href="https://bw.gitbooks.io/api-oc/content/pay.html">'hold'</a> - Создание платежа без списания<br>
-     * <a href="https://bw.gitbooks.io/api-oc/content/hold.html">'pay'</a> - Создание платежа со списанием
-     * @return mixed|string
-     * @throws \InvalidArgumentException
-     */
+
+	/**
+	 * PayParts Create.
+	 * Создание платежа
+	 *
+	 * @param string $method
+	 * <a href="https://bw.gitbooks.io/api-oc/content/pay.html">'hold'</a> - Создание платежа без списания<br>
+	 * <a href="https://bw.gitbooks.io/api-oc/content/hold.html">'pay'</a> - Создание платежа со списанием
+	 * @return mixed|string
+	 * @throws \InvalidArgumentException
+	 * @throws Exception
+	 */
     public function create($method = 'pay')
     {
         if ($this->options['SUCCESS']) {
@@ -282,27 +287,43 @@ function pay() {
 
             $this->LOG['CreateData'] = json_encode($param);
 
-            $CreateResult = json_decode($this->sendPost($param, $Url), true);
-             $this->LOG['CreateResult'] = json_encode($CreateResult);
-            if($CreateResult['state'] == 'SUCCESS'){
-            
-            $checkSignature = [
-                $this->password,
-                $CreateResult['state'],
-                $CreateResult['storeId'],
-                $CreateResult['orderId'],
-                $CreateResult['token'],
-                $this->password
-            ];
+			try {
+				$curl = $this->sendPost($param, $Url);
+			} catch (\Exception $e) {
+				throw $e;
+			}
 
-            if ($this->calcSignature($checkSignature) === $CreateResult['signature']) {
-                return $CreateResult;
-            }else{
-                return $CreateResult;
-            }  
-            } else {
-                return $CreateResult['message'];
-            }
+            $CreateResult = json_decode($curl, true);
+
+			$this->LOG['CreateResult'] = json_encode($CreateResult);
+
+				if ($CreateResult['state'] == 'SUCCESS') {
+
+				$checkSignature = [
+					$this->password,
+					$CreateResult['state'],
+					$CreateResult['storeId'],
+					$CreateResult['orderId'],
+					$CreateResult['token'],
+					$this->password
+				];
+
+					if ($this->calcSignature($checkSignature) === $CreateResult['signature']) {
+						return $CreateResult;
+					} else {
+					   throw new RuntimeException('Error signature');
+					}
+
+				} else {
+					$message = 'Error state';
+					if (isset($CreateResult['message'])) {
+						$message = $CreateResult['message'];
+					} else if (isset($CreateResult['errorMessage'])) {
+						$message = $CreateResult['errorMessage'];
+					}
+
+					throw new RuntimeException($message);
+				}
 
         } else {
             throw new InvalidArgumentException('No options');
@@ -471,12 +492,21 @@ function pay() {
             'Content-Type: application/json',
             'Accept: application/json; charset=utf-8'
         ]);
+
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($param));
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 
-        return curl_exec($ch);
+		$result = curl_exec($ch);
+		$error = curl_error($ch);
+		curl_close($ch);
+
+		if ($error) {
+			throw new RuntimeException('Curl Error');
+		}
+
+		return $result;
     }
 
     
