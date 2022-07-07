@@ -269,9 +269,20 @@
 </script>
     <script type="text/javascript">
         (function(d, w, s) {
-            var widgetHash = 'e72w5gm6r7zne5p6v1y4', gcw = d.createElement(s); gcw.type = 'text/javascript'; gcw.async = true;
+            var widgetHash = 'e72w5gm6r7zne5p6v1y4', gcw = d.createElement(s);
+            gcw.type = 'text/javascript';
+            gcw.async = true;
             gcw.src = '//widgets.binotel.com/getcall/widgets/'+ widgetHash +'.js';
             var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(gcw, sn);
+        })(document, window, 'script');
+    </script>
+    <script type="text/javascript">
+        (function(d, w, s) {
+            var widgetHash = '2e1p9jiyu3cja1wwrlf6', ctw = d.createElement(s);
+            ctw.type = 'text/javascript';
+            ctw.async = true;
+            ctw.src = '//widgets.binotel.com/calltracking/widgets/'+ widgetHash +'.js';
+        var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(ctw, sn);
         })(document, window, 'script');
     </script>
 {/literal}

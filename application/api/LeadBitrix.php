@@ -69,7 +69,7 @@ class LeadBitrix extends Okay {
 				}
 
 				if (empty($lead['result'])) {
-					l($lead);
+					//l($lead);
 				}
 
             } catch (Throwable $e) {

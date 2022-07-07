@@ -48,8 +48,10 @@
         {* User's phone *}
         <div class="form_group" style="max-width: 310px;display: inline-block; padding: 0 15px; float: left;">
             <div class="heading_label">{$lang->form_phone}</div>
-            <input class="form_input" type="text" id="phone" name="phone" placeholder="{$lang->form_phone}"  minlength="10" maxlength="13" onkeyup="this.value = this.value.replace (/[^\d,]/g, '')"   required data-language="form_phone" ><br>
-            <small>Format: 093XXXXXXX</small>
+            <input class="form_input" type="text" id="phone" name="phone" placeholder="{$lang->form_phone}"  required
+                   data-rule-required="true"
+                   data-rule-minlength="10"
+                   data-language="form_phone" >
         </div>
         
         {* Captcha *}

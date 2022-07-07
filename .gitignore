@@ -12,3 +12,4 @@ vendor.tgz
 composer.phar
 .idea/*
 .idea
+vendor/*

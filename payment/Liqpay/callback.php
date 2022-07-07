@@ -5,6 +5,14 @@ chdir ('../../');
 require_once('api/Okay.php');
 $okay = new Okay();
 
+$data = file_get_contents('php://input');
+
+$file = dirname(__FILE__).'/callback.log';
+$myFile = fopen($file, 'a') or die('Unable to open file!');
+$date = date("Y-m-d H:i:s");
+fwrite($myFile, "\n$date-" . $data);
+fclose($myFile);
+
 // Выбираем из xml нужные данные
 $public_key		 	= $okay->request->post('public_key');
 $amount				= $okay->request->post('amount');

@@ -358,7 +358,7 @@ function parseAjaxError(e, formId)
     }
 }
 
-/*
+
 setTimeout(function(){
     let str = $(location).attr('pathname');
 
@@ -386,7 +386,7 @@ setTimeout(function(){
         } );
     }
 }, 3000);
-*/
+
 
 $(document).on('submit', '.coupon_form', function(e) {
     e.preventDefault();

@@ -82,7 +82,7 @@ class Products extends Okay {
         }
         
         if(isset($filter['discounted'])) {
-            $is_featured_filter = $this->db->placehold('AND p.outlet=?', intval($filter['discounted']));
+            $is_featured_filter = " AND p.outlet={$filter['discounted']}"; //$this->db->placehold('AND p.outlet=?', intval($filter['discounted']));
         }
 
         if (!empty($filter['other_filter'])) {
