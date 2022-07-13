@@ -366,12 +366,15 @@ setTimeout(function(){
     if ((str.includes('products') || str.includes('catalog'))) {
 
         $.ajax( {
-            url: "rest/check_session/?key=coupon",
+            url: "rest/check_session?key=coupon",
             method: 'GET',
             success: function(data) {
                 console.log(data);
                 if (data.data.status == false) {
                     writeSession('coupon'); // 12 чвсов
+
+                    $('#coupon_form').show();
+                    $('#coupon_sms_verification').hide();
 
                     $.fancybox.open({
                         src: '#coupon-popup',
@@ -440,13 +443,62 @@ $(document).on('submit', '.coupon_form', function(e) {
                     });
 
         } else {
-            sendSms(phone, 'coupon_sms_verification');
+
+            /* ajax запрос */
+            $.ajax({
+                url: "rest/order/sms/send",
+                method: 'GET',
+                data: {phone: phone},
+                dataType: 'json',
+                success: function(data) {
+                    writeCookie('sms_code', data.data.code, 60);
+                },
+                error: function(e) {
+                    console.log(e);
+                    return false;
+                }
+            }).done(function (data) {
+                let id = data.data.id;
+
+                checkSmsStatusCoupon(id, 1);
+
+            });
+
+           // sendSms(phone, 'coupon_sms_verification');
         }
 
     }
 
     return false;
 });
+
+function checkSmsStatusCoupon(smsId, limit = 1)
+{
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/order/sms/status",
+        method: 'GET',
+        data: {id: smsId},
+        dataType: 'json',
+        success: function(data) {
+            if (!data.data.status && limit < 5) {
+                checkSmsStatusCoupon(smsId, limit++);
+            } else {
+                $('#coupon_form').hide();
+                $('#coupon_sms_verification').show();
+
+
+                $('#coupon_sms_verification #sms_code_run').focus();
+            }
+        },
+        error: function(e) {
+            console.log(e);
+            return false;
+        }
+    });
+
+    return false;
+}
 
 $(function(){
     //2. Получить элемент, к которому необходимо добавить маску
@@ -849,17 +901,20 @@ function checkValidCode(formId = '', popupId = '') {
             $('#' + formId).submit();
             $('#' + formId + ' input[type="submit"]').val('Loading...').prop("disabled", true);
 
-            $.fancybox.close({
-                src: '#' + popupId,
-                type: 'inline'
-            });
+            setTimeout(function() {
+                $.fancybox.close({
+                    src: '#' + popupId,
+                    type: 'inline'
+                });
+            }, 8000);
+
         } else {
-            $('.send_code_button').prop("disabled", true);
+           // $('.send_code_button').prop("disabled", true);
 
             $('.sms_hide_error').fadeIn(100);
 
-            setTimeout(function(){
-                $('.sms_hide_error').fadeOut(300);
+            setTimeout(function() {
+               $('.sms_hide_error').fadeOut(300);
             }, 3000);
 
             $('#sms_code_run').val('').focus();
@@ -869,6 +924,7 @@ function checkValidCode(formId = '', popupId = '') {
             src: '#' + popupId,
             type: 'inline'
         });
+
         alert('Код устарел!');
     }
 }
@@ -979,7 +1035,7 @@ function readCookie(name) {
 function writeSession(val) {
     /* ajax запрос */
     $.ajax( {
-        url: "rest/set_session/",
+        url: "rest/set_session",
         method: 'PATCH',
         data: {
             key: val

@@ -58,7 +58,7 @@ class order_controller extends base_controller
 		$sms = new SMSClient();
 		$code  = mt_rand(1000,9999);
 
-		$id = $sms->send($phone, $code);
+		$id = $sms->send($phone, 'Kod:'.$code);
 
 		try {
 			$status = $sms->getSMSState($id);

@@ -73,7 +73,6 @@
     {include file='../common/header_scripts.tpl'}
 
 </head>
-
 <body>
 {include file='../common/body_scripts.tpl'}
 {if $counters['body_top']}
@@ -194,8 +193,8 @@
                             {/if}
                         </div>
                         {* Call *}
-                        <div class="phone informer hidden-md-down">
-                            {include file="svg.tpl" svgId="phone"}
+                        <div class="phone1 informer hidden-md-down">
+                            {*include file="svg.tpl" svgId="phone"*}
                             <a class="phone binct-phone-number-1" href="tel:0932537677" target="_blank" title="Phone">
                                 <span class="">0932537677</span>
                             </a>
@@ -220,7 +219,7 @@
                         </div>
 
                         {* Callback *}
-                        <a class="callback informer binct-phone-number" target="_blank" title="{$lang->index_back_call}" href="tel:0932537677" data-language="index_back_call">
+                        <a class="callback informer binct-phone-number-1" target="_blank" title="{$lang->index_back_call}" href="tel:0932537677" data-language="index_back_call">
                             {include file="svg.tpl" svgId="callback"}
                         </a>
 

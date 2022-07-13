@@ -37,7 +37,7 @@
                 src: '#fn_callback',
                 type : 'inline'
             });
-        }); 
+        });
     {/if}
 
     {* Карточка товара, ошибка в форме *}
@@ -245,7 +245,7 @@
 
 </script>
 <script>
-    
+
     setTimeout(function(){
 (function(w,d,u){
                 var s=d.createElement('script');
@@ -290,7 +290,7 @@
 
 /*
 $(window).load(function() {
-   
+
 /** код будет запущен когда страница будет полностью загружена, включая все фреймы, объекты и изображения **/
     /*
 [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
