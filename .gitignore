@@ -4,12 +4,10 @@ files/*
 cron/dropbox.log
 tmp/
 log/*
-config/config.local.php
 cache/*
 mail/*
 dev/*
 vendor.tgz
 composer.phar
 .idea/*
-.idea
 vendor/*
