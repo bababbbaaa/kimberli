@@ -272,17 +272,22 @@ class Orders extends Okay {
 
     /*Добавления заказа*/
     public function add_order($order) {
+    	
         $order = (object)$order;
         $order->url = md5(uniqid($this->config->salt, true));
         $set_curr_date = '';
+        
         if(empty($order->date)) {
             $set_curr_date = ', date=now()';
         }
+        
         $all_status = $this->orderstatus->get_status();
         $order->status_id = reset($all_status)->id;
         $query = $this->db->placehold("INSERT INTO __orders SET ?%$set_curr_date", $order);
         $this->db->query($query);
+        
         $id = $this->db->insert_id();
+        
         if(reset($all_status)->is_close == 1){
             $this->orders->close(intval($id));
         } else {

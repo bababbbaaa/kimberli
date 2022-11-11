@@ -92,6 +92,7 @@
                                 </div>
                             {/if}
                         {/if}
+                        {$formId = 'captcha_id'}
                         {include file='popap/sms.tpl'}
                         <input type="hidden" name="checkout" value="1">
                         <input type="hidden" name="currency" value="{$currency->code}">

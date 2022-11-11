@@ -1,26 +1,33 @@
 <?php
 
 namespace rest\api;
-use KB\rest_server\application;
+use InvalidArgumentException;
 
 /**
  * Класс-обертка для конфигурационного файла с настройками магазина
  * В отличие от класса Settings, Config оперирует низкоуровневыми настройками, например найстройками базы данных.
+ * @property $db_server
+ * @property $db_user
+ * @property $db_password
+ * @property $db_name
+ * @property $db_charset
+ * @property $db_sql_mode
+ * @property $db_timezone
  */
 
 
 class Config {
 
     /*Версия системы*/
-    public $version = '2.3.0';
+    public string $version = '2.3.0';
     /*Тип системы*/
     public $version_type = 'pro';
     
     /*Файл для хранения настроек*/
-    public $config_file = '../config/config.php';
-    public $config_develop_file = '../config/config.local.php';
+    public string $config_file = __DIR__ . '/../../config/config.php';
+    public string $config_develop_file = __DIR__  . '/../../config/config.local.php';
 
-    private $vars = array();
+    private array $vars = [];
 
     /*
      * В конструкторе записываем настройки файла в переменные этого класса
@@ -29,7 +36,8 @@ class Config {
     public function __construct() {
         /*Читаем настройки из дефолтного файла*/
 
-        $c_file = dirname(dirname(__FILE__)).'/'.$this->config_file;
+        $c_file = $this->config_file;
+
         if (file_exists($c_file)) {
 			$ini = parse_ini_file($c_file);
 			/*Записываем настройку как переменную класса*/
@@ -37,12 +45,12 @@ class Config {
 				$this->vars[$var] = $value;
 			}
 		} else {
-			throw new \RuntimeException($c_file);
+			throw new InvalidArgumentException('No file config');
 		}
 
         /*Заменяем настройки, если есть локальный конфиг*/
-        if (file_exists(dirname(dirname(__FILE__)).'/'.$this->config_develop_file)) {
-            $ini = parse_ini_file(dirname(dirname(__FILE__)) . '/' . $this->config_develop_file);
+        if (file_exists($this->config_develop_file)) {
+            $ini = parse_ini_file( $this->config_develop_file);
             foreach ($ini as $var => $value) {
                 $this->vars[$var] = $value;
             }
@@ -99,9 +107,11 @@ class Config {
         $this->vars['max_upload_filesize'] = min($max_upload, $max_post, $memory_limit)*1024*1024;
         
         // Соль (разная для каждой копии сайта, изменяющаяся при изменении config-файла)
-        $s = stat(dirname(dirname(__FILE__)).'/'.$this->config_file);
+        $s = stat($this->config_file);
 
-        $this->vars['salt'] = md5(md5_file(dirname(dirname(__FILE__)).'/'.$this->config_file).$s['dev'].$s['ino'].$s['uid'].$s['mtime']);
+       // print_r($s); exit;
+
+        $this->vars['salt'] = md5(md5_file($this->config_file).$s['dev'].$s['ino'].$s['uid'].$s['mtime']);
         
         // Часовой пояс
         if(!empty($this->vars['php_timezone'])) {
@@ -121,9 +131,9 @@ class Config {
     /*Запись данных в конфиг*/
     public function __set($name, $value) {
         if(isset($this->vars[$name])) {
-            $conf = file_get_contents(dirname(dirname(dirname(__FILE__))).'/'.$this->config_file);
+            $conf = file_get_contents($this->config_file);
             $conf = preg_replace("/".$name."\s*=.*\n/i", $name.' = '.$value."\r\n", $conf);
-            $cf = fopen((dirname(dirname(__FILE__))).'/'.$this->config_file, 'w');
+            $cf = fopen($this->config_file, 'w');
             fwrite($cf, $conf);
             fclose($cf);
             $this->vars[$name] = $value;

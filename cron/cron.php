@@ -340,13 +340,12 @@ class cron extends Database
 
 			if ($err) {
 				$this->printLog($err);
-				new RuntimeException('Error curl');
+				throw new RuntimeException('Error curl');
 			} else {
 				return json_decode($response)->response;
 			}
 		} catch (Exception $e) {
-			//throw new RuntimeException($e->getMessage());
-			return (object) [];
+			throw new RuntimeException($e->getMessage());
 		}
 	}
 

@@ -262,4 +262,38 @@
             {/if}
         </div>
     </div>
-</div>    
+</div>
+<script>
+     //var dataLayer = window.dataLayer || [];
+    // dataLayer.push({ ecommerce: null });
+    dataLayer.push({
+        'event': 'purchase',
+        'transaction_id': "{$order->id}",
+        'affiliation': 'Online Store',
+        'value': {$order->total_price},
+        'currency': "{$currency->code}",
+        'tax': 0,
+        'shipping': 0,
+        'items': [
+                {foreach $purchases as $purchase}
+            {
+                'name': "{$purchase->product_name|escape}",
+                'id': "{$purchase->variant->id}",
+                'price': '{$purchase->variant->price}',
+                'brand': "KIMBERLI",
+                'variant': "{$purchase->variant->name|escape}",
+                'quantity': {$purchase->amount|escape}
+            }
+            {/foreach}
+        ]
+    });
+</script>
+
+{*{if $ecommerce}*}
+{literal}
+<script>
+
+
+</script>
+{/literal}
+{*{/if}*}

@@ -862,7 +862,7 @@
         bottom: -3px;
     }
     .heading_page {
-        font-size: 36px;
+        font-size: 16px;
         line-height: 40px;
     }
     .wrap_heading_page {
@@ -931,6 +931,7 @@
         height: 100%;
         overflow: auto;
         background: #fff;
+        z-index: 200002 !important;
     }
 
     .top_header .informer.callback{

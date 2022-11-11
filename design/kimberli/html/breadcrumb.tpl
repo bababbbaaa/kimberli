@@ -97,8 +97,10 @@
                         <span itemprop="title">
                             {if $smarty.get.type_post == "news"}
                                 {$lang->main_news}
-                            {else if $smarty.get.type_post == "partnerstvo"}
+                            {elseif $smarty.get.type_post == "partnerstvo"}
                                 {$lang->main_partnerstvo}
+                            {elseif $smarty.get.type_post == "promotions"}
+                                {$lang->main_promotions}
                             {else}
                                 {$lang->breadcrumbs_blog}
                             {/if}
@@ -113,8 +115,10 @@
                 <li data-language="breadcrumbs_blog">
                     {if $smarty.get.type_post == "news"}
                         {$lang->main_news}
-                    {else if $smarty.get.type_post == "partnerstvo"}
+                    {elseif $smarty.get.type_post == "partnerstvo"}
                         {$lang->main_partnerstvo}
+                    {else if $smarty.get.type_post == "promotions"}
+                        {$lang->main_promotions}
                     {else}
                         {$lang->breadcrumbs_blog}
                     {/if}

@@ -9,7 +9,7 @@
                                         <a href="{$bi->url}" >
                                     {/if}
                                     {if $bi->image}
-                                        <img src="{$bi->image|resize:1920:1080:false:$config->resized_banners_images_dir}" alt="{$bi->alt}" title="{$bi->title}"/>
+                                        <img src="{$bi->image|resize:1920:720:false:$config->resized_banners_images_dir}" alt="{$bi->alt}" title="{$bi->title}"/>
                                     {/if}
                                     {if $bi->title || $bi->description}
                         <div class="title">

@@ -20,12 +20,13 @@
                 {/if}
             </a>
             <form class="fn_variants preview_form" action="/{$lang_link}cart">
+                <input type="hidden" name="variant" value="{$product->variant->id}">
                 {* Product variants *}
-                <select name="variant" class="fn_variant variant_select {if $product->variants|count == 1}hidden{/if}">
+             {*   <select name="variant" class="fn_variant variant_select {if $product->variants|count == 1}hidden{/if}">
                     {foreach $product->variants as $v}
                         <option value="{$v->id}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if}>{if $v->name}{$v->name|escape}{else}{$product->name|escape}{/if}</option>
                     {/foreach}
-                </select>
+                </select>*}
 
                 <div class="action">
 
@@ -60,7 +61,7 @@
                                 {include file="svg.tpl" svgId="wishlist"}
                             </a>
                         {else}
-                            <a href="#" data-id="{$product->id}" class="fn_wishlist wishlist_button" title="{$lang->add_favorite}" onClick="fbq('track', 'AddToWishlist', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});" data-result-text="{$lang->remove_favorite}">
+                            <a href="#" data-id="{$product->id}" class="fn_wishlist wishlist_button" title="{$lang->add_favorite}" {*onClick="fbq('track', 'AddToWishlist', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});"*} data-result-text="{$lang->remove_favorite}">
                                 {include file="svg.tpl" svgId="wishlist"}
                             </a>
                         {/if}
@@ -74,14 +75,14 @@
                     {else}
                         {* Pre-order *}
                         <button class="button buy fn_is_preorder{if $product->variant->stock > 0} hidden{/if}" type="submit"
-                                onClick="fbq('track', 'AddToCart', {
+                               {* onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
                                 data-language="pre_order" title="{$lang->pre_order}">
                             {include file="svg.tpl" svgId="shopping_cart"}
                         </button>
@@ -89,14 +90,14 @@
 
                     {* Submit cart button *}
                     <button class="button buy fn_is_stock{if $product->variant->stock < 1} hidden{/if}" type="submit"
-                            onClick="fbq('track', 'AddToCart', {
+                           {* onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
                             data-language="add_to_cart" title="{$lang->add_to_cart}">
                         {include file="svg.tpl" svgId="shopping_cart"}
                     </button>

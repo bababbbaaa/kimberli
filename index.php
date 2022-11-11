@@ -65,7 +65,7 @@ if($res !== false) {
 
 function l($var)
   {
-	  if (true) {
+	  if ($_SERVER['REMOTE_ADDR'] == '195.38.8.37') {
 	  if (is_array($var)) {
 		  echo '<pre>';
 		  print_r($var);

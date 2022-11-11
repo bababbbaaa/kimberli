@@ -2,9 +2,11 @@
 
 {* The canonical address of the page *}
 {if $smarty.get.type_post == "blog"}
-    {$canonical="/blog" scope=parent}
-    {else if $smarty.get.type_post == "partnerstvo"}
-    {$canonical="/partnerstvo" scope=parent}
+        {$canonical="/blog" scope=parent}
+    {elseif $smarty.get.type_post == "partnerstvo"}
+        {$canonical="/partnerstvo" scope=parent}
+    {elseif $smarty.get.type_post == "promotions"}
+        {$canonical="/promotions" scope=parent}
     {else}
     {$canonical="/news" scope=parent}
 {/if}

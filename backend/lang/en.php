@@ -60,6 +60,7 @@ $backend_translations->blog_no_post = 'No posts to display';
 $backend_translations->blog_one_news = 'News';
 $backend_translations->blog_one_media = 'Media';
 $backend_translations->blog_one_partnerstvo = 'Partner';
+$backend_translations->blog_promotions = 'Promotions';
 $backend_translations->blog_search = 'Article search …';
 $backend_translations->blog_type = 'Type';
 $backend_translations->brand_add = 'Add brand';

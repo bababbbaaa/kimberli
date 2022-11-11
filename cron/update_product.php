@@ -266,7 +266,18 @@ try {
         }   
 }
 
-	$cron->query("UPDATE `ok_products` P SET P.`stock` = (SELECT COALESCE( SUM(V.stock), 0) FROM ok_variants V WHERE V.product_id = P.id), P.price = (SELECT MIN(V.price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0), P.compare_price = (SELECT MIN(V.compare_price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0)");
+	$cron->query("UPDATE `ok_products` P SET
+                           P.`stock` = (SELECT COALESCE( SUM(V.stock), 0) FROM ok_variants V WHERE V.product_id = P.id),
+                           P.price = (SELECT MIN(V.price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0),
+                           P.compare_price = (SELECT MIN(V.compare_price) FROM ok_variants V WHERE V.product_id = P.id and V.stock > 0)
+                           ");
+	
+	$cron->query("UPDATE `ok_products` P SET
+                           P.price = (SELECT MIN(V.price) FROM ok_variants V WHERE V.product_id = P.id and V.stock = 0),
+                           P.compare_price = (SELECT MIN(V.compare_price) FROM ok_variants V WHERE V.product_id = P.id and V.stock = 0)
+							WHERE P.`stock` = 0
+
+                           ");
 
 		if (count($data['error']) > 0) {
 			$cron->printLog($data['error']);

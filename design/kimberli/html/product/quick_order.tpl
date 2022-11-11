@@ -37,7 +37,7 @@
             </div>
         
             
-    <form class="quick_order_form popup fn_validate_callback"  method="post">
+    <form class="quick_order_form popup fn_validate_callback"  method="post" id="quick_order_form">
         <input class="hidden" type="text"  name="variant" value="{$product->variant->id}" >
         <input type="hidden" name="currency" value="{$currency->code}">
         {* User's name *}
@@ -77,6 +77,7 @@
         {/if}
 
 </div>
+        {$formId = 'quick_order_form'}
         {include file='popap/sms.tpl'}
         {* Submit button *}
         <div class="boxed_button">

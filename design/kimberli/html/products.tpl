@@ -16,7 +16,7 @@
         {$canonical="/all-products" scope=parent}
     {/if}
 {/if}
-{include file='popap/coupon.tpl'}
+{*include file='popap/coupon.tpl'*}
 <div class="">
     <div class="row {if !$products}mb-3{/if}">
         <div class="col-md-12">

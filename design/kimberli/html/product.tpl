@@ -4,7 +4,7 @@
 {$canonical="/products/{$product->url}" scope=parent}
 {* Форма обратного звонка *}
 {include file='product/quick_order.tpl'}
-{include file='popap/coupon.tpl'}
+
 <div class="fn_product product wrap_product" itemscope itemtype="http://schema.org/Product">
     <meta itemprop="brand" content="{$brand->name|escape}">
     <meta itemprop="name" content="{$product->name|escape}">
@@ -26,13 +26,13 @@
                         <div class="fn_images images clearfix">
                             {* cut removes the first image, if you need start from the second - write cut:2 *}
                             <div class="images_item">
-                                <div class="images_link" data-link="{$product->image->filename|resize:1300:1300}" data-img="{$product->image->filename|resize:700:700}" data-zoom="{$product->image->filename|resize:1300:1300:w}">
+                                <div class="images_link" data-link="{$product->image->filename|resize:1300:1300}" data-img="{$product->image->filename|resize:700:700}" data-zoom="{$product->image->filename|resize:1300:1300}">
                                     <img src="{$product->image->filename|resize:700:700}" alt="{$product->name|escape}"/>
                                 </div>
                             </div>
                             {foreach $product->images|cut as $i=>$image}
                                 <div class="images_item">
-                                    <div class="images_link" data-link="{$image->filename|resize:1300:1300}" data-img="{$image->filename|resize:700:700}" data-zoom="{$image->filename|resize:1300:1300:w}">
+                                    <div class="images_link" data-link="{$image->filename|resize:1300:1300}" data-img="{$image->filename|resize:700:700}" data-zoom="{$image->filename|resize:1300:1300}">
                                         <img src="{$image->filename|resize:700:700}" alt="{$product->name|escape}"/>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                     <div class="product_image">
                         {* Main product image *}
                         {if $product->image}
-                            <a href="{$product->image->filename|resize:1300:1300:w}" data-fancybox="group" data-caption="{$product->name|escape}">
+                            <a href="{$product->image->filename|resize:1300:1300}" data-fancybox="group" data-caption="{$product->name|escape}">
                                 <img {if $is_mobile == false && $is_tablet == false} id="zoom_image"{/if} class="fn_img product_img" itemprop="image" src="{$product->image->filename|resize:700:700}" data-zoom-image="{$product->image->filename|resize:1300:1300}" alt="{$product->name|escape}" title="{$product->name|escape}">
                             </a>
                         {else}
@@ -213,28 +213,53 @@
                                         {* Preorder *}
                                         <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if}">
                                             <button class="btn btn_white btn_green btn_cart px-2 py-1" type="submit"
-                                                    onClick="fbq('track', 'AddToCart', {
+
+                                                    onclick=" var dataLayer = window.dataLayer || [];
+                                                    dataLayer.push({
+                                                            'event': 'add_to_cart',
+                                                            'value': '{$product->variant->price|escape}',
+                                                            'items': [
+                                                            {
+                                                            'id': '{$product->variant->sku|escape}',
+                                                            'google_business_vertical': 'retail'
+                                                            }
+                                                            ]
+                                                            });"
+                                                 {*   onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
                                                     data-language="product_pre_order">{$lang->product_pre_order}</button>
                                         </span>
                                     {/if}
                                     {* Submit button *}
                                     <div class="col-sm-12 col-lg-6 {if $product->variant->stock < 1} hidden{/if}">
                                         <button class="fn_is_stock btn btn_green btn-block btn_cart px-2 py-1"
-                                                onClick="fbq('track', 'AddToCart', {
+                                               {* onClick="fbq('track', 'AddToCart', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
+
+                                                 onClick="gtag('event', 'AddToCart', {
+                                                 'items': [
+                    {
+                        'name': '{$product->name|escape}',
+                        'id': '{$product->variant->sku|escape}',
+                        'price': {$product->variant->price|escape},
+                        'category': '{$category->name|escape}',
+                        'variant': '{$product->name|escape}',
+                        'quantity': 1
+                    }
+                ]
+                });"
                                                 type="submit" data-language="product_add_cart">
                                             {include file="svg.tpl" svgId="shopping_cart"}
                                             <span>{$lang->product_add_cart}</span>
@@ -244,14 +269,14 @@
                                     {if $product->variant->stock > 0}
                                         <div class="col-sm-12 col-lg-6">
                                             <a class="product_button1 fn_quick_order btn btn_white btn-block btn_cart px-2 py-1"  title="{$lang->index_back_call}"
-                                               onClick="fbq('track', 'SpeedСall', {
+                                              {* onClick="fbq('track', 'SpeedСall', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
                                                href="#fn_quick_order"
                                                data-language="quick_order_header">
                                                 <span>{$lang->quick_order_header}</span>
@@ -273,14 +298,14 @@
                                             </a>
                                         {else}
                                             <a href="#" data-id="{$product->id}" class="fn_wishlist product_wished"
-                                               onClick="fbq('track', 'AddToWishlist', {
+                                             {*  onClick="fbq('track', 'AddToWishlist', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});"*}
                                                title="{$lang->product_add_favorite}" data-result-text="{$lang->product_remove_favorite}" data-language="product_add_favorite">
                                                 {include file="svg.tpl" svgId="wishlist"}
                                             </a>
@@ -299,50 +324,50 @@
                                             </a>
                                         {/if}
                                         <a class="phone product_comparison binct-phone-number-2" href="tel:0932537677"  title="Phone"
-                                           onClick="fbq('track', 'СallProduct', {
+                                         {*  onClick="fbq('track', 'СallProduct', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});" *}
                                         >
                                             {include file="svg.tpl" svgId="callback"}
                                         </a>
                                         <a class="viber product_comparison" href="viber://pa?chatURI=kimberlijewelleryhouse" target="_blank" title="Viber"
-                                           onClick="fbq('track', 'ProductMessenger', {
+                                        {*   onClick="fbq('track', 'ProductMessenger', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});" *}
                                         >
                                             {include file="svg.tpl" svgId="viber"}
                                         </a>
                                         <a class="telegram product_comparison" href="https://t.me/KIMBERLI_JEWELLERY_HOUSE_BOT" target="_blank" title="Telegram"
-                                           onClick="fbq('track', 'ProductMessenger', {
+                                          {* onClick="fbq('track', 'ProductMessenger', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});" *}
                                         >
                                             {include file="svg.tpl" svgId="telegram"}
                                         </a>
                                         <a class="messanger product_comparison" href="https://www.messenger.com/t/kimberlijewelleryhouse" target="_blank" title="Messanger"
-                                           onClick="fbq('track', 'ProductMessenger', {
+                                         {*  onClick="fbq('track', 'ProductMessenger', {
    value: {$product->variant->price|escape},
    currency: 'UAH',
    content_ids: {$product->variant->sku|escape},
    content_type: 'product',
    content_name: '{$product->name|escape}',
    content_type: '{$category->name|escape}',
-});"
+});" *}
                                         >
                                             {include file="svg.tpl" svgId="messenger"}
                                         </a>
@@ -659,10 +684,24 @@
     }
 
     });
+    var dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        'event': 'view_item',
+       // event_id: (new Date()).getTimezoneOffset()/1000,
+        'value': '{$product->variant->price|escape}',
+        'items': [
+            {
+                'id': '{$product->variant->sku|escape}',
+                'google_business_vertical': 'retail'
+            }
+        ]
+    });
 </script>
+{*
+{literal}
 
-{literal}      
 <script>
+
 fbq('track', 'ViewContent', {
     event_id: (new Date()).getTimezoneOffset()/1000,
     value: {/literal}{$product->variant->price|escape}{literal},
@@ -674,6 +713,7 @@ fbq('track', 'ViewContent', {
 });
    </script>
 {/literal}
+*}
 
 {*микроразметка по схеме JSON-LD*}
 {*

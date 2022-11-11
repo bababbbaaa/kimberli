@@ -21,6 +21,9 @@ class Order extends Okay {
 			$order = $this->orders->get_order($id);
 
 			if ($order) {
+				
+				$order->purchases = $this->getOrderProducts($id);
+				
 				$this->order = $order;
 			}
 		}
@@ -159,13 +162,17 @@ class Order extends Okay {
 		try {
 			facebook::send(['event' => 'Purchase', 'orderId' => $order->id, 'currency' => ($data['currency'] ?? 'UAH'), 'url' => 'order']);
 		} catch (Exception $e) {}
+		
+		if ($order) {
+			$order->purchases = $this->getOrderProducts($order->id);
+		}
 
 			return [
-				'orderId' => $order->id,
 				'type' => 'order',
 				'url' => '/'.$this->languages->get_lang_link . 'order/' . $order->url,
 				'value' => $order->total_price,
 				'currency' => $data['currency']?? 'UAH',
+				'order' => $order,
 			];
 
 	}
@@ -295,6 +302,8 @@ class Order extends Okay {
 			if (!$order) {
 				return null;
 			}
+			
+			$order->purchases = $this->getOrderProducts($order->id);
 
 			return $order;
 		}
@@ -411,6 +420,10 @@ class Order extends Okay {
 		$this->design->assign('orderId', $order->id);
 
 		$result = $this->design->fetch('product/quick_order_result.tpl');
+		
+		if ($order) {
+			$order->purchases = $this->getOrderProducts($order->id);
+		}
 
 		return [
 			'orderId' => $order->id,
@@ -418,6 +431,7 @@ class Order extends Okay {
 			'value' => $order->total_price,
 			'currency' => $data['currency']?? 'UAH',
 			'message' => $result,
+			'order' => $order,
 		];
 
 	}

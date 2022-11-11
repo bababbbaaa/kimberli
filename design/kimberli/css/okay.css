@@ -807,9 +807,9 @@ a.link:hover{
     border-color: #0A7C71;
 }
 .boxed_notify{
-    background-color: #6d5cae;
+    background-color: #000000;
     color: #fff;
-    border-color: #6d5cae;
+    border-color: #000000;
 }
 .boxed_yellow{
     background-color: #F8D053;
@@ -1392,6 +1392,7 @@ input[type=checkbox]:checked + .okay_ckeckbox:before{
     float: left;
     height: 100%;
     min-height: 1px;
+    text-align: center;
 }
 [dir='rtl'] .slick-slide {
     float: right;
@@ -1820,7 +1821,7 @@ a.logo img{
         padding-left: 0;
         list-style: none;
         display: flex;
-        justify-content: space-between;
+        flex-direction: row;
     }
     .icon_category_mobile{
         cursor: pointer;
@@ -1837,7 +1838,7 @@ a.logo img{
         text-align: left;
         list-style: none;
         outline: none;
-        width: 100%;
+        width: auto;
     }
     .menu_group_header::before{
         content: '';
@@ -5304,6 +5305,16 @@ body #bingc-passive div.bingc-passive-overlay div.bingc-passive-content div.bing
 body #bingc-active {
     background: #2E483E !important;
 }
+
+.info-popup {
+    padding: 0px !important;
+}
+
+.info-popup img {
+    width: 100%;
+    max-width: 700px;
+}
+
 .coupon-popup {
     padding: 50px!important;
 }
@@ -7151,5 +7162,9 @@ body #bingc-active {
     top: -18px;
 }
 /*-------------------*/
+.page_compilation {
+    max-width: 1024px;
+    margin: auto;
+}
 
 

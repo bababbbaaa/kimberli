@@ -187,6 +187,10 @@
                                         <div class="wishlist-data mobile-menu-lnk">
                                             {include file="wishlist_informer.tpl"}
                                         </div>
+                                        {* Callback *}
+                                        <a class="callback1 informer binct-phone-number-1"  title="{$lang->index_back_call}" href="tel:0932537677" data-language="index_back_call">
+                                            {include file="svg.tpl" svgId="callback"}
+                                        </a>
                                     </div>
 
                                 </div>
@@ -195,7 +199,7 @@
                         {* Call *}
                         <div class="phone1 informer hidden-md-down">
                             {*include file="svg.tpl" svgId="phone"*}
-                            <a class="phone binct-phone-number-1" href="tel:0932537677" target="_blank" title="Phone">
+                            <a class="phone binct-phone-number-1" href="tel:0932537677" title="Phone">
                                 <span class="">0932537677</span>
                             </a>
                         </div>
@@ -217,11 +221,6 @@
                         <div id="wishlist" class="informer hidden-md-down wishlist-data">
                             {include file="wishlist_informer.tpl"}
                         </div>
-
-                        {* Callback *}
-                        <a class="callback informer binct-phone-number-1" target="_blank" title="{$lang->index_back_call}" href="tel:0932537677" data-language="index_back_call">
-                            {include file="svg.tpl" svgId="callback"}
-                        </a>
 
                         {* Cart informer*}
                         <div id="cart_informer" class="informer">
@@ -283,6 +282,8 @@
             {include file='breadcrumb.tpl'}
         {/if}
         <div class="fn_ajax_content">
+            {include file='popap/coupon.tpl'}
+            {include file='popap/info.tpl'}
             {$content}
         </div>
     </div>
@@ -369,7 +370,7 @@
 
             {* Social buttons *}
             <div class="foot_social">
-                <a class="phone binct-phone-number-1" href="tel:0932537677" target="_blank" title="Phone">
+                <a class="phone binct-phone-number-1" href="tel:0932537677"  title="Phone">
                     {include file="svg.tpl" svgId="callicon"}
                 </a>
                 <a class="fb" href="https://facebook.com/Kimberli-Jewellery-House-155258051160989" target="_blank" title="Facebook">
@@ -547,6 +548,5 @@
         {$counter->code}
     {/foreach}
 {/if}
-
 </body>
 </html>

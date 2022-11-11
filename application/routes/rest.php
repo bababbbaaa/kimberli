@@ -58,6 +58,17 @@ routing::add_route(request::POST, 'rest', 'vacancy', 'vacancy');
  * @see \rest\controller\rest_controller::action_wishlist()
  */
 routing::add_route(request::GET, 'rest', 'wishlist', 'wishlist');
+/**
+ * @see \rest\controller\rest_controller::action_bar_kimberli()
+ */
+routing::add_route(request::POST, 'rest', 'bar_kimberli', 'bar_kimberli');
+
+/**
+ * @see \rest\controller\rest_controller::action_welcome_to_boutique()
+ */
+routing::add_route(request::POST, 'rest', 'welcome-to-the-boutique', 'welcome_to_boutique');
+
+
 
 
 

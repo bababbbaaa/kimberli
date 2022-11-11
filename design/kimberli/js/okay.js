@@ -231,10 +231,10 @@ $(document).on('submit', '#fn_callback_page', function(e) {
         success: function(data) {
             //$('#fn_callback_page .beforeSend').remove();
                 gtag('event', 'pick_a_gem', {'event_category': 'send'});
-                fbq('trackCustom', 'SpecialOrder', {
+               /* fbq('trackCustom', 'SpecialOrder', {
                     'content_name': name,
                     'content_content': message,
-                });
+                });*/
 
                 $('#fn_callback_page').fadeOut();
                 $('.result_callback_page' ).html(data.data.message).fadeIn();
@@ -313,10 +313,10 @@ $(document).on('submit', '#vacancy-request_form', function(e) {
                  'content_content': message,
              });
              */
-            fbq('trackCustom', 'VacancyOrder', {
+          /*  fbq('trackCustom', 'VacancyOrder', {
                 'content_name': data.data.name,
                 'content_content': data.data.message,
-            });
+            });*/
 
             $that.fadeOut();
             $('.vacancy-request_form_result').html(data.data.message).fadeIn();
@@ -358,37 +358,6 @@ function parseAjaxError(e, formId)
     }
 }
 
-
-setTimeout(function(){
-    let str = $(location).attr('pathname');
-
-
-    if ((str.includes('products') || str.includes('catalog'))) {
-
-        $.ajax( {
-            url: "rest/check_session?key=coupon",
-            method: 'GET',
-            success: function(data) {
-                console.log(data);
-                if (data.data.status == false) {
-                    writeSession('coupon'); // 12 чвсов
-
-                    $('#coupon_form').show();
-                    $('#coupon_sms_verification').hide();
-
-                    $.fancybox.open({
-                        src: '#coupon-popup',
-                        type: 'inline'
-                    });
-                }
-            },
-            error: function(e) {
-                console.log(e);
-                return false;
-            }
-        } );
-    }
-}, 3000);
 
 
 $(document).on('submit', '.coupon_form', function(e) {
@@ -468,6 +437,159 @@ $(document).on('submit', '.coupon_form', function(e) {
         }
 
     }
+
+    return false;
+});
+
+$(document).on('submit', '.bar_kimberli_form', function(e) {
+    e.preventDefault();
+    let phone,
+    name;
+
+    /* Вариант */
+    if ($(this).find('input[name=phone]').size() > 0) {
+        phone = $(this).find('input[name=phone]').val();
+    }
+
+    /* Вариант */
+    if ($(this).find('input[name=name]').size() > 0) {
+        name = $(this).find('input[name=name]').val();
+    }
+
+    if (phone) {
+
+        if (typeof(e.isTrigger) != "undefined" && e.isTrigger !== null) {
+
+            $.ajax({
+                url: "rest/bar_kimberli",
+                method: 'POST',
+                data: {phone: phone, name: name},
+                dataType: 'json',
+                success: function (data) {
+                    $('.bar_kimberli_popup #coupon_sms_verification').hide();
+                        $('.bar_kimberli_popup .body .result').html(data.data.message);
+
+                       setTimeout(function() {
+                            $.fancybox.close({
+                                src: '#bar_kimberli_popup',
+                                type: 'inline'
+                            });
+
+                            $('#form_bar_kimberli').show();
+
+                            $('.bar_kimberli_popup .result').html('');
+                        }, 8000);
+
+                },
+                error: function (e) {
+                    console.log(e);
+
+                    $.fancybox.close({
+                        src: '#bar_kimberli_popup',
+                        type: 'inline'
+                    });
+                }
+            });
+
+        } else {
+
+            /* ajax запрос */
+            $.ajax({
+                url: "rest/order/sms/send",
+                method: 'GET',
+                data: {phone: phone},
+                dataType: 'json',
+                success: function(data) {
+                    writeCookie('sms_code', data.data.code, 60);
+                },
+                error: function(e) {
+                    console.log(e);
+                    return false;
+                }
+            }).done(function (data) {
+                let id = data.data.id;
+
+                checkSmsStatusBarKimberli(id, 1);
+
+            });
+        }
+
+    }
+
+    return false;
+});
+
+function checkSmsStatusBarKimberli(smsId, limit = 1)
+{
+    $('#form_bar_kimberli').hide();
+    $('.bar_kimberli_popup #coupon_sms_verification').show();
+
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/order/sms/status",
+        method: 'GET',
+        data: {id: smsId},
+        dataType: 'json',
+        success: function(data) {
+            if (!data.data.status && limit < 5) {
+                checkSmsStatusBarKimberli(smsId, limit++);
+            } else {
+                $('.bar_kimberli_popup #coupon_sms_verification #sms_code_run').focus();
+            }
+        },
+        error: function(e) {
+            console.log(e);
+            return false;
+        }
+    });
+
+    return false;
+}
+
+$(document).on('submit', '.welcome-to-the-boutique_form', function(e) {
+    e.preventDefault();
+    let phone,
+        name;
+
+    /* Вариант */
+    if ($(this).find('input[name=phone]').size() > 0) {
+        phone = $(this).find('input[name=phone]').val();
+    }
+
+    /* Вариант */
+    if ($(this).find('input[name=name]').size() > 0) {
+        name = $(this).find('input[name=name]').val();
+    }
+
+            $.ajax({
+                url: "rest/welcome-to-the-boutique",
+                method: 'POST',
+                data: {phone: phone, name: name},
+                dataType: 'json',
+                success: function (data) {
+                    $('.welcome-to-the-boutique_form').hide();
+                    $('.welcome-to-the-boutique .body .result').html(data.data.message);
+
+                    setTimeout(function() {
+                        $.fancybox.close({
+                            src: '#welcome-to-the-boutique_popup',
+                            type: 'inline'
+                        });
+
+                        $('.welcome-to-the-boutique .result').html('');
+                        $('.welcome-to-the-boutique_form').show();
+                    }, 5000);
+
+                },
+                error: function (e) {
+                    console.log(e);
+
+                    $.fancybox.close({
+                        src: '#welcome-to-the-boutique_popup',
+                        type: 'inline'
+                    });
+                }
+            });
 
     return false;
 });
@@ -575,7 +697,7 @@ $('.fn_validate_feedback input[type="submit"]').click(function(e) {
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === true) {
-                            fbq('track', 'Contact', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+                            //fbq('track', 'Contact', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
                             gtag( 'event', 'WriteInContact', { 'event_category' : 'send' ,});
 
                             $.fancybox.close({
@@ -628,7 +750,7 @@ $(document).on('submit', '.callback_form', function(e) {
         dataType: 'json',
         success: function (data) {
             if (data.status === true) {
-                fbq('track', 'BackCall', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+               // fbq('track', 'BackCall', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
                 gtag( 'event', 'WriteInCallback', { 'event_category': 'send'});
                 $('.callback_form' ).html(data.data.message);
             }
@@ -655,7 +777,7 @@ $(document).on('submit', '.comment_form', function(e) {
         dataType: 'json',
         success: function (data) {
             if (data.status === true) {
-                fbq('track', 'NewComment', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+               // fbq('track', 'NewComment', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
                 gtag( 'event', 'NewComment', { 'event_category': 'send'});
                 location.reload();
             }
@@ -760,13 +882,37 @@ function confirmQuickOrder(data)
         dataType: 'json',
         success: function (data) {
             if (data.status === true) {
-                fbq('track', 'Purchase', {
+               /* fbq('track', 'Purchase', {
                     value: data.data.value,
                     currency: data.data.currency,
-                });
+                });*/
 
                 gtag('event', 'fasr_order', {  'event_category': 'send_form',});
                // fbq('track', 'AddQuickOrder', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+
+
+              /*  let order = data.data.order;
+                let purchases = [];
+
+                data.data.order.purchases.forEach((element, index, array) => {
+                    purchases.push({
+                        id: element.sku,
+                        name: element.variant_name,
+                        quantity: element.amount,
+                        price: element.price
+                    });
+                });
+
+                gtag('event', 'purchase', {
+                        'affiliation': 'online store',
+                        'value': order.total_price,
+                        'currency': data.data.currency,
+                        'tax': 0,
+                        'shipping': 0,
+                        'items': purchases,
+                    }
+                );*/
+
 
                 $.fancybox.close({
                     src: '#fn_sms_verification',
@@ -774,7 +920,8 @@ function confirmQuickOrder(data)
                 });
 
                 $('.hide_result').hide();
-                $('.result_quick_order' ).html(data.data.message).fadeIn();
+                $('.result_quick_order').html(data.data.message).fadeIn();
+                return true;
             }
         },
         error: function (e) {
@@ -894,19 +1041,30 @@ $('.fn_validate_cart input[type="submit"]').click(function(e) {
 
 function checkValidCode(formId = '', popupId = '') {
 
+    if (formId == 'quick_order_form') {
+        return true;
+    }
+
     if (typeof(readCookie('sms_code')) != "undefined" && readCookie('sms_code') !== null) {
         let cod = $('#sms_code_run').val();
 
         if (cod == readCookie('sms_code')) {
             $('#' + formId).submit();
-            $('#' + formId + ' input[type="submit"]').val('Loading...').prop("disabled", true);
+            //$('#' + formId + ' input[type="submit"]').val('Loading...').prop("disabled", true);
 
-            setTimeout(function() {
+            if (formId == 'coupon_form') {
+                setTimeout(function() {
+                    $.fancybox.close({
+                        src: '#' + popupId,
+                        type: 'inline'
+                    });
+                }, 8000);
+            }  else if (formId != 'form_bar_kimberli') {
                 $.fancybox.close({
                     src: '#' + popupId,
                     type: 'inline'
                 });
-            }, 8000);
+            }
 
         } else {
            // $('.send_code_button').prop("disabled", true);
@@ -964,7 +1122,7 @@ function checkSmsStatus(smsId, limit = 1, popup = '')
             if (!data.data.status && limit < 5) {
                 checkSmsStatus(smsId, limit++);
             } else {
-                console.log('fancybox sms');
+                console.log('fancybox sms1');
 
                 if (popup != '') {
                     src = popup;
@@ -998,12 +1156,35 @@ function confirmOrder(data)
         dataType: 'json',
         success: function (data) {
             if (data.status === true) {
-                fbq('track', 'Purchase', {
+              /*  fbq('track', 'Purchase', {
                     'value': data.data.value,
                     'currency': data.data.currency,
+                });*/
+
+             /*   let order = data.data.order;
+                let purchases = [];
+
+                data.data.order.purchases.forEach((element, index, array) => {
+                    purchases.push({
+                        id: element.sku,
+                        name: element.variant_name,
+                        quantity: element.amount,
+                        price: element.price
+                    });
                 });
 
-                window.location = data.data.url;
+            gtag('event', 'purchase', {
+                'affiliation': 'online store',
+                'value': order.total_price,
+                'currency': data.data.currency,
+                'tax': 0,
+                'shipping': 0,
+                'items': purchases,
+                }
+                );
+*/
+
+              window.location = data.data.url;
             }
 
             return false;
@@ -1101,7 +1282,7 @@ $(document).on('submit', '#santa_form', function(e) {
         }else{
            $('#santa_form').fadeOut();
             $('.result_forma' ).html(data.message).fadeIn();
-            fbq('track', 'Lead', {  content_name: 'my-Name',  content_category: 'Santa', });
+           // fbq('track', 'Lead', {  content_name: 'my-Name',  content_category: 'Santa', });
             gtag('event', 'pick_a_gem', {'event_category': 'Santa',});
         }
         },
@@ -1147,7 +1328,7 @@ $(document).on('submit', '#form_26', function(e) {
         }else{
            $('#'+id).fadeOut();
             $('.result_forma' ).html(data.message).fadeIn();
-            fbq('track', 'Lead', {  content_name: 'my-Name',  content_category: '26', });
+           // fbq('track', 'Lead', {  content_name: 'my-Name',  content_category: '26', });
             gtag('event', 'pick_a_gem', {'event_category': '26',});
         }
         },
@@ -1668,6 +1849,20 @@ $(function(){
         fade: true
     });
 
+    /* бар кимберли */
+    $('.fn_banner_bar_kimberli_banner').slick({
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        swipeToSlide : true,
+        dots: true,
+        arrows: true,
+        adaptiveHeight: true,
+        autoplaySpeed: 3000,
+        autoplay: true
+    });
+
 
     /* Бренды слайдер*/
     $(".fn_all_brands").slick({
@@ -1976,7 +2171,71 @@ $(function(){
         $( '[name="payment_method_id"]' ).parent().removeClass( 'active' );
         $( this ).parent().addClass( 'active' );
     } );
+
+/* показать попапы через 10 сек после загрузки страницы*/
+setTimeout(function() {
+
+    let pathname = $(location).attr('pathname');
+
+        $.ajax( {
+            url: "rest/check_session",
+            method: 'GET',
+            success: function(result, status) {
+                if (status == 'success'  &&  result.data.popup.length !== 0) {
+
+                    let popup = '';
+
+                    result.data.popup.forEach((element) => {
+                        popup = element;
+                    });
+
+                    showPopup(popup);
+
+                    setTimeout(function() {
+                        showPopup40('coupon');
+                    }, 9000000);
+
+                    writeSession(popup);
+                } else if (pathname == '/cart') {
+                    showPopup('coupon');
+                }
+            },
+            error: function(e) {
+                console.log(e);
+                return false;
+            }
+        });
+    }, 10000);
+
 });
+
+function showPopup40(popup) {
+
+    showPopup(popup);
+      //  setTimeout(function() {
+      //      showPopup40(popup);
+      //  }, 40000);
+}
+
+function showPopup(popup) {
+
+    let pathname = $(location).attr('pathname');
+
+    if (popup == 'coupon') {
+        $('#coupon_form').show();
+        $('#coupon_sms_verification').hide();
+    } else if (popup == 'info' && pathname == '/promotions/daruemo-diamant') {
+        return true;
+    }
+
+    let open = document.getElementsByClassName("fancybox-is-open").length > 0;
+   if (!open) {
+       $.fancybox.open({
+           src: '#' + popup + '-popup',
+           type: 'inline'
+       });
+   }
+}
 
 
 /* Обновление блоков: cart_informer, cart_purchases, cart_deliveries */
@@ -2282,10 +2541,10 @@ $('.fn_banner_full_page_banner').slick({ //full page banner
     slidesToShow: 1,
     slidesToScroll: 1,
     swipeToSlide : true,
-    dots: true,
+    dots: false,
     arrows: false,
     adaptiveHeight: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 5000,
     autoplay: true
 });
 /** end init banners **/
@@ -2323,17 +2582,17 @@ $(document).on('click', 'a.ins', function(){
 });
 
 $(document).on('click', '.foot_social a.fb, .foot_social a.ins, .foot_social a.tl, .foot_social a.vb, .foot_social a.fbm, .b24-widget-button-social-item.ui-icon-service-telegram, .b24-widget-button-social-item.ui-icon-service-viber', function(){
-    fbq('trackCustom', 'Footermessenger');
+   // fbq('trackCustom', 'Footermessenger');
 });
 
 $(document).on('click', 'div.foot_social a.phone', function(){
-    fbq('trackCustom', 'FooterCall');
+    //fbq('trackCustom', 'FooterCall');
 });
 
 $(document).on('click', '.b24-widget-button-social-item.b24-widget-button-openline_livechat', function(){
-    fbq('trackCustom', 'CrmChat');
+   // fbq('trackCustom', 'CrmChat');
 });
 
 $(document).on('click', '.block.padding a.binct-phone-number-1', function (){
-    fbq('track', 'Contact');
+   // fbq('track', 'Contact');
 });

@@ -191,6 +191,7 @@
                                         <option value="news" {if $post->type_post == "news"}selected=""{/if} >{$btr->blog_one_news|escape}</option>
                                         <option value="media" {if $post->type_post == "media"}selected=""{/if} >{$btr->blog_one_media|escape}</option>
                                         <option value="partnerstvo" {if $post->type_post == "partnerstvo"}selected=""{/if} >{$btr->blog_one_partnerstvo|escape}</option>
+                                        <option value="promotions" {if $post->type_post == "promotions"}selected=""{/if} >{$btr->blog_promotions|escape}</option>
                                     </select>
                                 </div>
                             </div>

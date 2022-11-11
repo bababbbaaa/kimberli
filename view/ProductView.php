@@ -60,17 +60,28 @@ class ProductView extends View {
        // l($product);
 
         if ($product_values = $this->features_values->get_features_values(array('product_id'=>$product->id))) {
+        	
+        	//l($product_values);
+	
+			//l($product->variant);
+        	
             foreach ($product_values as $pv) {
-				if ($pv->id == 356 && $product->variant->size > 0) {
+				if ($pv->feature_id == 74 && $product->variant->size > 0) {
 					$pv->value = $product->variant->size;
+				}
+	
+				if ($pv->feature_id == 82 && $product->variant->weight > 0) {
+					$pv->value = $product->variant->weight;
 				}
 
                 if (!isset($product->features[$pv->feature_id])) {
                     $product->features[$pv->feature_id] = $pv;
+					$product->features[$pv->feature_id]->values[] = $pv;
+                
                 }
-
-                $product->features[$pv->feature_id]->values[] = $pv;
             }
+            
+            //l($product->features);
 
             if (!isset($product->features[74]) && $product->variant->size > 0) {
 				$product->features[74] = (object) [

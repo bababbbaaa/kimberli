@@ -1,5 +1,7 @@
 <?php
+
 namespace cron;
+use Exception;
 
 require_once('bootstrap.php');
 
@@ -7,7 +9,7 @@ $cron = new cron();
 
 try {
 	$contacts = $cron->getClients();
-} catch (\Exception $e) {
+} catch (Exception $e) {
 	$cron->printLog($e);
 	$cron->logging('[error] Update joinposter: ' . $e->getMessage());
 
@@ -18,7 +20,7 @@ if (0 < count($contacts)) {
 	try {
 		$cron->setContacts($contacts);
 		return [];
-	} catch (\Exception $e) {
+	} catch (Exception $e) {
 		$cron->logging('[error] Update joinposter: ' . $e->getMessage());
 		throw $e;
 	}

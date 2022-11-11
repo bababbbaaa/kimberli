@@ -24,6 +24,10 @@ class OrderView extends View {
             $order = $this->orders->get_order((string)$url);
         } elseif(!empty($_SESSION['order_id'])) {
             $order = $this->orders->get_order(intval($_SESSION['order_id']));
+			$this->design->assign('ecommerce', 1);
+			
+			unset($_SESSION['order_id']);
+        
         } else {
             return false;
         }

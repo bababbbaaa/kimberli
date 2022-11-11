@@ -18,7 +18,7 @@
                         <input class="btn btn_black feature_multi_values" type="submit" id="send_coupon_form"  name="coupon" data-language="coupon_submit" value="{$lang->coupon_submit}">
                     </div>
                 </div>
-                {*include file='popap/sms.tpl'*}
+
             </form>
             <div id="coupon_sms_verification" style="text-align: center; display: none">
                 {* The form heading *}

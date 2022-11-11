@@ -97,9 +97,7 @@ class Bug extends Okay {
            $this->db->query("INSERT INTO __bug SET ?%", $bug);
         }
 
-		@file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=' . urlencode($e->getMessage())).'&parse_mode=HTML';
-
-
+		@file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=777' . urlencode($e->getMessage())).'&parse_mode=HTML';
 	}
     
     public function add_log(array $e) {

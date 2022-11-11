@@ -178,9 +178,11 @@ class View extends Okay {
                 $strlen = $first_lang->id == $this->language->id ? "" : $first_lang->label;
                 $page_url = trim(substr($page_url, strlen($strlen)),"/");
             }
+            
             if (isset($_GET['page_url']) && in_array($_GET['page_url'], array('all-products', 'discounted', 'bestsellers'))) {
                 $page_url = $_GET['page_url'];
             }
+            
             $this->url = $page_url;
             $this->design->assign('language', $this->language);
             $this->design->assign('languages', $languages);

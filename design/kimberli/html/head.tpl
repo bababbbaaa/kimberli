@@ -153,8 +153,8 @@
     <link rel="alternate" hreflang="{$l->href_lang}" href="{preg_replace('/^(.+)\/$/', '$1', $l->url)}">
     {/if}
 {/foreach}
-<meta name="google-site-verification" content="tcZlOH9iNtfkCtwnAEnVnyJWSuktyFo1HlzfByWvnlw" />
 <meta name="facebook-domain-verification" content="v77lzmto4cr9w76a8bj5q7s3t9oo4t" />
 {*
 <meta name="cmsmagazine" content="231a9f3108fba988744fc23434449802" />
-<meta name="it-rating" content="it-rat-1d674945dd1fe863a3409ed2f27767e7" />*}
+<meta name="it-rating" content="it-rat-1d674945dd1fe863a3409ed2f27767e7" />
+*}

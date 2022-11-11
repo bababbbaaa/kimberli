@@ -443,7 +443,11 @@
             </div>
             <div class="atelier-request_heading_title">замовити екселюзивний виріб</div>
         </div>
-        {$dop_files_footer}
+        {if $dop_files_footer}
+            {foreach $dop_files_footer as $files}
+                {$files}
+            {/foreach}
+        {/if}
        {* <form action="" class="atelier-request_form">
             <input type="text" name="name" placeholder="Имя*" required>
             <input type="text" name="phone" placeholder="Номер телефона*" required>

@@ -95,6 +95,9 @@ RewriteRule ^([a-z]{2}/)?blog/?$	index.php?module=BlogView&lang_label=$1&type_po
 # Новости
 RewriteRule ^([a-z]{2}/)?news/([^/]+)/?$	index.php?module=BlogView&url=$2&lang_label=$1&type_post=news [L,QSA]
 RewriteRule ^([a-z]{2}/)?news/?$	index.php?module=BlogView&lang_label=$1&type_post=news [L,QSA]
+# Акции
+RewriteRule ^([a-z]{2}/)?promotions/([^/]+)/?$	index.php?module=BlogView&url=$2&lang_label=$1&type_post=promotions [L,QSA]
+RewriteRule ^([a-z]{2}/)?promotions/?$	index.php?module=BlogView&lang_label=$1&type_post=promotions [L,QSA]
 # Медиа
 RewriteRule ^([a-z]{2}/)?media/([^/]+)/?$	index.php?module=BlogView&url=$2&lang=$1&type_post=media [L,QSA]
 RewriteRule ^([a-z]{2}/)?media/?$	index.php?module=BlogView&lang=$1&type_post=media [L,QSA]
@@ -144,7 +147,8 @@ RewriteRule ^feed\.xml?$	feed.php  [L,QSA]
 RewriteRule ^rozetka\.xml?$	feed.php  [L,QSA]
 
 RewriteRule ^google\.xml?$	feed_google.php  [L,QSA]
-
+#RewriteRule ^google-ua\.xml?$	feed_google.php  [L,QSA]
+RewriteRule ^([a-z]{2}/)?google\.xml?$	feed_google.php?&lang_label=$1  [L,QSA]
 # feedback
 RewriteRule ^([a-z]{2}/)?contact/?$	index.php?module=FeedbackView&lang_label=$1  [L,QSA]
 

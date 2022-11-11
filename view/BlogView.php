@@ -125,6 +125,8 @@ class BlogView extends View {
             case 26:  	$this->design->assign('form', $this->design->fetch('form/26/26.tpl')); break;
 			case 29:  	$this->design->assign('form', $this->design->fetch('form/29/29.tpl')); break;
 			case 32:  	$this->design->assign('form', $this->design->fetch('form/32/32.tpl')); break;
+			case 33:	$this->design->assign('form', $this->design->fetch('form/33/33.tpl')); break;
+			case 34:	$this->design->assign('form', $this->design->fetch('form/34/34.tpl')); break;
            
             default : break;
         }

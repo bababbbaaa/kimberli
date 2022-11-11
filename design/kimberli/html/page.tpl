@@ -33,7 +33,15 @@
                 {$page->description}
             </div>
             {if $dop_files_footer}
-                {$dop_files_footer}
+
+                {foreach $dop_files_footer as $files}
+                    <div class="row mb-3">
+                    <div class="col-lg-12">
+                    {$files}
+                    </div>
+                    </div>
+                {/foreach}
+
             {/if}
         {/if}
     </div>

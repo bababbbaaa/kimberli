@@ -27,6 +27,8 @@ class cart_controller extends base_controller
 		$object = new Okay();
 
 		$object->cart->add_item((int) $variant, (int) $amount);
+		
+		$result['variant'] = '';
 
 		$cart = $object->cart->get_cart();
 

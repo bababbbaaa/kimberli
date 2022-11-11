@@ -20,6 +20,7 @@ class Blog extends Okay {
         }
         
         $lang_sql = $this->languages->get_query(array('object'=>'blog'));
+
         $query = $this->db->placehold("SELECT 
                 b.id, 
                 b.url, 
@@ -38,6 +39,8 @@ class Blog extends Okay {
                 $type
             LIMIT 1
         ");
+
+
         if($this->db->query($query)) {
             return $this->db->result();
         } else {

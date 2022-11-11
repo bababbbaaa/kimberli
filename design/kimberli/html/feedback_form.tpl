@@ -52,6 +52,7 @@
                             </div>
                         {/if}
                     {/if}
+                        {$formId = 'captcha_id'}
                         {include file='popap/sms.tpl'}
                     <input type="hidden" name="feedback" value="1">
 

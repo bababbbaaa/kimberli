@@ -3,22 +3,25 @@
 {* The canonical address of the page *}
 {if $smarty.get.type_post == "blog"}
     {$canonical="/blog/{$post->url}" scope=parent}
-{else}
+{elseif $smarty.get.type_post == "news"}
     {$canonical="/news/{$post->url}" scope=parent}
+{elseif $smarty.get.type_post == "promotions"}
+    {$canonical="/promotions/{$post->url}" scope=parent}
 {/if}
 
 {* The page heading *}
 
-    <div class="wrap_heading_page mb-2" {if $post->image} style="background: rgb(36, 38, 38) url({$post->image|resize:1920:539:false:$config->resized_blog_dir});" {/if}>
+    <div class="wrap_heading_page1 mb-2" style="position: relative;">
+        {if $post->image} <img src="{$post->image|resize:1920:539:false:$config->resized_blog_dir}" style="width: 100%">{/if}
         <div class="inner_heading_page txt_center">
           {*  <div class="type_heading_post">
                 {$post->type_post}
             </div>*}
-            <h1 class="heading_page">
+            <h1 class="heading_page" {if $smarty.get.type_post == "promotions"} style="display: none"{/if}>
                 <span data-post="{$post->id}">{$post->name|escape}</span>
             </h1>
-            <img class="border" src="design/{$settings->theme|escape}/images/heading_border.png" alt="post_border">
-            <div class="heading_date">
+            <img class="border" src="design/{$settings->theme|escape}/images/heading_border.png" alt="post_border" {if $smarty.get.type_post == "promotions"} style="display: none"{/if}>
+            <div class="heading_date" {if $smarty.get.type_post == "promotions"} style="display: none"{/if}>
                 <span>{$post->date|date}</span>
             </div>
         </div>
@@ -40,14 +43,23 @@
         {if $form}
             {$form}
         {/if}
-        
+
+        {if $compilation }
+            <div class="page_compilation">
+                {* Product list *}
+                <div id="fn_products_content" class="fn_categories products clearfix">
+                    {include file="compilation/products_content.tpl"}
+                </div>
+            </div>
+        {/if}
+
         {* Social share *}
-        <div class="post_share">
+       {* <div class="post_share">
             <div class="share_text">
                 <span data-language="{$translate_id['product_share']}">{$lang->product_share}:</span>
             </div>
             <div class="fn_share jssocials"></div>
-        </div>
+        </div>*}
 
         {* Previous/Next posts *}
         {if $prev_post || $next_post}
@@ -65,16 +77,9 @@
             </div>
         {/if}
     </div>
-        {if $compilation }
-             <div class="page_compilation">
-            {* Product list *}
-            <div id="fn_products_content" class="fn_categories products clearfix">
-                {include file="compilation/products_content.tpl"}
-            </div>
-            </div>
-        {/if}                
 
 
+    {if $smarty.get.type_post != "promotions"}
     <div id="comments">
         <div class="h2">
             <span data-language="post_comments">{$lang->post_comments}</span>
@@ -189,6 +194,7 @@
            </div>
         </div>
     </div>
+    {/if}
 </div>
                    
 {* Related products *}

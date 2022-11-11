@@ -57,6 +57,7 @@
                                 <option value="{url module=BlogAdmin type_post="news" keyword=null id=null page=null}" {if $type_post == "news"}selected=""{/if} >{$btr->blog_news|escape}</option>
                                 <option value="{url module=BlogAdmin type_post="media" keyword=null id=null page=null}" {if $type_post == "media"}selected=""{/if} >{$btr->blog_media|escape}</option>
                                 <option value="{url module=BlogAdmin type_post="partnerstvo" keyword=null id=null page=null}" {if $type_post == "partnerstvo"}selected=""{/if} >{$btr->blog_partnerstvo|escape}</option>
+                                <option value="{url module=BlogAdmin type_post="promotions" keyword=null id=null page=null}" {if $type_post == "promotions"}selected=""{/if} >{$btr->blog_promotions|escape}</option>
                             </select>
                         </div>
                     </div>
@@ -119,6 +120,8 @@
                                                     <div class="tag tag-info">{$btr->blog_one_media|escape}</div>
                                                     {elseif $post->type_post == "partnerstvo"}
                                                     <div class="tag tag-info">{$btr->blog_one_partnerstvo|escape}</div>
+                                                    {elseif $post->type_post == "promotions"}
+                                                    <div class="tag tag-info">{$btr->blog_promotions|escape}</div>
                                                 {/if}
                                             </div>
                                         </div>
@@ -132,6 +135,8 @@
                                                     <div class="tag tag-info">{$btr->blog_one_media|escape}</div>
                                                     {elseif $post->type_post == "partnerstvo"}
                                                     <div class="tag tag-info">{$btr->blog_one_partnerstvo|escape}</div>
+                                            {elseif $post->type_post == "promotions"}
+                                                <div class="tag tag-danger">{$btr->blog_promotions|escape}</div>
                                             {/if}
                                         </div>
 

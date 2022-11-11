@@ -239,14 +239,15 @@
         $(".fn_share").jsSocials({
             showLabel: false,
             showCount: false,
-            shares: ["twitter", "facebook", "googleplus", "vkontakte"]
+            shares: ["twitter", "facebook", "googleplus"]
         });
     }
 
 </script>
+
 <script>
 
-    setTimeout(function(){
+setTimeout(function() {
 (function(w,d,u){
                 var s=d.createElement('script');
                 s.async=true;
@@ -286,22 +287,3 @@
         })(document, window, 'script');
     </script>
 {/literal}
-<script>
-
-/*
-$(window).load(function() {
-
-/** код будет запущен когда страница будет полностью загружена, включая все фреймы, объекты и изображения **/
-    /*
-[].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
-img.setAttribute('src', img.getAttribute('data-src'));
-img.onload = function() {
-img.removeAttribute('data-src');
-
-};
-});
-
-
-});*/
-
-</script>

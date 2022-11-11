@@ -10,6 +10,7 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 
 class Okay {
 	private $debug = false;
+	public string $country = '';
 
 	/*public $config = null;
 	public $request = null;
@@ -186,7 +187,39 @@ class Okay {
         } else {
             ini_set('display_errors', 'off');
         }
+        
+        if (empty($this->country) && isset($_SESSION['country']['ip']) && $_SESSION['country']['ip'] == $_SERVER['REMOTE_ADDR']) {
+        	$this->country = $_SESSION['country']['iso'];
+		} else if (!empty($this->country) && isset($_SESSION['country']['ip']) && $_SESSION['country']['ip'] != $_SERVER['REMOTE_ADDR']) {
+        	$this->getCountry();
+		} else {
+			$this->getCountry();
+		}
     }
+    
+    private function getCountry()
+	{
+		$is_bot = preg_match(
+			"~(Google|Yahoo|Rambler|Bot|Yandex|Spider|Snoopy|Crawler|Finder|Mail|curl)~i",
+			$_SERVER['HTTP_USER_AGENT']
+		);
+		
+		try {
+			$geo = !$is_bot ? json_decode(file_get_contents('http://api.sypexgeo.net/json/' . $_SERVER['REMOTE_ADDR']), true) : [];
+			
+			$this->country = isset($geo['country']['iso']) ? $geo['country']['iso'] : '';
+			
+			if (!empty($this->country)) {
+				$_SESSION['country'] = [
+					'iso' => $this->country,
+					'ip' => $_SERVER['REMOTE_ADDR'],
+				];
+			}
+		} catch (Throwable $e) {
+		
+		}
+		
+	}
     
     public function __get($name) {
         // Если такой объект уже существует, возвращаем его

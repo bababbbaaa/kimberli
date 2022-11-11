@@ -4,10 +4,32 @@ ini_set('display_errors', 1);
 require_once('api/Okay.php');
 $okay = new Okay();
 
+$lang_link = '';
+$title = 'Ювелірний Дім Kimberli';
+$description = 'Ювелірний Дім Kimberli - це великий вибір високоякісних прикрас із золота з довічною гарантією на всю продукцію і сертифікованим камінням від виробника.';
+
+if (isset($_GET['lang_label'])) {
+	switch ($_GET['lang_label']) {
+		case 'ru/':
+			$okay->languages->set_lang_id(1);
+			$okay->language = $okay->languages->get_language($okay->languages->lang_id());
+			$lang_link = $okay->language->label . '/';
+			
+			$title = 'Ювелирный Дом Kimberli';
+			$description = 'Ювелирный Дом Kimberli – это большой выбор высококачественных украшений из золота с пожизненной гарантией на всю продукцию и сертифицированными камнями от производителя.';
+			break;
+		default:
+			$okay->languages->set_lang_id(3);
+			$okay->language = $okay->languages->get_language($okay->languages->lang_id());
+	}
+}
+
 // Товары
 $okay->db->query("SET SQL_BIG_SELECTS=1");
 $stock_filter = $okay->settings->yandex_export_not_in_stock ? '' : ' AND v.stock >0 ';
 $price_filter = $okay->settings->yandex_no_export_without_price ? ' AND v.price >0 ' : '';
+
+$lang_sql = $okay->languages->get_query(array('object'=>'variant'));
 
 // Товары
 $query = "SELECT 
@@ -25,9 +47,11 @@ $query = "SELECT
         p.annotation, 
         c.rate_from, 
         c.rate_to, 
-        v.currency_id
+        v.currency_id,
+       $lang_sql->fields
     FROM __variants v 
     LEFT JOIN __products p ON v.product_id=p.id
+    $lang_sql->join
     left join __currencies as c on(c.id=v.currency_id)
     WHERE 
         1 
@@ -37,8 +61,11 @@ $query = "SELECT
         $price_filter 
     GROUP BY v.id 
     ORDER BY p.id, v.position";
+
 $okay->db->query($query);
 $products = $okay->db->results();
+
+//print_r($products); exit;
 
 header("Content-type: text/xml; charset=UTF-8");
 print (pack('CCC', 0xef, 0xbb, 0xbf));
@@ -47,9 +74,9 @@ $xml = '<?xml version="1.0" encoding="UTF-8" ?>';
 $xml .= '<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">';
 $xml .= '<channel>';
 
-$xml .= '<title>Ювелірний Дім Kimberli</title>';
-$xml .= '<link>' . $okay->config->url . '</link>';
-$xml .= '<description>Ювелірний Дім Kimberli - це великий вибір високоякісних прикрас із золота з довічною гарантією на всю продукцію і сертифікованим камінням від виробника.</description>';
+$xml .= '<title>'.$title.'</title>';
+$xml .= '<link>' . $okay->config->url . $lang_link. '</link>';
+$xml .= '<description>'.$description.'</description>';
 
 $p_ids = $p_var = [];
 
@@ -102,13 +129,21 @@ $parts = [
 $meta_description = strtr($okay->settings->seo_product_description, $parts);
     $xml .= '<item>';
     $xml .= '<g:id>' . $product->product_id . '</g:id>';
-    $xml .= '<g:title><![CDATA[' . ucfirst(trim(mb_strtolower($product->product_name . ' sku '. $product->sku))) . ']]></g:title>';
+    $xml .= '<g:title><![CDATA[' . ucfirst(trim(mb_strtolower($product->name . ' sku '. $product->sku))) . ']]></g:title>';
     $xml .= '<g:description><![CDATA[' . $meta_description . ']]></g:description>';
-    $xml .= '<g:link>' . $okay->config->root_url . '/products/' . $product->url . '</g:link>';
+    $xml .= '<g:link>' . $okay->config->root_url . '/' . $lang_link . 'products/' . $product->url . '</g:link>';
     
      if(!empty($p_images[$product->product_id])) {
+     	$i = 0;
         foreach($p_images[$product->product_id] as $img) {
-            $xml .= '<g:image_link>'.$okay->design->resize_modifier($img, 800, 600).'</g:image_link>';
+        	
+        	if ($i == 0) {
+				$xml .= '<g:image_link>'.$okay->design->resize_modifier($img, 700, 700).'</g:image_link>';
+			} else {
+				$xml .= '<g:additional_image_link>'.$okay->design->resize_modifier($img, 700, 700).'</g:additional_image_link>';
+			}
+           
+            $i++;
         }
     }
     

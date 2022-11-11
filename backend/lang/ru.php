@@ -69,6 +69,7 @@ $backend_translations->blog_name = 'Название записи';
 $backend_translations->blog_news = 'Новости';
 $backend_translations->blog_media = 'Медиа';
 $backend_translations->blog_partnerstvo = 'Партнеры';
+$backend_translations->blog_promotions = 'Акции';
 $backend_translations->blog_no_post = 'Нет записей';
 $backend_translations->blog_one_news = 'Новость';
 $backend_translations->blog_one_media = 'Медиа';

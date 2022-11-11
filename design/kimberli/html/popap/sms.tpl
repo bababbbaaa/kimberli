@@ -13,24 +13,7 @@
         <div class="signin-sms__wrap">
             <input class="sms-input" id="sms_code_run" type="tel" maxlength="4" onkeyup="this.value = this.value.replace (/[^\d,]/g, '')">
         </div>
-        <input class="btn btn_big btn btn_black btn_cart send_code_button" style="margin-top: 20px;" disabled="true" type="submit" name="submit2" data-method="confirm" onclick="return checkVerifiCode();"  data-language="sms_code_checkout"  value="{$lang->sms_code_checkout}">
+        <input class="btn btn_big btn btn_black btn_cart send_code_button" style="margin-top: 20px;" type="submit" name="submit2" data-method="confirm" onclick="return checkValidCode('{$formId}', 'fn_sms_verification');"  data-language="sms_code_checkout"  value="{$lang->sms_code_checkout}">
 
     </div>
 </div>
-<literal>
-    <script>
-    $('#sms_code_run').on('keyup', function(e) {
-       let value =  $(this).val();
-    if(
-        value != ''
-        && value.length == 4
-        && typeof(readCookie('sms_code')) != "undefined"
-        && readCookie('sms_code') !== null
-        && value == readCookie('sms_code')) {
-        $('.send_code_button').removeAttr('disabled');
-    } else {
-        $('.send_code_button').prop("disabled", true);
-    }
-    });
-    </script>
-</literal>

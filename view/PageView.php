@@ -9,6 +9,10 @@ class PageView extends View {
         $url = $this->request->get('page_url', 'string');
         $page = $this->pages->get_page($url);
         
+        //if ($url === 'catalog') {
+			//header("Location: /catalog/all", true, 301);
+		//}
+        
         // Отображать скрытые страницы только админу
         if((empty($page) || (!$page->visible && empty($_SESSION['admin']))) && $url != '404') {
             return false;
@@ -23,9 +27,15 @@ class PageView extends View {
         case 'atelier': 
            // $this->design->assign('dop_files_header', $this->design->fetch('dop_files_header.tpl'));
            // $footer = $this->design->fetch('dop_files_header.tpl');
-            $footer = $this->design->fetch('callback_page.tpl');
+            $footer[] = $this->design->fetch('callback_page.tpl');
             $this->design->assign('dop_files_footer', $footer);
             break;
+
+			case 'bar-kimberli':
+				//$footer[] = $this->design->fetch('form/37/37.tpl');
+				$footer[] = $this->design->fetch('page/dop_files/bar-slider.tpl');
+				$this->design->assign('dop_files_footer', $footer);
+				break;
 			default : break;
         }
 

@@ -470,6 +470,7 @@ class ProductsView extends View {
         if ($this->is_wrong_params) {
             return false;
         }
+		
         // GET-Параметры
         $brand_url = $this->request->get('brand', 'string');
 
@@ -567,8 +568,7 @@ class ProductsView extends View {
         }
 
         $mode = $this->request->get('mode');
-
-        l($mode);
+        
         if (!empty($mode)) {
             if ($mode == 'bestsellers') {
                 $filter['featured'] = 1;
@@ -718,16 +718,13 @@ class ProductsView extends View {
         if (!in_array($this->page->url, array( 'all-products', 'stock', 'bestsellers'))) {//'discounted',
             $this->translations->debug = (bool)$this->config->debug_translation;
             $translations = $this->translations->get_translations(array('lang'=>$this->language->label));
-           // print_r($this->other_filters);
             foreach ($this->other_filters as $f) {
                 $label = 'features_filter_'.$f;
                 $item = (object)array('url'=>$f, 'name'=>$translations->{$label}, 'translation'=>$label);
-               // print_r($item);
                 if (!in_array($f, $filter['other_filter'])) {
                     $tm_filter = $filter;
                     $tm_filter['other_filter'] = array($f);
                     $cnt = $this->products->count_products($tm_filter);
-                    //echo $cnt;
                     if ($cnt > 0) {
                         $other_filters[] = $item;
                     }
@@ -871,8 +868,20 @@ class ProductsView extends View {
             foreach($variants as $variant) {
                 $products[$variant->product_id]->variants[] = $variant;
 
-				$emptyVar[] = $variant->product_id;
+				//$emptyVar[] = $variant->product_id;
             }
+            
+           // l($products);
+            
+            foreach ($products as $key => $pr) {
+            	
+            	if (empty($pr->variants)) {
+					$emptyVar[] = $key;
+				}
+				
+			}
+            
+           // l($emptyVar);
 
             /*if (!empty($emptyVar) && $diff = array_diff($products_ids, $emptyVar)) {
 
@@ -944,7 +953,7 @@ class ProductsView extends View {
                 $seo_filter_patterns = $this->seo_filter_patterns->get_patterns(array('category_id'=>$this->category->id, 'type'=>'brand'));
                 $seo_filter_pattern = reset($seo_filter_patterns);
 
-            } elseif ($this->meta_array['features_values']  && count($this->meta_array['features_values']) == 1 && !$this->meta_array['brand']) {
+            } else if ($this->meta_array['features_values']  && count($this->meta_array['features_values']) == 1 && !$this->meta_array['brand']) {
 
                 foreach($this->seo_filter_patterns->get_patterns(array('category_id'=>$this->category->id, 'type'=>'feature')) as $p) {
                     $key = 'feature'.(!empty($p->feature_id) ? '_'.$p->feature_id : '');

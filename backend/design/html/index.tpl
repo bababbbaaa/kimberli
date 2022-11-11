@@ -26,25 +26,8 @@
     {/if}
     <script src="design/js/toastr.min.js"></script>
     <script src="design/js/Sortable.js"></script>
-    <!-- Google Tag Manager -->
-    {if $settings->gather_enabled}
-        {literal}
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-PHHHS9D');
-        </script>
-        {/literal}
-    {/if}
-    <!-- End Google Tag Manager -->
 </head>
 <body class="navbar-fixed {if $manager->menu_status && $is_mobile === false && $is_tablet === false}menu-pin{/if}">
-    <!-- Google Tag Manager (noscript) -->
-    {if $settings->gather_enabled}
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHHHS9D" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    {/if}
-    <!-- End Google Tag Manager (noscript) -->
 
     <a href="javascript:;" id="fix_logo" class="hidden-lg-down"></a>
     <nav id="admin_catalog" class="fn_left_menu">

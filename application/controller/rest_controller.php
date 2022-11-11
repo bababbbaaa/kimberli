@@ -3,6 +3,7 @@
 namespace rest\controller;
 
 use rest\api\Okay;
+use rest\api\SMSError_Exception;
 use rest\providers\facebook;
 use rest\api\Feedbacks;
 use rest\api\Callbacks;
@@ -16,6 +17,7 @@ use rest\validation\ValidationException;
 use rest\entity\Argo;
 use RuntimeException;
 use Exception;
+use cron\cron;
 
 class rest_controller extends base_controller
 {
@@ -176,6 +178,39 @@ class rest_controller extends base_controller
 
 		return $result;
 	}
+	
+	public function action_bar_kimberli()
+	{
+		$phone = $this->request->post('phone');
+		$name = $this->request->post('name');
+		
+		// Отправляем письмо пользователю
+		(new Okay())->notify->email(
+			'barkimberli@gmail.com',
+			'Комплимент від BAR KIMBERLI',
+			$name. ' - ' . $phone,
+			'shop@kimberli.ua'
+		);
+		
+		return ['message' => 'Ваш комплімент вже чекає на вас в Kimberli Bar менеджер за‘яжеться з вами найближчим часом'];
+	}
+	
+	
+	public function action_welcome_to_boutique(): array
+	{
+		$phone = $this->request->post('phone');
+		$name = $this->request->post('name');
+		
+		// Отправляем письмо пользователю
+		(new Okay())->notify->email(
+			'shopkimberli@gmail.com',
+			'Онлайн запис до бутика',
+			$name. ' - ' . $phone,
+			'shop@kimberli.ua'
+		);
+		
+		return ['message' => 'Наш менеджер за‘яжеться з вами найближчим часом'];
+	}
 
 	public function action_callback()
 	{
@@ -309,38 +344,80 @@ class rest_controller extends base_controller
 
 	}
 
-	public function action_set_session()
+	public function action_set_session(): array
 	{
 		$key = $this->request->post('key');
 
-
 		if (empty($key)) {
-			return ['status' => false];
+			return [];
 		}
 
-		$_SESSION['coupon'] = $key;
+		$ip = ip2long($_SERVER['REMOTE_ADDR']);
 
-		return ['status' => true];
+		$sql = "INSERT INTO `ok_popup` (`ip`, `popup`) VALUES ({$ip}, '{$key}')";
+
+		$cron = new cron();
+		$cron->query($sql);
+		
+		//$_SESSION['popup'] = $key;
+
+		return ['popup' => [$key]];
 	}
 
 	public function action_check_session(): array
 	{
-		$key = $this->request->get('key') ?? '';
+		/*if (!isset($_SESSION['popup'])) {
+			return [
+				'popup' => ['coupon'],
+			];
+		}
+		
+		return ['popup' => []];*/
+		
+		$dateFrom = new \DateTime(date('Y-m-d') . ' 00:00:00');
+		$dateTo = new \DateTime(date('Y-m-d') . ' 23:59:59');
 
-		if (empty($key)) {
-			return ['status' => false];
+		$cron = new cron();
+		$ip = ip2long($_SERVER['REMOTE_ADDR']);
+
+		$sql = "SELECT id, INET_NTOA(`ip`) as ip, popup, date_view FROM `ok_popup` as pp WHERE pp.`ip` = {$ip} AND pp.date_view >= '{$dateFrom->format('Y-m-d H:i:s')}' AND pp.date_view <= '{$dateTo->format('Y-m-d H:i:s')}'";
+
+
+		$cron->query($sql);
+
+		if ($cron->num_rows() == 0) {
+			return [
+				'popup' => ['coupon'],
+			];
 		}
 
-		return ['status' => isset($_SESSION[$key])];
+		$result = [];
+
+		$pp = [
+			'coupon',
+			//'info',
+		];
+
+		foreach ($cron->results() as $item) {
+			$result[] = $item->popup;
+		}
+
+		$diff = array_diff($pp, $result);
+
+		if (count($diff)) {
+			return ['popup' => [current($diff)]];
+		}
+
+		return ['popup' => []];
 	}
 
 	/**
 	 * Generate new coupon and send sms
 	 *
 	 * @return array
-	 * @throws \rest\api\SMSError_Exception
+	 * @throws SMSError_Exception
 	 */
-	public function action_coupon()
+	public function action_coupon(): array
 	{
 		$phone = $this->request->post('phone');
 
@@ -359,8 +436,8 @@ class rest_controller extends base_controller
 		$coupon = new Coupons();
 
 		$kupon = new \stdClass();
-		$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$kupon->code = $coupon->generate_string($permitted_chars, 10);
+		//$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$kupon->code = mt_rand(1000,9999);//$coupon->generate_string($permitted_chars, 10);
 		$kupon->type = 'percentage';
 
 		$date_expire = new \DateTime('now + 7 days');

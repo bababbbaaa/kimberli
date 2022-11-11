@@ -73,6 +73,7 @@ $backend_translations->blog_no_post = 'Немає записів';
 $backend_translations->blog_one_news = 'Новина';
 $backend_translations->blog_one_media = 'Медіа';
 $backend_translations->blog_one_partnerstvo = 'Партнер';
+$backend_translations->blog_promotions = 'Акції';
 $backend_translations->blog_search = 'пошук запису…';
 $backend_translations->blog_type = 'Тип';
 $backend_translations->brand_add = 'Додавання бренду';
