@@ -9,5 +9,5 @@ mail/*
 dev/*
 vendor.tgz
 composer.phar
-.idea
+.idea/*
 vendor/*
