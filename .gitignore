@@ -11,3 +11,5 @@ vendor.tgz
 composer.phar
 .idea
 vendor/*
+vendor/
+config/config.local.php
