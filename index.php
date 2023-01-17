@@ -17,9 +17,9 @@ if(!empty($_SERVER['HTTP_USER_AGENT'])){
 session_start();
 
 try {
-require_once('view/IndexView.php');
+    require_once('view/IndexView.php');
 
-$view = new IndexView();
+    $view = new IndexView();
 
 //header("X-Powered-CMS: OkayCMS ".$view->config->version." ".$view->config->version_type);
 

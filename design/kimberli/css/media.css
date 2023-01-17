@@ -827,6 +827,12 @@
     footer .foot_social a {
         padding: 0px 15px;
     }
+
+    footer .foot_social .phone {
+        display: inherit;
+        margin-bottom: 20px;
+    }
+
     .informers li {
         margin-left: 10px;
     }

@@ -188,7 +188,7 @@
                                         {* Product variants *}
                                         <select name="variant" class="fn_variant variant_select{if $product->variants|count < 2} hidden{/if}">
                                             {foreach $product->variants as $v}
-                                                <option{if $product->variant->sku == $v->sku} selected{/if} value="{$v->id}" data-href="{$lang_link}/products/{$v->url}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if} {if $v->units}data-units="{$v->units}"{/if}>{if $v->name}{$v->name|escape} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
+                                                <option{if $product->variant->sku == $v->sku} selected{/if} value="{$v->id}" data-href="{$lang_link}/products/{$v->url}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if} {if $v->units}data-units="{$v->units}"{/if}>{if $v->name}{$v->name|escape}{if $v->weight}, {$lang->weight} - {$v->weight}{/if} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
                                             {/foreach}
                                         </select>
                                     </div>

@@ -102,13 +102,13 @@ foreach ($result as $k => $r){
                 
                 $result[$k][$kk]->category = $cc[$cat_rez->id]['name'];//$cat_rez->name;
                 $result[$k][$kk]->roz_cat_id = $cc[$cat_rez->id]['id'];
-                $opt = "SELECT  f.id as feature_id, l.name ,po.value
+            $opt = "SELECT  f.id as feature_id, l.name ,po.value
             FROM ok_options po
             LEFT JOIN ok_features f ON f.id=po.feature_id
             LEFT JOIN ok_lang_features l ON l.feature_id=f.id AND l.lang_id = 3
             WHERE po.product_id = {$result[$k][$kk]->id} AND po.lang_id='3' ";
             
-                $okay->db->query($opt);
+            $okay->db->query($opt);
             $option = $okay->db->results();
             $par = [];
             $name = [];
@@ -150,7 +150,7 @@ foreach($category as $category)
 $xml .= '</categories>';
 
 $xml .= '<offers>';
-foreach ($result as $k=>$res){
+foreach ($result as $k => $res){
     foreach ($result[$k] as $p){
     if(true){
         $available = 'true';

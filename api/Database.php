@@ -37,7 +37,7 @@ class Database extends Okay {
         // Выводим сообщение, в случае ошибки
         if($this->mysqli->connect_error)
         {
-            @file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=111' . urlencode($this->mysqli->connect_error)).'&parse_mode=HTML';
+           @file_get_contents('https://api.telegram.org/bot539849731:AAH9t4G2hWBv5tFpACwfFg3RqsPhK4NrvKI/sendMessage?chat_id=' . 404070580 . '&text=111' . urlencode($this->mysqli->connect_error)).'&parse_mode=HTML';
             //trigger_error("Could not connect to the database: ".$this->mysqli->connect_error, E_USER_WARNING);
             echo file_get_contents('https://kimberli.ua/500.html');
             exit();
@@ -58,8 +58,9 @@ class Database extends Okay {
     /**
      * Закрываем подключение к базе данных
      */
-    public function disconnect() {
-        if(!@$this->mysqli->close())
+    public function disconnect(): bool
+    {
+        if(!$this->mysqli->close())
             return true;
         else
             return false;
@@ -76,9 +77,7 @@ class Database extends Okay {
     
         $args = func_get_args();
         $q = call_user_func_array(array($this, 'placehold'), $args);
-            if ($_SERVER['REMOTE_ADDR'] == '195.38.11.96') {
-            //l($q);
-        }
+
         $this->res = $this->mysqli->query($q);
         if ($this->config->sql_debug && $this->res == false) {
         
@@ -112,8 +111,7 @@ class Database extends Okay {
         $tmpl = array_shift($args);
         // Заменяем все __ на префикс, но только необрамленные кавычками
         $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1".$this->config->db_prefix."\$2", $tmpl);
-        if(!empty($args))
-        {
+        if(!empty($args))  {
             $result = $this->sql_placeholder_ex($tmpl, $args, $error);
             if ($result === false)
             {
@@ -122,9 +120,9 @@ class Database extends Okay {
                 return false;
             }
             return $result;
-        }
-        else
+        } else {
             return $tmpl;
+        }
     }
     
     /**
@@ -138,8 +136,9 @@ class Database extends Okay {
             return false;
         }
     
-        if($this->res->num_rows == 0)
-            return array();
+        if($this->res->num_rows == 0) {
+            return [];
+        }
     
         while($row = $this->res->fetch_object())
         {

@@ -17,3 +17,4 @@
 2022-02-15 18:22:41-{"orderId":"1187","paymentState":"CANCELED","signature":"W7tsYWg/YHQPJ4F3JZvcQSI4Lxs=","info":{},"message":"Client hasn't completed payment","storeId":"41F84FF33E1F4564A8D1"}
 2022-02-16 18:17:14-{"orderId":"1188","paymentState":"CANCELED","signature":"OSwCg2sz5auXoT/uYliCKWucT/s=","info":{},"message":"Client hasn't completed payment","storeId":"41F84FF33E1F4564A8D1"}
 2022-02-16 18:17:24-{"orderId":"1192","paymentState":"CANCELED","signature":"/xiZahosqHlGzNfIlruCEe0qYF0=","info":{},"message":"Client hasn't completed payment","storeId":"41F84FF33E1F4564A8D1"}
+2022-12-24 16:16:52-{"orderId":"1334","paymentState":"CANCELED","signature":"D1E7KAjdMojR/NGBdEz1bToBXAI=","message":"Клієнт не завершив оплату","storeId":"CB8901F15DB843B2837B"}

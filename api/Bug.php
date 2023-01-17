@@ -57,7 +57,9 @@ class Bug extends Okay {
     }
 
     public function add_exception($e) {
-         if(!$this->config->bug_track) return false;
+         if(false === $this->config->bug_track) {
+             return false;
+         }
         
          $query  =  "SELECT b.`id`, b.`count` FROM __bug b
             WHERE 
@@ -66,18 +68,20 @@ class Bug extends Okay {
                     and type = '".self::error('EXCEPTION')."'
                     and message like '{$e->getMessage()}'
             LIMIT 1";
-                    $this->db->query($query);
+         $this->db->query($query);
          $results = $this->db->results();
+
          $id = isset($results[0]->id) ? $results[0]->id : 0;
          $count = isset($results[0]->count) ? $results[0]->count : 0;
-        if($id){
+
+        if ($id) {
             $bug = (object)[];
              $bug->count = ($count+1);
              $bug->fix = 0;
              $bug->utime = date("Y-m-d H:i:s");
              $query = $this->db->placehold("UPDATE __bug SET ?% WHERE id=? LIMIT 1", $bug, intval($id));
                 $this->db->query($query);
-        }else{
+        } else {
        $bug = (object)[];
        $bug->utime = date("Y-m-d H:i:s");
             $bug->class = get_class($e);

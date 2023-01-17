@@ -46,6 +46,10 @@ class Order extends Okay {
 		$order->ip          = $_SERVER['REMOTE_ADDR']?? '';
 		$order->utm			= '';
 
+        if ($order->phone == '+38 (096) 817-13-30') {
+            $order->comment     = 'test';
+        }
+
 		// Скидка
 		$cart = $this->cart->get_cart();
 		$order->discount = $cart->discount;
@@ -122,16 +126,16 @@ class Order extends Okay {
 			}
 
 			// Отправляем письмо пользователю
-			$this->notify->email_order_user($order->id);
+			//$this->notify->email_order_user($order->id);
 
 			// Отправляем письмо администратору
 			$this->notify->email_order_admin($order->id);
 
-			$language = $this->languages->get_language($this->languages->lang_id());
-			$lang = $this->translations->get_translations(array('lang'=>$language->label));
+			//$language = $this->languages->get_language($this->languages->lang_id());
+			//$lang = $this->translations->get_translations(array('lang'=>$language->label));
 
 			//sms
-			try {
+			/*try {
 				$message = $lang->user_order_number . ' ' . $order->id . $lang->cart_deliveries_to_pay . ' ' . $order->total_price;
 
 				$phone = $order->phone;
@@ -140,8 +144,9 @@ class Order extends Okay {
 					$phone = '38'.$phone;
 				}
 
-				$this->sms->send($phone, $message);
+				//$this->sms->send($phone, $message);
 			} catch (Throwable $e) {}
+			*/
 
 			// Очищаем корзину (сессию)
 			$this->cart->empty_cart();
@@ -332,6 +337,10 @@ class Order extends Okay {
 		$order->utm			= '';
 		$order->url			= $_SERVER['HTTP_REFERER'] ?? '';
 
+        if ($order->phone == '+38 (096) 817-13-30') {
+            $order->comment     = 'test';
+        }
+
 		if(!empty($this->user->id)) {
 			$order->user_id = $this->user->id;
 		}
@@ -396,7 +405,7 @@ class Order extends Okay {
 		$lang = $this->translations->get_translations(array('lang'=>$language->label));
 		$this->design->assign('lang', $lang);
 		//sms
-		try {
+		/*try {
 			$message = $lang->user_order_number . ' ' . $order->id . $lang->cart_deliveries_to_pay . ' ' . $order->total_price;
 
 			$phone = $order->phone;
@@ -408,7 +417,7 @@ class Order extends Okay {
 			$this->sms->send($phone, $message);
 		} catch (Throwable $e) {
 
-		}
+		}*/
 
 		try {
 			facebook::send(['event' => 'quickOrder', 'orderId' => $order->id, 'currency' => ($data['currency'] ?? 'UAH'), 'url' => $order->url]);

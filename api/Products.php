@@ -27,7 +27,7 @@ class Products extends Okay {
         $new_filter = '';
         $other_filter = '';
 		$group_by = "GROUP BY p.id";
-        $order = 'pv.price ASC';
+        $order = 'p.view DESC, p.stock DESC';
 
         $include_empty = false;
 
@@ -131,7 +131,8 @@ class Products extends Okay {
 
         if(isset($filter['price'])) {
             if(isset($filter['price']['min'])) {
-                $price_filter .= $this->db->placehold(" AND (floor(IF(pv.currency_id=0 OR c.id is null,p.price, p.price*c.rate_to/c.rate_from)*$coef)>= ? or pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')) ", $this->db->escape(trim($filter['price']['min'])));
+                $price_filter .= $this->db->placehold(" AND (floor(IF(pv.currency_id=0 OR c.id is null,p.price, p.price*c.rate_to/c.rate_from)*$coef)>= ? ) ", $this->db->escape(trim($filter['price']['min'])));
+           //or pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
             }
             if(isset($filter['price']['max'])) {
                 $price_filter .= $this->db->placehold(" AND floor(IF(pv.currency_id=0 OR c.id is null,p.price, p.price*c.rate_to/c.rate_from)*$coef)<= ? ", $this->db->escape(trim($filter['price']['max'])));
@@ -185,6 +186,9 @@ class Products extends Okay {
 				case 'last_update_desc':
 					$order = "p.last_modify DESC";
 					break;
+                case 'view':
+                    $order = "p.view DESC, p.stock DESC";
+                    break;
             }
         }
         
@@ -237,9 +241,9 @@ class Products extends Okay {
         }
 
 		if(!empty($filter['stock']) || !empty($filter['in_stock']) || (!empty($filter['other_filter']) && in_array("stock", $filter['other_filter']))) {
-			$stock_filter = " AND (pv.stock > 0
-			OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
-			)";
+			$stock_filter = " AND pv.stock > 0";
+			//OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
+			//)";
 		}else if(isset($filter['no_stock'])) {
 			$stock_filter = " AND (pv.stock = 0 or pv.stock is NULL) ";
 		}
@@ -541,9 +545,9 @@ class Products extends Okay {
         }
 
 		if(isset($filter['stock']) || isset($filter['in_stock']) || (!empty($filter['other_filter']) && in_array("stock", $filter['other_filter']))) {
-			$stock_filter = " AND (pv.stock > 0
-			OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
-			)";
+			$stock_filter = " AND pv.stock > 0";
+			//OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
+			//)";
 		} else if(isset($filter['no_stock'])) {
 			$stock_filter = " AND (pv.stock = 0 or pv.stock is NULL)";
 		}
@@ -1256,6 +1260,16 @@ LIMIT 1";
         $id = $this->db->insert_id();
         $this->db->query("UPDATE __spec_img SET position=id WHERE id=?", $id);
         return $id;
+    }
+
+    public function addView(int $productId) {
+
+        $this->db->query("SELECT `view` FROM  `ok_products` WHERE id = {$productId}");
+        $view = $this->db->result('view');
+
+        $view++;
+
+        $this->db->query("UPDATE ok_products SET view = $view WHERE id = {$productId}");
     }
 
 }

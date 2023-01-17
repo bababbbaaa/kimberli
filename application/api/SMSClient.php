@@ -82,16 +82,22 @@ class SMSClient extends Pest {
 	public static function getSessionID_St( $login, $password ) {
 		$pest = new Pest(SMSClient::m_baseURL);
 		$sessionID = "";
+
 		try {
 			$sessionID = str_replace('"', '',
 				$pest->get('/User/SessionId?login='.$login.'&password='.$password)
 			);
-		} catch( Exception $e ) {
+
+		} catch (Exception $e) {
+
 			$errorInfo = json_decode($e->getMessage());
 			unset($pest);
-			throw( new SMSError_Exception( $errorInfo->Desc, $errorInfo->Code));
+
+			throw(new SMSError_Exception($errorInfo->Desc, $errorInfo->Code));
 		}
+
 		unset($pest);
+
 		return $sessionID;
 	}
 

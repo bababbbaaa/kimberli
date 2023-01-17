@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="career_heading">
             {*<div class="career_title">Работа в Kimberli</div>*}
-            <div class="career_descr">Актуальные вакансии в компании</div>
+            <div class="career_descr">Actual vacancies in the company</div>
         </div>
 {if $vacancies }
         <div class="vacancies">

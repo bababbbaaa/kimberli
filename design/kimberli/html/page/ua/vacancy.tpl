@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="career_heading">
             {*<div class="career_title">Работа в Kimberli</div>*}
-            <div class="career_descr">Актуальные вакансии в компании</div>
+            <div class="career_descr">Актуальні вакансії в компанії</div>
         </div>
 {if $vacancies }
         <div class="vacancies">
@@ -11,12 +11,12 @@
                     <div class="vacancy_preview">
                         <div class="name">{$vacancy->name|escape}</div>
                         <div class="details">
-                            <span>Опыт работы {$vacancy->experience|escape}</span>
+                            <span>Досвід роботи {$vacancy->experience|escape}</span>
                             <span>{$vacancy->schedule|escape}</span>
                             <span>{$vacancy->city|escape}</span>
                         </div>
                         <div class="arrow">
-                            <span>Подробней</span>
+                            <span>Докладніше</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="16" viewBox="0 0 25 16" fill="none">
                                 <path d="M24.7071 8.70711C25.0976 8.31658 25.0976 7.68342 24.7071 7.29289L18.3431 0.928932C17.9526 0.538408 17.3195 0.538408 16.9289 0.928932C16.5384 1.31946 16.5384 1.95262 16.9289 2.34315L22.5858 8L16.9289 13.6569C16.5384 14.0474 16.5384 14.6805 16.9289 15.0711C17.3195 15.4616 17.9526 15.4616 18.3431 15.0711L24.7071 8.70711ZM0 9H24V7H0V9Z" fill="#000"/>
                             </svg>
@@ -25,55 +25,55 @@
                     <div class="vacancy_content">
                         <div class="vacancy_details">
                             <div class="vacancy_details_item">
-                                <span>Опыт работы</span>
+                                <span>Досвід роботи</span>
                                 <p>{$vacancy->experience|escape}</p>
                             </div>
                             <div class="vacancy_details_item">
-                                <span>Тип работы</span>
+                                <span>Тип работи</span>
                                 <p>{$vacancy->schedule|escape}</p>
                             </div>
                             <div class="vacancy_details_item">
-                                <span>Город</span>
+                                <span>Місто</span>
                                 <p>{$vacancy->city|escape}</p>
                             </div>
                             <div class="vacancy_details_item">
-                                <span>Дата вакансии</span>
+                                <span>Дата вакансії</span>
                                 <p>{$vacancy->date_vacancy|date}</p>
                             </div>
                         </div>
 
                         {if $vacancy->description}
                             <div class="vacancy_descr">
-                                <div class="vacancy_descr_title">Описание</div>
+                                <div class="vacancy_descr_title">Деталі</div>
                                 {$vacancy->description}
                             </div>
                         {/if}
                         {if $vacancy->responsibilities}
                         <div class="vacancy_info">
-                            <div class="vacancy_info_title">Обязанности</div>
+                            <div class="vacancy_info_title">Обовязки</div>
                             {$vacancy->responsibilities}
                         </div>
                         {/if}
                         {if $vacancy->required_skills}
                         <div class="vacancy_info">
-                            <div class="vacancy_info_title">Необходимые навыки</div>
+                            <div class="vacancy_info_title">Необхідні навички</div>
                             {$vacancy->required_skills}
                         </div>
                         {/if}
                         {if $vacancy->extra_skills}
                         <div class="vacancy_info">
-                            <div class="vacancy_info_title">Будет плюсом</div>
+                            <div class="vacancy_info_title">Буде плюсом</div>
                             {$vacancy->extra_skills}
                         </div>
                         {/if}
                         {if $vacancy->offer}
                         <div class="vacancy_info">
-                            <div class="vacancy_info_title">Предлагаем</div>
+                            <div class="vacancy_info_title">Пропонуємо</div>
                             {$vacancy->offer}
                         </div>
                         {/if}
 
-                        <button class="vacancy_submit" data-vacancy="{$vacancy->name|escape}" type="button">Отправить резюме</button>
+                        <button class="vacancy_submit" data-vacancy="{$vacancy->name|escape}" type="button">Відправити резюме</button>
                     </div>
                 </div>
             {/foreach}
@@ -85,17 +85,17 @@
 <div class="atelier-request vacancy-request">
     <div class="container-fluid">
         <div class="atelier-request_heading">
-            <div class="atelier-request_heading_title">подать свое резюме</div>
+            <div class="atelier-request_heading_title">відправити свое резюме</div>
         </div>
         <form id="vacancy-request_form" action="POST" class="atelier-request_form" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="text" name="name" placeholder="Имя*" required>
+                <input type="text" name="name" placeholder="Ім'я*" required>
             </div>
             <div class="form-group">
-                <input type="text" name="phone" placeholder="Номер телефона*" required>
+                <input type="text" name="phone" placeholder="Номер телефону*" required>
             </div>
             <div class="form-group">
-                <input type="text" name="vacancy" placeholder="Желаемая должность">
+                <input type="text" name="vacancy" placeholder="Бажана посада">
             </div>
             <div class="form-group upload">
                 <input type="file" id="file-input" name="resume">
@@ -107,16 +107,16 @@
                     <svg class="check-icon" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 4L4 7L10 1" stroke="#BE9948" stroke-width="1.5"/>
                     </svg>
-                    <span>Загрузить резюме</span>
+                    <span>Завантажити резюме</span>
                 </label>
                 <div class="remove-file">
                     <svg xmlns="http://www.w3.org/2000/svg" height="512pt" viewBox="0 0 512 512" width="512pt"><path d="m256 0c-141.164062 0-256 114.835938-256 256s114.835938 256 256 256 256-114.835938 256-256-114.835938-256-256-256zm0 0" fill="#f44336"/><path d="m350.273438 320.105469c8.339843 8.34375 8.339843 21.824219 0 30.167969-4.160157 4.160156-9.621094 6.25-15.085938 6.25-5.460938 0-10.921875-2.089844-15.082031-6.25l-64.105469-64.109376-64.105469 64.109376c-4.160156 4.160156-9.621093 6.25-15.082031 6.25-5.464844 0-10.925781-2.089844-15.085938-6.25-8.339843-8.34375-8.339843-21.824219 0-30.167969l64.109376-64.105469-64.109376-64.105469c-8.339843-8.34375-8.339843-21.824219 0-30.167969 8.34375-8.339843 21.824219-8.339843 30.167969 0l64.105469 64.109376 64.105469-64.109376c8.34375-8.339843 21.824219-8.339843 30.167969 0 8.339843 8.34375 8.339843 21.824219 0 30.167969l-64.109376 64.105469zm0 0" fill="#fafafa"/></svg>
                 </div>
             </div>
             <div class="form-group w-100">
-                <textarea name="comment" placeholder="Добавить сообщение"></textarea>
+                <textarea name="comment" placeholder="Додати коментар"></textarea>
             </div>
-            <button class="submit">Отправить резюме</button>
+            <button class="submit">Відправити резюме</button>
         </form>
         <div class="vacancy-request_form_result"></div>
     </div>

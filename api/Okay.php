@@ -188,13 +188,13 @@ class Okay {
             ini_set('display_errors', 'off');
         }
         
-        if (empty($this->country) && isset($_SESSION['country']['ip']) && $_SESSION['country']['ip'] == $_SERVER['REMOTE_ADDR']) {
+      /*  if (empty($this->country) && isset($_SESSION['country']['ip']) && $_SESSION['country']['ip'] == $_SERVER['REMOTE_ADDR']) {
         	$this->country = $_SESSION['country']['iso'];
 		} else if (!empty($this->country) && isset($_SESSION['country']['ip']) && $_SESSION['country']['ip'] != $_SERVER['REMOTE_ADDR']) {
         	$this->getCountry();
 		} else {
 			$this->getCountry();
-		}
+		}*/
     }
     
     private function getCountry()

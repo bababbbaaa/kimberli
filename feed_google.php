@@ -8,12 +8,17 @@ $lang_link = '';
 $title = 'Ювелірний Дім Kimberli';
 $description = 'Ювелірний Дім Kimberli - це великий вибір високоякісних прикрас із золота з довічною гарантією на всю продукцію і сертифікованим камінням від виробника.';
 
+// Все валюты
+$okay->currencies = $okay->money->get_currencies(array('enabled'=>1));
+$okay->currency = reset($okay->currencies);
+
 if (isset($_GET['lang_label'])) {
 	switch ($_GET['lang_label']) {
 		case 'ru/':
 			$okay->languages->set_lang_id(1);
 			$okay->language = $okay->languages->get_language($okay->languages->lang_id());
 			$lang_link = $okay->language->label . '/';
+            //$okay->currency = reset($okay->currencies);
 			
 			$title = 'Ювелирный Дом Kimberli';
 			$description = 'Ювелирный Дом Kimberli – это большой выбор высококачественных украшений из золота с пожизненной гарантией на всю продукцию и сертифицированными камнями от производителя.';
@@ -43,20 +48,20 @@ $query = "SELECT
         v.name as variant_name, 
         v.position as variant_position, 
         p.id as product_id, 
-        p.url, 
+        v.url, 
         p.annotation, 
         c.rate_from, 
         c.rate_to, 
         v.currency_id,
        $lang_sql->fields
     FROM __variants v 
-    LEFT JOIN __products p ON v.product_id=p.id
+    LEFT JOIN __products p ON v.product_id = p.id
     $lang_sql->join
     left join __currencies as c on(c.id=v.currency_id)
     WHERE 
         1 
         AND p.visible 
-        AND p.xml_category_id
+        #AND p.xml_category_id
         $stock_filter
         $price_filter 
     GROUP BY v.id 
@@ -117,19 +122,35 @@ foreach($products as $product)
 {
    
     
-    $categories = $okay->categories->get_categories(array('product_id' => $product->product_id));
-    $category = array_shift($categories);
+$categories = $okay->categories->get_categories(array('product_id' => $product->product_id));
+$category = array_shift($categories);
+
 $parts = [
-            //'{$category}' => $category->name,
-            '{$product}' => mb_strtolower($product->product_name),
-            '{$price}' => $product->price,
-            '{$sitename}' => $okay->settings->site_name,
+            '{$category}' => ($category->name),
+            '{$product}' => (mb_strtolower($product->product_name?? '')),
+            '{$price}' => ($product->price . ' '. $okay->currency->sign),
+            '{$sitename}' => ($okay->settings->site_name ?? ''),
         ];
 
-$meta_description = strtr($okay->settings->seo_product_description, $parts);
+    $default_products_seo_pattern = (object) $okay->settings->default_products_seo_pattern;
+
+$meta_description = $auto_meta_description = $default_products_seo_pattern->auto_meta_desc;//$product->meta_description;//strtr($okay->settings->seo_product_description, $parts);
+$meta_description = strtr($auto_meta_description, $parts);
+/*
+if (empty($meta_description)) {
+    $opt = "SELECT  f.id as feature_id, l.name ,po.value
+            FROM ok_options po
+            LEFT JOIN ok_features f ON f.id=po.feature_id
+            LEFT JOIN ok_lang_features l ON l.feature_id=f.id AND l.lang_id = 3
+            WHERE po.product_id = {$result[$k][$kk]->id} AND po.lang_id='3' ";
+
+    $okay->db->query($opt);
+    $option = $okay->db->results();
+}*/
+
     $xml .= '<item>';
-    $xml .= '<g:id>' . $product->product_id . '</g:id>';
-    $xml .= '<g:title><![CDATA[' . ucfirst(trim(mb_strtolower($product->name . ' sku '. $product->sku))) . ']]></g:title>';
+    $xml .= '<g:id>' . $product->sku . '</g:id>';
+    $xml .= '<g:title><![CDATA[' . ucfirst(trim(mb_strtolower($product->name . ' ('. $product->sku . ')'))) . ']]></g:title>';
     $xml .= '<g:description><![CDATA[' . $meta_description . ']]></g:description>';
     $xml .= '<g:link>' . $okay->config->root_url . '/' . $lang_link . 'products/' . $product->url . '</g:link>';
     

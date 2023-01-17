@@ -142,6 +142,7 @@ class ComposerStaticInit9e1ebd80bf262b86e8cece8ac2ff8bd0
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
         'PayParts\\PayParts' => __DIR__ . '/..' . '/privatbank/payparts/src/PayParts/PayParts.php',
         'Smarty' => __DIR__ . '/..' . '/smarty/smarty/libs/Smarty.class.php',

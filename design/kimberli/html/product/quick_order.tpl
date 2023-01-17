@@ -38,7 +38,7 @@
         
             
     <form class="quick_order_form popup fn_validate_callback"  method="post" id="quick_order_form">
-        <input class="hidden" type="text"  name="variant" value="{$product->variant->id}" >
+        <input type="hidden" name="variant" value="{$product->variant->id}" >
         <input type="hidden" name="currency" value="{$currency->code}">
         {* User's name *}
        {* <div class="form_group">

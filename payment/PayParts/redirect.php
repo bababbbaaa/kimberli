@@ -4,6 +4,16 @@ chdir ('../../');
 
 session_start();
 
+if (empty($_SESSION['StoreId']) || empty($_SESSION['Password'])) {
+    echo 'error Store';
+    exit;
+}
+
+if (empty($_SESSION['OrderID'])) {
+    echo 'error Order';
+    exit;
+}
+
 require_once("payment/PayParts/PayParts.php");
 
 $pp = new PayParts($_SESSION['StoreId'], $_SESSION['Password']);

@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="contacts_shop">
-                        <div class="contacts_shop_location" data-lat="50.440317357573804" data-lng="30.54435428975263">Київ, ул. Московская, 8 - KIMBERLI BAR</div>
+                        <div class="contacts_shop_location" data-lat="50.440317357573804" data-lng="30.54435428975263">Київ, вул. Князів Острозьких, 8 - KIMBERLI BAR</div>
                         <div class="contacts_shop_content">
                             <a href="#" class="contacts_shop_link">kimberli.ua</a>
                             <div class="contacts_shop_detail">

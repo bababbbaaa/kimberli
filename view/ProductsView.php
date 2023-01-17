@@ -589,7 +589,7 @@ class ProductsView extends View {
         if (!empty($_SESSION['sort'])) {
             $filter['sort'] = $_SESSION['sort'];
         } else {
-            $filter['sort'] = 'price';
+            $filter['sort'] = 'view';
         }
 
         $this->design->assign('sort', $filter['sort']);

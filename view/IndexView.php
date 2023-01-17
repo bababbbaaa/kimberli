@@ -3,11 +3,10 @@
 require_once('View.php');
 
 class IndexView extends View {
-    
-    
-    
+
     public function __construct() {
         parent::__construct();
+
     }
     public $modules_dir = 'view/';
     

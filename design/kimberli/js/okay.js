@@ -657,6 +657,35 @@ $(document).on('submit', '.fn_validate_feedback', function(e) {
     }
 
     if (phone) {
+        $.ajax({
+            url: "rest/feedback",
+            method: 'POST',
+            data: $('.fn_validate_feedback').serialize(),
+            dataType: 'json',
+            success: function (data) {
+                if (data.status === true) {
+                    //fbq('track', 'Contact', { content_name: 'my-Name', content_category: 'Valuation Form submitted'});
+                    gtag( 'event', 'WriteInContact', { 'event_category' : 'send' ,});
+
+                    $.fancybox.close({
+                        src: '#fn_sms_verification',
+                        type: 'inline'
+                    });
+
+                    $('.fn_validate_feedback' ).html(data.data.message);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+                $.fancybox.close({
+                    src: '#fn_sms_verification',
+                    type: 'inline'
+                });
+                return false;
+            }
+        });
+
+       /*
         val.prop("disabled", true);
 
         sendSms(phone);
@@ -665,13 +694,13 @@ $(document).on('submit', '.fn_validate_feedback', function(e) {
             val.removeAttr('disabled');
         }, 3000);
 
-        console.log('send sms');
+        console.log('send sms');*/
     }
 
     console.log('end');
     return false;
 });
-
+/*
 $('.fn_validate_feedback input[type="submit"]').click(function(e) {
 
     if ($(this).attr('data-method') == 'confirm') {
@@ -737,7 +766,7 @@ $('.fn_validate_feedback input[type="submit"]').click(function(e) {
             alert('Код устарел!');
         }
     }
-});
+});*/
 
 /* Аякс callback */
 $(document).on('submit', '.callback_form', function(e) {
@@ -817,7 +846,8 @@ $(document).on('submit', '.quick_order_form', function(e) {
     console.log(variant);
 
     if (phone) {
-        val.prop("disabled", true);
+        confirmQuickOrder($('.quick_order_form').serialize());
+      /*  val.prop("disabled", true);
 
         sendSms(phone);
 
@@ -825,13 +855,13 @@ $(document).on('submit', '.quick_order_form', function(e) {
             val.removeAttr('disabled');
         }, 3000);
 
-        console.log('send sms');
+        console.log('send sms');*/
     }
 
     console.log('end');
     return false;
 });
-
+/*
 $('.quick_order_form input[type="submit"]').click(function(e) {
 
     if ($(this).attr('data-method') == 'confirm') {
@@ -871,7 +901,7 @@ $('.quick_order_form input[type="submit"]').click(function(e) {
             alert('Код устарел!');
         }
     }
-});
+});*/
 
 function confirmQuickOrder(data)
 {
@@ -914,10 +944,10 @@ function confirmQuickOrder(data)
                 );*/
 
 
-                $.fancybox.close({
+               /* $.fancybox.close({
                     src: '#fn_sms_verification',
                     type: 'inline'
-                });
+                });*/
 
                 $('.hide_result').hide();
                 $('.result_quick_order').html(data.data.message).fadeIn();
@@ -981,7 +1011,8 @@ $(document).on('submit', '.fn_validate_cart', function(e) {
         }
 
         if (phone) {
-            val.prop("disabled", true);
+            confirmOrder($('.fn_validate_cart').serialize());
+            /*val.prop("disabled", true);
 
             sendSms(phone);
 
@@ -989,7 +1020,7 @@ $(document).on('submit', '.fn_validate_cart', function(e) {
                 val.removeAttr('disabled');
             }, 3000);
 
-            console.log('send sms');
+            console.log('send sms');*/
         } else {
           alert('error phone');
         }
@@ -1001,7 +1032,7 @@ $(document).on('submit', '.fn_validate_cart', function(e) {
     return false;
 });
 /* Ajax new order cart confirm */
-$('.fn_validate_cart input[type="submit"]').click(function(e) {
+/*$('.fn_validate_cart input[type="submit"]').click(function(e) {
 
     if ($(this).attr('data-method') == 'confirm') {
 
@@ -1037,7 +1068,7 @@ $('.fn_validate_cart input[type="submit"]').click(function(e) {
         alert('Код устарел!');
     }
 }
-});
+});*/
 
 function checkValidCode(formId = '', popupId = '') {
 
@@ -2173,6 +2204,7 @@ $(function(){
     } );
 
 /* показать попапы через 10 сек после загрузки страницы*/
+/*
 setTimeout(function() {
 
     let pathname = $(location).attr('pathname');
@@ -2191,9 +2223,9 @@ setTimeout(function() {
 
                     showPopup(popup);
 
-                    setTimeout(function() {
-                        showPopup40('coupon');
-                    }, 9000000);
+                   // setTimeout(function() {
+                    //    showPopup40('coupon');
+                  //  }, 9000000);
 
                     writeSession(popup);
                 } else if (pathname == '/cart') {
@@ -2205,13 +2237,17 @@ setTimeout(function() {
                 return false;
             }
         });
-    }, 10000);
+    }, 30000);
+    */
 
-});
+
+
+});/* Document ready */
+
 
 function showPopup40(popup) {
 
-    showPopup(popup);
+    //showPopup(popup);
       //  setTimeout(function() {
       //      showPopup40(popup);
       //  }, 40000);

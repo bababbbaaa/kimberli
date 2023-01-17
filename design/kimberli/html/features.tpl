@@ -32,7 +32,7 @@
             </div>
             <div class="filter_group">
                 {* Display all brands *}
-                <div class="filter_item">
+               {* <div class="filter_item">
                     <form method="post">
                         {$furl = {furl params=[filter=>null, page=>null]}}
                         <button type="submit" name="prg_seo_hide" class="filter_link {if !$smarty.get.filter} checked{/if}" value="{$furl|escape}">
@@ -40,7 +40,7 @@
                             <span data-language="features_all">{$lang->features_all}</span>
                         </button>
                     </form>
-                </div>
+                </div>*}
                 {* Other filter list *}
                 {foreach $other_filters as $f}
                     <div class="filter_item">
@@ -110,7 +110,7 @@
 
                 <div class="filter_group feature_content">
                     {* Display all features *}
-                    <div class="filter_item">
+                   {* <div class="filter_item">
                         <form method="post">
                             {$furl = {furl params=[$f->url=>null, page=>null]}}
                             <button type="submit" name="prg_seo_hide" class="filter_link {if !$smarty.get.$key} checked{/if}" value="{$furl|escape}">
@@ -118,7 +118,7 @@
                                 <span data-language="features_all">{$lang->features_all}</span>
                             </button>
                         </form>
-                    </div>
+                    </div>*}
                     {* Feture value *}
                     {$o_count = 0}
                     {foreach $f->features_values as $fv}

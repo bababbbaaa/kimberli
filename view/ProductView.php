@@ -19,6 +19,8 @@ class ProductView extends View {
             return false;
         }
 
+        $this->products->addView($product->id);
+
         $productShtr = preg_replace('~[^0-9]+~','',$product_url);
         
         //lastModify
@@ -34,7 +36,7 @@ class ProductView extends View {
             }
         }
         
-        $variants = array();
+        $variants = [];
         $variantsData = $this->variants->get_variants(array('sku'=>$product->new_sku, 'in_stock' => 1));
 
         if (empty($variantsData)) {
@@ -44,7 +46,7 @@ class ProductView extends View {
         foreach($variantsData as $v) {
             $variants[$v->sku] = $v;
         }
-       // l($variants);
+        //l($variants);
 
         $product->variants = $variants;
         
@@ -269,15 +271,15 @@ class ProductView extends View {
         $default_products_seo_pattern = (object)$this->settings->default_products_seo_pattern;
         $parts = array(
             '{$brand}'    => ($this->design->get_var('brand') ? $this->design->get_var('brand')->name : ''),
-            '{$product}'  => ($product->name ? $product->name : ''),
+            '{$product}'  => ($product->name ?? ''),
             '{$price}'    => ($product->variant->price != null ? $this->money->convert($product->variant->price, $this->currency->id, false).' '.$this->currency->sign : ''),
-            '{$sitename}' => ($this->settings->site_name ? $this->settings->site_name : '')
+            '{$sitename}' => ($this->settings->site_name ??'')
         );
         
         //Автоматичекска генерация мета тегов и описания товара
         if (!empty($category)) {
-            $parts['{$category}']    = ($category->name ? $category->name : '');
-            $parts['{$category_h1}'] = ($category->name_h1 ? $category->name_h1 : '');
+            $parts['{$category}']    = ($category->name ?? '');
+            $parts['{$category_h1}'] = ($category->name_h1 ?? '');
             foreach ($product->features as $feature) {
                 if ($feature->auto_name_id) {
                     $parts['{$'.$feature->auto_name_id.'}'] = $feature->name;
