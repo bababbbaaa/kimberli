@@ -23,6 +23,11 @@
                 {* Additional product images *}
                 {if $product->images|count > 1}
                     <div class="product-preview_mini">
+                        {if $product->variant->discount}
+                            <div class="product-preview_discount">
+                                -{$product->variant->discount}%
+                            </div>
+                        {/if}
                         <div class="fn_images images clearfix">
                             {* cut removes the first image, if you need start from the second - write cut:2 *}
                             <div class="images_item">
@@ -41,6 +46,11 @@
                     </div>
                 {/if}
                 <div class="product-preview_main">
+                    {if $product->variant->discount}
+                        <div class="product-preview_discount">
+                            -{$product->variant->discount}%
+                        </div>
+                    {/if}
                     <div class="product_image">
                         {* Main product image *}
                         {if $product->image}
@@ -56,6 +66,18 @@
                             <img class="promo_img" alt='{$product->special}' title="{$product->special}"  src='files/special/{$product->special}'/>
                         {/if}
                     </div>
+                </div>
+                <div class="product-preview_benefits desktop-v {if $product->images|count > 1} {else} full {/if}">
+                    <div class="product-preview_benefits_heading">{$lang->product_should_choose} Kimberli?</div>
+                    <ul class="product-preview_benefits_list">
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_personal_consultations}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_handmade}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_high_quality_products}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_selected_stones}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_worldwide_delivery_choose}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_years_market}</li>
+                        <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_clients_trust}</li>
+                    </ul>
                 </div>
             </div>
 
@@ -107,16 +129,6 @@
                             {/if}
                         </div>
                         {* Stock *}
-                        <div class="product_available float-xs-right">
-                            <span class="no_stock fn_not_stock{if $product->variant->stock > 0} hidden{/if}" data-language="product_out_of_stock">{$lang->product_out_of_stock}</span>
-
-                            <span class="fn_in_stock{if $product->variant->stock < 1} hidden{/if}" data-language="product_in_stock">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"/>
-                                    </svg>
-                                    {$lang->product_in_stock}
-                                </span>
-                        </div>
                         <div class="product_info row">
                             <div class="col-md-12">
                                 {if $brand}
@@ -136,7 +148,7 @@
                                     <span class="fn_sku sku_nubmer" {if $product->variant->sku}itemprop = "sku"{/if}>{$product->variant->sku|escape}</span>
                                 </div>
                                 {if $product->variant->certificate}
-                                <div class="product_sku  clearfix">
+                                <div class="product_sku additional-sku clearfix">
                                     <span data-language="certificate_gia_hrd">{$lang->certificate_gia_hrd}:</span>
                                     <span class="fn_shtr sku_nubmer">
                                         {$product->variant->certificate}
@@ -144,7 +156,7 @@
                                 </div>
                                 {/if}
                                 {if $product->outlet}
-                                    <div class="product_sku clearfix">
+                                    <div class="product_sku additional-sku clearfix">
                                         <span class="fn_shtr sku_nubmer">OUTLET</span>
                                     </div>
                                 {/if}
@@ -157,225 +169,266 @@
                         </div>
                     </div>
                     <form class="fn_variants" action="/{$lang_link}cart">
-                        <div class="product_prices {if $product->variant->stock <= 0} hidden{/if}">
-
-                            <div class="">
-                                {* Price *}
-                                <div class="price ">
-                                    <meta property="product:price:amount" content="{$product->variant->price}">
-                                    <meta property="product:price:currency" content="{$currency->code|escape}">
-                                    <span class="fn_price" itemprop="price" content="{$product->variant->price}">{$product->variant->price|convert}</span>
-                                    <span itemprop="priceCurrency" content="{$currency->code|escape}">{$currency->sign|escape}</span>
+                        <div class="product_buy">
+                            <div class="product_buy_top">
+                                {if $product->variant->discount}
+                                    <div class="product_buy_discount">
+                                        <span>-{$product->variant->discount}%</span>
+                                    </div>
+                                {/if}
+                                <div class="product_available">
+                                    <span class="no_stock fn_not_stock{if $product->variant->stock > 0} hidden{/if}" data-language="product_estimated_price">{$lang->product_estimated_price}</span>
+                                    <span class="fn_in_stock{if $product->variant->stock < 1} hidden{/if}" data-language="product_in_stock">
+                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"/>
+                                            </svg>
+                                            {$lang->product_in_stock}
+                                        </span>
                                 </div>
-                                {* Old price *}
-                                <del class="old_price{if !$product->variant->compare_price} hidden{/if}">
-                                    <span class="fn_old_price">{$product->variant->compare_price|convert}</span> {$currency->sign|escape}
-                                </del>
                             </div>
+                            <div class="product_buy_main">
+                                <div class="product_prices {if $product->variant->stock <= 0} product_stock {/if}">
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="fn_is_stock product_inlines_box {if $product->variant->stock < 1} hidden{/if}">
-                                        {* Quantity *}
-                                        <div class="amount fn_product_amount">
-                                            <span class="minus">&minus;</span>
-                                            <input class="input_amount" type="text" name="amount" value="1" data-max="{$product->variant->stock}">
-                                            <span class="plus">&plus;</span>
+                                        {* Price *}
+                                        <div class="price ">
+                                            <meta property="product:price:amount" content="{$product->variant->price}">
+                                            <meta property="product:price:currency" content="{$currency->code|escape}">
+                                            <span class="fn_price" itemprop="price" content="{$product->variant->price}">{$product->variant->price|convert}</span>
+                                            <span itemprop="priceCurrency" content="{$currency->code|escape}">{$currency->sign|escape}</span>
                                         </div>
-                                    </div>
+                                        {* Old price *}
+                                        <del class="old_price{if !$product->variant->compare_price} hidden{/if}">
+                                            <span class="fn_old_price">{$product->variant->compare_price|convert}</span> {$currency->sign|escape}
+                                        </del>
 
-                                    <div class="product_variants product_inlines_box {if $product->variants|count < 2} hidden{/if}">
-                                        {* Product variants *}
-                                        <select name="variant" class="fn_variant variant_select{if $product->variants|count < 2} hidden{/if}">
-                                            {foreach $product->variants as $v}
-                                                <option{if $product->variant->sku == $v->sku} selected{/if} value="{$v->id}" data-href="{$lang_link}/products/{$v->url}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if} {if $v->units}data-units="{$v->units}"{/if}>{if $v->name}{$v->name|escape}{if $v->weight}, {$lang->weight} - {$v->weight}{/if} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
-                                            {/foreach}
-                                        </select>
+                                    <select name="variant" class="fn_variant variant_select hidden">
+                                        {foreach $product->variants as $v}
+                                            <option{if $product->variant->sku == $v->sku} selected{/if} value="{$v->id}" data-href="{$lang_link}/products/{$v->url}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if} {if $v->units}data-units="{$v->units}"{/if}>{if $v->name}{$v->name|escape}{if $v->weight}, {$lang->weight} - {$v->weight}{/if} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
+                                        {/foreach}
+                                    </select>
+                                    <!--<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="fn_is_stock product_inlines_box {if $product->variant->stock < 1} hidden{/if}">
+                                                {* Quantity *}
+                                                <div class="amount fn_product_amount">
+                                                    <span class="minus">&minus;</span>
+                                                    <input class="input_amount" type="text" name="amount" value="1" data-max="{$product->variant->stock}">
+                                                    <span class="plus">&plus;</span>
+                                                </div>
+                                            </div>
+        
+                                            <div class="product_variants product_inlines_box {if $product->variants|count < 2} hidden{/if}">
+                                                {* Product variants *}
+                                                <select name="variant" class="fn_variant variant_select{if $product->variants|count < 2} hidden{/if}">
+                                                    {foreach $product->variants as $v}
+                                                        <option{if $product->variant->sku == $v->sku} selected{/if} value="{$v->id}" data-href="{$lang_link}/products/{$v->url}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if} {if $v->units}data-units="{$v->units}"{/if}>{if $v->name}{$v->name|escape}{if $v->weight}, {$lang->weight} - {$v->weight}{/if} - {$v->price|convert} {$currency->sign|escape}{else}{$product->name|escape}{/if}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>-->
+        
+                                </div>
+                                <div class="wrap_product_buttons">
+                                    <div class="product_buttons1 row">
+                                        <div style="display: block;" class="block_quick_and_cart {if $product->variant->stock <= 0} col-sm-12 col-lg-6{/if}">
+                                            {if !$settings->is_preorder}
+                                                {* No stock *}
+                                                <span class="fn_not_preorder {if $product->variant->stock > 0} hidden{/if}">
+                                                    <button class="disable_button product_button1 btn btn_green btn-block btn_cart px-2" type="button" data-language="product_out_of_stock">{$lang->product_out_of_stock}</button>
+                                                </span>
+                                            {else}
+                                                {* Preorder *}
+                                                <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if} ">
+                                                    <button class="btn btn_green btn-block btn_cart px-2" type="submit"
+        
+                                                            onclick=" var dataLayer = window.dataLayer || [];
+                                                            dataLayer.push({
+                                                                    'event': 'add_to_cart',
+                                                                    'value': '{$product->variant->price|escape}',
+                                                                    'items': [
+                                                                    {
+                                                                    'id': '{$product->variant->sku|escape}',
+                                                                    'google_business_vertical': 'retail'
+                                                                    }
+                                                                    ]
+                                                                    });"
+                                                         {*   onClick="fbq('track', 'AddToCart', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });"*}
+                                                            data-language="product_pre_order">{$lang->product_pre_order}</button>
+                                                </span>
+                                            {/if}
+                                            {* Submit button *}
+                                            <div class="col-sm-12 col-lg-6 {if $product->variant->stock < 1} hidden{/if}">
+                                                <button class="fn_is_stock btn btn_green btn-block btn_cart px-2 fn_variants"
+                                                       {* onClick="fbq('track', 'AddToCart', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });"*}
+        
+                                                         onClick="gtag('event', 'AddToCart', {
+                                                         'items': [
+                            {
+                                'name': '{$product->name|escape}',
+                                'id': '{$product->variant->sku|escape}',
+                                'price': {$product->variant->price|escape},
+                                'category': '{$category->name|escape}',
+                                'variant': '{$product->name|escape}',
+                                'quantity': 1
+                            }
+                        ]
+                        });"
+                                                        type="submit" data-language="product_add_cart">
+                                                    {include file="svg.tpl" svgId="shopping_cart"}
+                                                    <span>{$lang->product_add_cart}</span>
+                                                </button>
+                                            </div>
+                                            {* quick order button *}
+                                            {if $product->variant->stock > 0}
+                                                <div class="col-sm-12 col-lg-6">
+                                                    <a class="product_button1 fn_quick_order btn btn_white btn-block btn_cart px-2"  title="{$lang->index_back_call}"
+                                                      {* onClick="fbq('track', 'SpeedСall', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });"*}
+                                                       href="#fn_quick_order"
+                                                       data-language="quick_order_header">
+                                                        <span>{$lang->quick_order_header}</span>
+                                                    </a>
+                                                </div>
+                                            {/if}
+                                        </div>
+                                        {if false}
+                                            <div  class="block_dop_button">
+                                                {* Wishlist *}
+        
+                                                {if $product->id|in_array:$wished_products}
+                                                    <a href="#" data-id="{$product->id}" class="fn_wishlist selected product_wished"
+                                                       title="{$lang->product_remove_favorite}"
+                                                       data-result-text="{$lang->product_add_favorite}"
+                                                       data-language="product_remove_favorite"
+                                                    >
+                                                        {include file="svg.tpl" svgId="wishlist"}
+                                                    </a>
+                                                {else}
+                                                    <a href="#" data-id="{$product->id}" class="fn_wishlist product_wished"
+                                                     {*  onClick="fbq('track', 'AddToWishlist', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });"*}
+                                                       title="{$lang->product_add_favorite}" data-result-text="{$lang->product_remove_favorite}" data-language="product_add_favorite">
+                                                        {include file="svg.tpl" svgId="wishlist"}
+                                                    </a>
+                                                {/if}
+        
+        
+                                                {* Comparison *}
+        
+                                                {if !in_array($product->id, $comparison->ids)}
+                                                    <a class="fn_comparison product_comparison" href="#" data-id="{$product->id}" title="{$lang->product_add_comparison}" data-result-text="{$lang->product_remove_comparison}" data-language="product_add_comparison">
+                                                        {include file="svg.tpl" svgId="comparison"}
+                                                    </a>
+                                                {else}
+                                                    <a class="fn_comparison selected product_comparison" href="#" data-id="{$product->id}" title="{$lang->product_remove_comparison}" data-result-text="{$lang->product_add_comparison}" data-language="product_remove_comparison">
+                                                        {include file="svg.tpl" svgId="comparison"}
+                                                    </a>
+                                                {/if}
+                                                <a class="phone product_comparison binct-phone-number-2" href="tel:0932537677"  title="Phone"
+                                                 {*  onClick="fbq('track', 'СallProduct', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });" *}
+                                                >
+                                                    {include file="svg.tpl" svgId="callback"}
+                                                </a>
+                                                <a class="viber product_comparison" href="viber://pa?chatURI=kimberlijewelleryhouse" target="_blank" title="Viber"
+                                                {*   onClick="fbq('track', 'ProductMessenger', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });" *}
+                                                >
+                                                    {include file="svg.tpl" svgId="viber"}
+                                                </a>
+                                                <a class="telegram product_comparison" href="https://t.me/KIMBERLI_JEWELLERY_HOUSE_BOT" target="_blank" title="Telegram"
+                                                  {* onClick="fbq('track', 'ProductMessenger', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });" *}
+                                                >
+                                                    {include file="svg.tpl" svgId="telegram"}
+                                                </a>
+                                                <a class="messanger product_comparison" href="https://www.messenger.com/t/kimberlijewelleryhouse" target="_blank" title="Messanger"
+                                                 {*  onClick="fbq('track', 'ProductMessenger', {
+           value: {$product->variant->price|escape},
+           currency: 'UAH',
+           content_ids: {$product->variant->sku|escape},
+           content_type: 'product',
+           content_name: '{$product->name|escape}',
+           content_type: '{$category->name|escape}',
+        });" *}
+                                                >
+                                                    {include file="svg.tpl" svgId="messenger"}
+                                                </a>
+                                            </div>
+                                        {/if}
+        
+                                    </div>
+                                </div>
+                                <div class="product_benefits">
+                                    <div class="product_benefits_column">
+                                        <div class="product_benefits_heading">{$lang->product_warranty}</div>
+                                        <ul class="product_benefits_list">
+                                            <li>{$lang->product_cleaning}</li>
+                                            <li>{$lang->product_rhodium}</li>
+                                            <li>{$lang->product_correction}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="product_benefits_column">
+                                        <div class="product_benefits_heading">{$lang->product_delivery_free}</div>
+                                        <ul class="product_benefits_list">
+                                            <li>{$lang->product_pickup}</li>
+                                            <li>{$lang->product_courier_delivery}</li>
+                                            <li>{$lang->product_worldwide_delivery}</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         {if $product->annotation}
                             <div class="product_annotation">
                                 {$product->annotation}
                             </div>
                         {/if}
-                        <div class="wrap_product_buttons">
-                            <div class="product_buttons1 row">
-                                <div style="display: block;" class="block_quick_and_cart">
-                                    {if !$settings->is_preorder}
-                                        {* No stock *}
-                                        <span class="fn_not_preorder {if $product->variant->stock > 0} hidden{/if}">
-                                            <button class="disable_button btn btn_green btn-block btn_cart px-2 py-1" type="button" data-language="product_out_of_stock">{$lang->product_out_of_stock}</button>
-                                        </span>
-                                    {else}
-                                        {* Preorder *}
-                                        <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if}">
-                                            <button class="btn btn_white btn_green btn_cart px-2 py-1" type="submit"
-
-                                                    onclick=" var dataLayer = window.dataLayer || [];
-                                                    dataLayer.push({
-                                                            'event': 'add_to_cart',
-                                                            'value': '{$product->variant->price|escape}',
-                                                            'items': [
-                                                            {
-                                                            'id': '{$product->variant->sku|escape}',
-                                                            'google_business_vertical': 'retail'
-                                                            }
-                                                            ]
-                                                            });"
-                                                 {*   onClick="fbq('track', 'AddToCart', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});"*}
-                                                    data-language="product_pre_order">{$lang->product_pre_order}</button>
-                                        </span>
-                                    {/if}
-                                    {* Submit button *}
-                                    <div class="col-sm-12 col-lg-6 {if $product->variant->stock < 1} hidden{/if}">
-                                        <button class="fn_is_stock btn btn_green btn-block btn_cart px-2 py-1"
-                                               {* onClick="fbq('track', 'AddToCart', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});"*}
-
-                                                 onClick="gtag('event', 'AddToCart', {
-                                                 'items': [
-                    {
-                        'name': '{$product->name|escape}',
-                        'id': '{$product->variant->sku|escape}',
-                        'price': {$product->variant->price|escape},
-                        'category': '{$category->name|escape}',
-                        'variant': '{$product->name|escape}',
-                        'quantity': 1
-                    }
-                ]
-                });"
-                                                type="submit" data-language="product_add_cart">
-                                            {include file="svg.tpl" svgId="shopping_cart"}
-                                            <span>{$lang->product_add_cart}</span>
-                                        </button>
-                                    </div>
-                                    {* quick order button *}
-                                    {if $product->variant->stock > 0}
-                                        <div class="col-sm-12 col-lg-6">
-                                            <a class="product_button1 fn_quick_order btn btn_white btn-block btn_cart px-2 py-1"  title="{$lang->index_back_call}"
-                                              {* onClick="fbq('track', 'SpeedСall', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});"*}
-                                               href="#fn_quick_order"
-                                               data-language="quick_order_header">
-                                                <span>{$lang->quick_order_header}</span>
-                                            </a>
-                                        </div>
-                                    {/if}
-                                </div>
-                                {if false}
-                                    <div  class="block_dop_button">
-                                        {* Wishlist *}
-
-                                        {if $product->id|in_array:$wished_products}
-                                            <a href="#" data-id="{$product->id}" class="fn_wishlist selected product_wished"
-                                               title="{$lang->product_remove_favorite}"
-                                               data-result-text="{$lang->product_add_favorite}"
-                                               data-language="product_remove_favorite"
-                                            >
-                                                {include file="svg.tpl" svgId="wishlist"}
-                                            </a>
-                                        {else}
-                                            <a href="#" data-id="{$product->id}" class="fn_wishlist product_wished"
-                                             {*  onClick="fbq('track', 'AddToWishlist', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});"*}
-                                               title="{$lang->product_add_favorite}" data-result-text="{$lang->product_remove_favorite}" data-language="product_add_favorite">
-                                                {include file="svg.tpl" svgId="wishlist"}
-                                            </a>
-                                        {/if}
-
-
-                                        {* Comparison *}
-
-                                        {if !in_array($product->id, $comparison->ids)}
-                                            <a class="fn_comparison product_comparison" href="#" data-id="{$product->id}" title="{$lang->product_add_comparison}" data-result-text="{$lang->product_remove_comparison}" data-language="product_add_comparison">
-                                                {include file="svg.tpl" svgId="comparison"}
-                                            </a>
-                                        {else}
-                                            <a class="fn_comparison selected product_comparison" href="#" data-id="{$product->id}" title="{$lang->product_remove_comparison}" data-result-text="{$lang->product_add_comparison}" data-language="product_remove_comparison">
-                                                {include file="svg.tpl" svgId="comparison"}
-                                            </a>
-                                        {/if}
-                                        <a class="phone product_comparison binct-phone-number-2" href="tel:0932537677"  title="Phone"
-                                         {*  onClick="fbq('track', 'СallProduct', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});" *}
-                                        >
-                                            {include file="svg.tpl" svgId="callback"}
-                                        </a>
-                                        <a class="viber product_comparison" href="viber://pa?chatURI=kimberlijewelleryhouse" target="_blank" title="Viber"
-                                        {*   onClick="fbq('track', 'ProductMessenger', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});" *}
-                                        >
-                                            {include file="svg.tpl" svgId="viber"}
-                                        </a>
-                                        <a class="telegram product_comparison" href="https://t.me/KIMBERLI_JEWELLERY_HOUSE_BOT" target="_blank" title="Telegram"
-                                          {* onClick="fbq('track', 'ProductMessenger', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});" *}
-                                        >
-                                            {include file="svg.tpl" svgId="telegram"}
-                                        </a>
-                                        <a class="messanger product_comparison" href="https://www.messenger.com/t/kimberlijewelleryhouse" target="_blank" title="Messanger"
-                                         {*  onClick="fbq('track', 'ProductMessenger', {
-   value: {$product->variant->price|escape},
-   currency: 'UAH',
-   content_ids: {$product->variant->sku|escape},
-   content_type: 'product',
-   content_name: '{$product->name|escape}',
-   content_type: '{$category->name|escape}',
-});" *}
-                                        >
-                                            {include file="svg.tpl" svgId="messenger"}
-                                        </a>
-                                    </div>
-                                {/if}
-
-                            </div>
-                        </div>
 
                         {* *  <div class="product_info row">
                                <div class="col-md-12">
@@ -398,6 +451,18 @@
                                 </div>
                             </div>
                         {/if}
+                        <div class="product-preview_benefits mobile-v">
+                            <div class="product-preview_benefits_heading">{$lang->product_should_choose} Kimberli?</div>
+                            <ul class="product-preview_benefits_list">
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_personal_consultations}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_handmade}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_high_quality_products}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_selected_stones}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_worldwide_delivery_choose}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_years_market}</li>
+                                <li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M4.19632 10.2058C4.04557 10.2058 3.89481 10.1481 3.77996 10.0333L0.172757 6.42595C-0.0575858 6.19571 -0.0575858 5.82345 0.172757 5.59322C0.402993 5.36298 0.775144 5.36298 1.00549 5.59322L4.19632 8.78406L10.9946 1.98591C11.2248 1.75567 11.597 1.75567 11.8273 1.98591C12.0575 2.21625 12.0575 2.5884 11.8273 2.81875L4.6128 10.0333C4.49795 10.1481 4.34708 10.2058 4.19632 10.2058Z" fill="#048225"></path> </svg> {$lang->product_clients_trust}</li>
+                            </ul>
+                        </div>
                         {if !$product->description}
                             <meta itemprop="description" content="{$product->name|escape}">
                         {/if}
@@ -460,6 +525,31 @@
                                 </div>
                             </div>
                         {/if}
+                        <div class="product_tab">
+                            <div class="product_tab_heading" data-language="product_delivery_pay">{$lang->product_delivery_pay}</div>
+                            <div class="product_tab_content">
+                                <div class="insertions_tab_block">
+                                    <span class="insertions_tab_title">{$lang->product_delivery_self_pickup_heading}</span>
+                                    <p>{$lang->product_delivery_self_pickup_p1} <a href="{$lang_link}contact" target="_blank">{$lang->product_delivery_self_pickup_href}</a>.</p>
+                                    <p>{$lang->product_delivery_self_pickup_p2}</p>
+                                </div>
+                                <div class="insertions_tab_block">
+                                    <span class="insertions_tab_title">{$lang->product_delivery_del_ukraine_heading}</span>
+                                    <p>{$lang->product_delivery_del_ukraine_p1}</p>
+                                    <p>{$lang->product_delivery_del_ukraine_p2}</p>
+                                </div>
+                                <div class="insertions_tab_block">
+                                    <span class="insertions_tab_title">{$lang->product_delivery_del_world_heading}</span>
+                                    <p>{$lang->product_delivery_del_world_p1}</p>
+                                    <p>{$lang->product_delivery_del_world_p2}</p>
+                                </div>
+                            </div>
+                            <div class="arrow">
+                                <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.8" d="M1 1L7 7L13 1" stroke="black"/>
+                                </svg>
+                            </div>
+                        </div>
                         <div class="product_tab">
                             <div class="product_tab_heading" data-language="product_comments">{$lang->product_comments}</div>
                             <div class="product_tab_content">

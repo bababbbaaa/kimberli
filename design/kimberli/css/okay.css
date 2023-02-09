@@ -2269,7 +2269,7 @@ a.logo img{
 .wrap_breadcrumb {
     display: inline-block;
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     margin-bottom: 10px;
     border-top: 1px solid rgb(238, 238, 238);
     padding-top: 10px;
@@ -2330,7 +2330,7 @@ a.logo img{
     padding: 0;
     color: rgb(113, 113, 113);
     margin: 3px 0;
-    font-size: 14px;
+    font-size: 12px;
 
 }
 .breadcrumbs li + li:before {
@@ -2792,11 +2792,12 @@ a.logo img{
     align-items: flex-start;
 }
 .product-preview{
-    width: 56.5%;
+    width: 54.5%;
     display: flex;
     justify-content: flex-start;
     flex-shrink: 0;
     margin-right: 25px;
+    flex-wrap: wrap;
 }
 .product-preview-empty.product-preview{
     width: 47.5%;
@@ -2821,7 +2822,7 @@ a.logo img{
     width: 100%;
 }
 .product_heading {
-    font-size: 24px;
+    font-size: 22px;
     color: #000000;
     line-height: 29px;
     letter-spacing: 0.05em;
@@ -2844,20 +2845,15 @@ a.logo img{
 }
 .product_raits{
     display: inline-block;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgb(238, 238, 238);
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    /*border-bottom: 1px solid rgb(238, 238, 238);*/
     width: 100%;
-}
-.product_prices{
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgb(231, 231, 231);
-    padding-bottom: 20px;
 }
 .product_annotation{
     margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(231, 231, 231);
+    padding-bottom: 0;
+    /*border-bottom: 1px solid rgb(231, 231, 231);*/
     line-height: 22px;
     margin-top: 10px;
     color: rgb(133, 133, 133);
@@ -2873,7 +2869,6 @@ a.logo img{
     letter-spacing: 0.05em;
 }
 .product_prices .old_price{
-    margin-left: 23px;
     font-size: 24px;
     color: #E95252;
     text-decoration: line-through;
@@ -2892,6 +2887,9 @@ a.logo img{
     font-family: 'SolomonSansSemiBold';
     text-transform: uppercase;
     margin-bottom: 14px;
+}
+.product_sku:last-child{
+    margin-bottom: 0;
 }
 .product_available span,
 .product_sku span,
@@ -2977,8 +2975,181 @@ a.logo img{
     display: none;
 }
 
+.product_buy{
+    border: 1px solid rgb(186, 147, 62);
+    padding: 15px 12px;
+    margin-bottom: 20px;
+}
+.product_buy_top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+.product-preview_main{
+    position: relative;
+}
+.product-preview_discount{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 10;
+    padding: 5px 15px 2px 15px;
+    background: #f91d1d;
+    font-family: 'SolomonSansSemiBold';
+    color: #fff;
+    font-size: 17px;
+}
+.product_prices{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+.product_prices .price{
+    width: 48%;
+    font-size: 28px;
+    font-family: 'SolomonSansSemiBold';
+    color: rgb(50 112 14);
+    letter-spacing: normal;
+    line-height: 34px;
+}
+.wrap_product_buttons .btn{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    letter-spacing: normal;
+    font-family: 'SolomonSansBold';
+    letter-spacing: normal;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.wrap_product_buttons .btn svg{
+    margin-right: 5px;
+}
+.wrap_product_buttons .btn_white{
+    border-color: rgb(50 112 14);
+    color: rgb(50 112 14);
+}
+.wrap_product_buttons .btn_white:hover{
+    background: rgb(50 112 14);
+    color: #fff;
+}
+.product_prices .old_price{
+    width: 48%;
+    margin-left: 0;
+    font-size: 19px;
+    letter-spacing: normal;
+}
+.product_benefits{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.product_benefits_column{
+    width: 48%;
+}
+.product_benefits_heading{
+    font-size: 16px;
+    font-family: 'SolomonSansSemiBold';
+    margin-bottom: 7px;
+    color: #000000;
+}
+.product_benefits_list{
+    list-style-type: none;
+    margin-bottom: 0;
+}
+.product_benefits_list li{
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+    position: relative;
+    padding-left: 19px;
+}
+.product_benefits_list li:after{
+    display: block;
+    content: '';
+    width: 6px;
+    height: 1px;
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    background: #000;
+    opacity: 0.5;
+}
+
+.product-preview_benefits{
+    width: 80.4%;
+    margin-left: auto;
+    margin-top: 10px;
+    border-bottom: 1px solid rgb(231, 231, 231);
+    padding-bottom: 5px;
+}
+.product-preview_benefits.mobile-v{
+    display: none;
+}
+.product-preview_benefits.full{
+    width: 100%;
+}
+.product-preview_benefits_heading{
+    text-align: center;
+    font-size: 20px;
+    font-family: 'SolomonSansSemiBold';
+    margin-bottom: 15px;
+    color: rgb(186, 147, 62);
+    text-transform: uppercase;
+}
+.product-preview_benefits_list li{
+    display: block;
+    font-size: 16px;
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 5px;
+    font-family: 'SolomonSansSemiBold';
+}
+.product-preview_benefits_list li svg{
+    margin-right: 5px;
+}
+.product-preview_benefits_list li svg path{
+    fill: rgb(186, 147, 62);
+}
+.additional-sku{
+    position: absolute;
+    margin: 0;
+    right: 8px;
+    top: -27px;
+}
+.product-preview_mini{
+    position: relative;
+}
+.product-preview_mini .product-preview_discount{
+    display: none;
+}
+
+.product_buy_top .product_available{
+    margin-bottom: 0;
+    margin-left: auto;
+    padding-top: 3px;
+}
+.product_stock .old_price{
+    display: none !important;
+}
+.product_stock.product_prices .price{
+    color: rgb(151, 151, 151) !important;
+}
+.product_buy_discount{
+    font-size: 17px;
+    color: #E95252;
+    font-family: 'SolomonSansSemiBold';
+    text-transform: uppercase;
+}
+.product_buy_main{
+    padding: 0 15px;
+}
+
 .wrap_product_buttons{
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     padding: 5px 0 0;
 }
 .product_buttons button,
@@ -7167,4 +7338,6 @@ body #bingc-active {
     margin: auto;
 }
 
-
+.text-gray {
+    color: grey;
+}

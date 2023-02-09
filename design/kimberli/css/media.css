@@ -530,6 +530,73 @@
         font-size: 40px;
         line-height: 46px;
     }
+    .product-preview_benefits.desktop-v{
+        display: none;
+    }
+    .product-preview_benefits.mobile-v{
+        display: block;
+    }
+    .additional-sku{
+        top: -28px;
+    }
+    .product_buy_main{
+        padding: 0;
+    }
+    .wrap_product_buttons .btn{
+        margin-top: 10px;
+    }
+    .product_prices .price{
+        width: auto;
+        margin-right: 15px;
+    }
+    .product_prices{
+        display: block;
+    }
+    .product_prices .old_price{
+        width: auto;
+    }
+    .product_prices .price{
+        line-height: 34px;
+    }
+    .product_buy_top{
+        margin-bottom: 15px;
+        padding: 0;
+    }
+    .wrap_product_buttons .btn{
+        font-size: 14px;
+    }
+    .product_buy_top .product_available{
+        padding-top: 2px;
+    }
+    .product_benefits_column{
+        width: 49%;
+    }
+    .product_benefits_heading{
+        font-size: 14px;
+    }
+    .product_benefits_list li{
+        font-size: 12px;
+    }
+    .product_benefits_list li{
+        padding-left: 13px;
+    }
+    .product_benefits_list li::after {
+        width: 5px;
+        left: 2px;
+    }
+    .product-preview_benefits{
+        width: 100%;
+        margin-top: 0;
+    }
+    .product-preview_benefits_heading{
+        font-size: 17px;
+    }
+    .product-preview_benefits_list li{
+        font-size: 14px;
+    }
+    .product-preview_mini .product-preview_discount{
+        display: block;
+    }
 }
 
 @media only screen and (max-width : 768px) {
