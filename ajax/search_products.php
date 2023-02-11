@@ -41,7 +41,7 @@ if (!empty($keyword)) {
 /*Делаем выборку из БД*/
 $query = "SELECT
             p.id,
-            p.url,
+            v.url,
             p.main_image_id,
             v.stock,
 			v.price,
@@ -49,7 +49,7 @@ $query = "SELECT
             $px.name
         FROM __products p
         $lang_sql->join
-        inner join ok_variants v on v.product_id=p.id
+        LEFT join ok_variants v on v.product_id=p.id
         WHERE
             1
             $keyword_filter

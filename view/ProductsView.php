@@ -567,6 +567,8 @@ class ProductsView extends View {
 
         }
 
+        $filter['empty_products'] = true;
+
         $mode = $this->request->get('mode');
         
         if (!empty($mode)) {
@@ -823,7 +825,7 @@ class ProductsView extends View {
         // Товары
         $products = [];
 
-		//$filter['empty'] = false;
+
 		//l($filter);
 
         foreach($this->products->get_products($filter) as $p) {

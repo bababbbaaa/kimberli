@@ -286,6 +286,10 @@
                                             </div>
                                         </div>
                                         <div class="okay_list_boding variants_item_sku">
+                                            <div class="heading_label">{$btr->general_artikul|escape}</div>
+                                            <input class="variant_input" name="variants[sku2][]" type="text" value="{$variant->shtr|escape}"/>
+                                        </div>
+                                        <div class="okay_list_boding variants_item_sku">
                                             <div class="heading_label">{$btr->general_sku|escape}</div>
                                             <input class="variant_input" name="variants[sku][]" type="text" value="{$variant->sku|escape}"/>
                                         </div>

@@ -1,3 +1,5 @@
+
+<script src="design/{$settings->theme}/js/popup.js{if $js_version}?v={$js_version}{/if}"></script>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s) {

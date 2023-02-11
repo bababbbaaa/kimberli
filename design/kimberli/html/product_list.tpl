@@ -111,14 +111,14 @@
         
         {* Product name *}
         <a class="product_name" data-product="{$product->id}" href="{$lang_link}products/{$product->url}">{$product->name|escape}</a>
-        {if $category->id != 113 && $product->variant->stock > 0}
+        {if $category->id != 113}
         <div class="price_container">
             {* Old price *}
             {* Price *}
-            <span class="price">
+            <span class="price{if $product->variant->stock == 0} text-gray{/if}">
                 <span class="fn_price">{$product->variant->price|convert}</span> <span>{$currency->sign|escape}</span>
             </span>
-            <del class="old_price{if !$product->variant->compare_price} hidden{/if}">
+            <del class="old_price{if !$product->variant->compare_price || $product->variant->stock == 0} hidden{/if}">
                 <span class="fn_old_price">{$product->variant->compare_price|convert}</span> <span>{$currency->sign|escape}</span>
             </del>
           

@@ -16,4 +16,4 @@ config/config.local.php
 vendor
 /application/providers/logs/
 /cron/files/
-/application/log/
+/application/log/*

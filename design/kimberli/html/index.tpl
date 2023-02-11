@@ -284,6 +284,7 @@
         <div class="fn_ajax_content">
             {include file='popap/coupon.tpl'}
             {include file='popap/info.tpl'}
+            {include file='popap/vd_13.tpl'}
             {$content}
         </div>
     </div>

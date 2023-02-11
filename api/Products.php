@@ -31,7 +31,7 @@ class Products extends Okay {
 
         $include_empty = false;
 
-        if (!empty($filter['empty'])) {
+        if (!empty($filter['empty_products'])) {
 			$include_empty = true;
 		}
         
@@ -90,9 +90,11 @@ class Products extends Okay {
             if (in_array("featured", $filter['other_filter'])) {
                 $other_filter .= "p.featured=1 OR ";
             }
+
             if (in_array("discounted", $filter['other_filter'])) {
                $other_filter .= "(pv.compare_price>0 and pv.proc >=40) OR ";
             }
+
             $other_filter = substr($other_filter, 0, -4).")";
         }
 
@@ -121,8 +123,6 @@ class Products extends Okay {
         $first_currency = $this->money->get_currencies(array('enabled'=>1));
         $first_currency = reset($first_currency);
         $coef = 1;
-        
-        //l($filter);
 
         if(isset($_SESSION['currency_id']) && $first_currency->id != $_SESSION['currency_id']) {
             $currency = $this->money->get_currency(intval($_SESSION['currency_id']));
@@ -134,6 +134,7 @@ class Products extends Okay {
                 $price_filter .= $this->db->placehold(" AND (floor(IF(pv.currency_id=0 OR c.id is null,p.price, p.price*c.rate_to/c.rate_from)*$coef)>= ? ) ", $this->db->escape(trim($filter['price']['min'])));
            //or pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
             }
+
             if(isset($filter['price']['max'])) {
                 $price_filter .= $this->db->placehold(" AND floor(IF(pv.currency_id=0 OR c.id is null,p.price, p.price*c.rate_to/c.rate_from)*$coef)<= ? ", $this->db->escape(trim($filter['price']['max'])));
             }
@@ -197,17 +198,14 @@ class Products extends Okay {
 			//$filter['stock'] = 1;
             foreach($keywords as $keyword) {
                 $kw = $this->db->escape(trim($keyword));
+
                 if($kw !=='') {
-                $k_adm = '';
-              //  if(!empty($filter['admin'])) {
 					$k_adm = " OR pv.sku LIKE '%$kw%'";
 					$filter['stock'] = false;
-               // }
 
 					$keyword_filter .=" AND (pv.sku2 LIKE '%$kw%' OR $px.name LIKE '%$kw%' OR $px.meta_keywords LIKE '%$kw%' $k_adm)";
                 }
             }
-
         }
 
         if(!empty($filter['features'])) {
@@ -241,7 +239,11 @@ class Products extends Okay {
         }
 
 		if(!empty($filter['stock']) || !empty($filter['in_stock']) || (!empty($filter['other_filter']) && in_array("stock", $filter['other_filter']))) {
-			$stock_filter = " AND pv.stock > 0";
+
+            if ($include_empty === false) {
+                $stock_filter = " AND pv.stock > 0";
+            }
+
 			//OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
 			//)";
 		}else if(isset($filter['no_stock'])) {
@@ -298,14 +300,13 @@ class Products extends Okay {
             ORDER BY $order
             $sql_limit
         ";
-//l($query);
 
         $this->db->query($query);
 
         $products = $this->db->results();
         
-        if ($include_empty) {
-        	$limit = 8;
+        if (/*$include_empty*/false) {
+        	//$limit = 8;
 
 			$has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', 1);
 
@@ -331,7 +332,6 @@ class Products extends Okay {
 			}
 
 			$sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
-
 
 			$pIds = implode(',', $pIds);
 
@@ -414,9 +414,10 @@ class Products extends Okay {
         $features_filter = '';
 		$features_filter_join = '';
         $other_filter = '';
+        $include_empty = false;
 
-		if (!empty($filter['empty'])) {
-			$include_empty = true;
+		if (isset($filter['empty_products'])) {
+			$include_empty = (bool) $filter['empty_products'];
 		}
         
         $lang_id  = $this->languages->lang_id();
@@ -433,7 +434,7 @@ class Products extends Okay {
 				$cat = implode(',', $filter['category_id']);
 				$category_id_filter = "INNER JOIN ok_products_categories pc ON pc.product_id = p.id AND pc.category_id in({$cat})";
 			}
- }
+        }
 
         if (isset($filter['without_category'])) {
             $without_category_filter = $this->db->placehold('AND (SELECT count(*)=0 FROM __products_categories pc WHERE pc.product_id=p.id) = ?', intval($filter['without_category']));
@@ -463,7 +464,6 @@ class Products extends Okay {
 					$keyword_filter .=" AND (pv.sku2 LIKE '%$kw%' OR $px.name LIKE '%$kw%' OR $px.meta_keywords LIKE '%$kw%' $k_adm)";
 				}
 			}
-
 		}
         
         if(isset($filter['featured'])) {
@@ -474,7 +474,6 @@ class Products extends Okay {
             $has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', intval($filter['has_images']));
         }
 
-        
         if(isset($filter['created'])) {
             $has_images_filter = $this->db->placehold('AND p.created >= ?', date('Y-m-d 00:00:00'));
         }
@@ -490,7 +489,6 @@ class Products extends Okay {
         $price_filter = '';
 
 		$variant_join = 'INNER JOIN ok_variants pv ON pv.product_id = p.id';
-
 
         $select = 'count(distinct p.id) as count';
         $currency_join = '';
@@ -545,7 +543,10 @@ class Products extends Okay {
         }
 
 		if(isset($filter['stock']) || isset($filter['in_stock']) || (!empty($filter['other_filter']) && in_array("stock", $filter['other_filter']))) {
-			$stock_filter = " AND pv.stock > 0";
+
+            if ($include_empty === false) {
+                $stock_filter = " AND pv.stock > 0";
+            }
 			//OR pv.sku2 in ('К1888','К100237', 'К100229', 'К1806', 'К100042', 'К1414', 'К100069', 'К1356', 'К100083', 'К1164', 'К1110', 'К1888', 'К100237', 'К1777', 'К100165', 'К100055', 'К100041', 'К100171с', 'К100145', 'П370', 'П500', 'П499', 'П501', 'С2815С', 'С2507', 'С2821', 'С2308', 'С2839', 'С2912', 'С2421', 'С2968', 'С2962', 'С2732', 'С2734')
 			//)";
 		} else if(isset($filter['no_stock'])) {
@@ -662,6 +663,7 @@ class Products extends Okay {
                 p.hrd,
                 p.youtube,
                 pv.sku,
+                pv.sku2,
                 pv.new_sku,
                 $lang_sql->fields
             FROM __products AS p

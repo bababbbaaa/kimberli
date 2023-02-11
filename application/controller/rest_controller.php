@@ -387,15 +387,19 @@ class rest_controller extends base_controller
 
 		if ($cron->num_rows() == 0) {
 			return [
-				'popup' => ['coupon'],
+				'popup' => [
+                    //'coupon',
+                    'vd_13',
+                ],
 			];
 		}
 
 		$result = [];
 
 		$pp = [
-			'coupon',
+			//'coupon',
 			//'info',
+            'vd_13',
 		];
 
 		foreach ($cron->results() as $item) {
