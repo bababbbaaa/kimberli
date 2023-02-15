@@ -370,9 +370,9 @@ class rest_controller extends base_controller
 			return [
 				'popup' => ['coupon'],
 			];
-		}
+		}*/
 		
-		return ['popup' => []];*/
+		//return ['popup' => []];
 		
 		$dateFrom = new \DateTime(date('Y-m-d') . ' 00:00:00');
 		$dateTo = new \DateTime(date('Y-m-d') . ' 23:59:59');
@@ -389,7 +389,7 @@ class rest_controller extends base_controller
 			return [
 				'popup' => [
                     //'coupon',
-                    'vd_13',
+                    'sale',
                 ],
 			];
 		}
@@ -399,7 +399,7 @@ class rest_controller extends base_controller
 		$pp = [
 			//'coupon',
 			//'info',
-            'vd_13',
+            'sale',
 		];
 
 		foreach ($cron->results() as $item) {

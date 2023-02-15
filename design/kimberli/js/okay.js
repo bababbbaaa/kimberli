@@ -359,12 +359,12 @@ function parseAjaxError(e, formId)
 }
 
 
-
+/*
 $(document).on('submit', '.coupon_form', function(e) {
     e.preventDefault();
     let phone;
 
-    /* Вариант */
+
     if ($(this).find('input[name=phone]').size() > 0) {
         phone = $(this).find('input[name=phone]').val();
     }
@@ -413,7 +413,7 @@ $(document).on('submit', '.coupon_form', function(e) {
 
         } else {
 
-            /* ajax запрос */
+
             $.ajax({
                 url: "rest/order/sms/send",
                 method: 'GET',
@@ -440,6 +440,7 @@ $(document).on('submit', '.coupon_form', function(e) {
 
     return false;
 });
+*/
 
 $(document).on('submit', '.bar_kimberli_form', function(e) {
     e.preventDefault();

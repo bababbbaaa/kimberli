@@ -90,7 +90,7 @@
     </div>
     <div class="col-sm-12 col-md-4 text-center">
         {if $cart->total_products > 0}
-            <a href="{$lang_link}cart" class="btn btn_white btn-block btn_cart px-2 py-1" data-language="index_cart" style="" title="{$lang->go_to_cart}">
+            <a href="{$lang_link}cart" class="btn btn_green btn-block btn_cart px-2 py-1" data-language="index_cart" style="" title="{$lang->go_to_cart}">
                 {$lang->go_to_cart}
             </a>
         {/if}
