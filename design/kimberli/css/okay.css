@@ -3133,7 +3133,7 @@ a.logo img{
     padding-top: 3px;
 }
 .product_stock .old_price{
-    display: none !important;
+    /*display: none !important;*/
 }
 .product_stock.product_prices .price{
     color: rgb(151, 151, 151) !important;

@@ -197,7 +197,7 @@
                                             <span itemprop="priceCurrency" content="{$currency->code|escape}">{$currency->sign|escape}</span>
                                         </div>
                                         {* Old price *}
-                                        <del class="old_price{if !$product->variant->compare_price} hidden{/if}">
+                                        <del class="old_price{if !$product->variant->compare_price || $product->variant->compare_price == $product->variant->price} hidden{/if}">
                                             <span class="fn_old_price">{$product->variant->compare_price|convert}</span> {$currency->sign|escape}
                                         </del>
 
@@ -231,7 +231,7 @@
                                 </div>
                                 <div class="wrap_product_buttons">
                                     <div class="product_buttons1 row">
-                                        <div style="display: block;" class="block_quick_and_cart {if $product->variant->stock <= 0} col-sm-12 col-lg-6{/if}">
+                                        <div style="display: block;" class="block_quick_and_cart {if $product->variant->stock <= 0} {/if}">
                                             {if !$settings->is_preorder}
                                                 {* No stock *}
                                                 <span class="fn_not_preorder {if $product->variant->stock > 0} hidden{/if}">
@@ -239,7 +239,7 @@
                                                 </span>
                                             {else}
                                                 {* Preorder *}
-                                                <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if} ">
+                                                <span class="fn_is_preorder {if $product->variant->stock > 0} hidden{/if} col-sm-12 col-lg-6 ">
                                                     <button class="btn btn_green btn-block btn_cart px-2" type="submit"
         
                                                             onclick=" var dataLayer = window.dataLayer || [];
@@ -252,7 +252,16 @@
                                                                     'google_business_vertical': 'retail'
                                                                     }
                                                                     ]
-                                                                    });"
+                                                                    });
+
+                                                                    fbq('track', 'AddToCart', {
+                                                                    value: {$product->variant->price|escape},
+                                                                    currency: 'UAH',
+                                                                    content_ids: {$product->variant->sku|escape},
+                                                                    content_type: 'product',
+                                                                    content_name: '{$product->name|escape}',
+                                                                    });
+                                                                    "
                                                          {*   onClick="fbq('track', 'AddToCart', {
            value: {$product->variant->price|escape},
            currency: 'UAH',
@@ -265,7 +274,7 @@
                                                 </span>
                                             {/if}
                                             {* Submit button *}
-                                            <div class="col-sm-12 col-lg-6 {if $product->variant->stock < 1} hidden{/if}">
+                                            <div class="col-sm-12 col-lg-6 {if $product->variant->stock <= 0} hidden{/if}">
                                                 <button class="fn_is_stock btn btn_green btn-block btn_cart px-2 fn_variants"
                                                        {* onClick="fbq('track', 'AddToCart', {
            value: {$product->variant->price|escape},
@@ -294,7 +303,7 @@
                                                 </button>
                                             </div>
                                             {* quick order button *}
-                                            {if $product->variant->stock > 0}
+                                            {if $product->variant->stock >= 0}
                                                 <div class="col-sm-12 col-lg-6">
                                                     <a class="product_button1 fn_quick_order btn btn_white btn-block btn_cart px-2"  title="{$lang->index_back_call}"
                                                       {* onClick="fbq('track', 'SpeedСall', {
