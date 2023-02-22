@@ -65,7 +65,7 @@ $collection = [
 
 $data = ['update' => 0, 'add_options' => 0, 'add' => [], 'error' => []];
 
-$i=0;
+$i = 0;
 
 $cron->checkLastUpdateFile();// проверяем последнее обновление файла
 
@@ -82,10 +82,19 @@ try {
 
 		$cron->query("SELECT `id`, `product_id` FROM  `ok_variants` WHERE `sku` LIKE '$shtr'  LIMIT 1"); //
 
-        $id = $cron->result('id');
-        $p_id = $cron->result('product_id');
+        $variant =  $cron->result();
+
+        $id = $variant->id ?? false;
+        $p_id = $variant->product_id ?? false;
+
+        $ru_name = $record->namer . ' - ' . $record->namecr . ' - ' . $record->shtr . ' - ' . $record->si;
+        $en_name = $record->namei . ' - ' . $record->nameci . ' - ' . $record->shtr . ' - ' . $record->si;
+        $ua_name = $record->name . ' - ' . $record->namec . ' - ' . $record->shtr . ' - ' . $record->si;
+
+        $ua_name = str_replace("'", "\'", $ua_name);
         
         if ($id) {
+
         	$kol = $record->kol;
 			$price = $record->cena;
 			$oldPrice = $record->cenas;
@@ -105,65 +114,95 @@ try {
 					    `ok_variants`.`vstavka` = '{$record->namev}'
 					WHERE `ok_variants`.`id` = {$id}"
 			);
-            
+
+            $cron->query("SELECT `lang_id`, `variant_id` FROM `ok_lang_variants` WHERE `variant_id` = {$id} LIMIT 3");
+
+            $lv = $cron->results();
+
+            $langs = [
+                1 => $ru_name,
+                2 => $en_name,
+                3 => $ua_name,
+            ];
+
+            if (count($lv) != 3) {
+                $lang = array_column($lv, 'lang_id');
+                foreach (array_diff(array_keys($langs), $lang) as $lang_id) {
+                    $sql = "INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES ({$lang_id}, {$id}, '{$langs[$lang_id]}')";
+
+                    $cron->query($sql);
+                }
+            }
+
             if($p_id) {
 				$cron->query("SELECT `product_id` as `ids` FROM `ok_products_features_values` WHERE `product_id` = {$p_id} LIMIT 1");
                 
                 if(!$cron->result('ids') && !empty($color[$record->namecr]) && !empty($collection[$record->gr])) {
                     $data['add_options'] += 1;
 					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) VALUES ({$p_id}, {$color[$record->namecr]}), ({$p_id}, {$collection[$record->gr]})"); // добавление свойства: цвет золота и коллекция
-                }  
+                }
+
+                $cron->query("SELECT `lang_id`, `product_id` FROM `ok_lang_products` WHERE `product_id` = {$p_id} LIMIT 3");
+
+                $lp = $cron->results();
+
+                if (count($lp) != 3) {
+                    $lang = array_column($lp, 'lang_id');
+
+                    foreach (array_diff(array_keys($langs), $lang) as $lang_id) {
+                        $sql = "INSERT INTO `ok_lang_products` (`lang_id`, `product_id`, `name`) VALUES ({$lang_id}, {$p_id}, '{$langs[$lang_id]}')";
+
+                        $cron->query($sql);
+                    }
+                }
             }
              
         $data['update'] = $data['update']+1;
         } else {
 
-			$new_sku = $record->si .'-' . $record->cvet . '-' . $record->namev;
+            $new_sku = $record->si . '-' . $record->cvet . '-' . $record->namev;
 
-			if ('Сертификат' == $record->si) {
-				$new_sku .= '-' .$record->shtr;
-			}
+            if ('Сертификат' == $record->si) {
+                $new_sku .= '-' . $record->shtr;
+            }
 
-			$url = $categoriesMap[$record->namer]['translit'] . '-' . $record->shtr;
+            if (empty(trim($record->namer))) {
 
-			$ru_name =  $record->namer . ' - ' . $record->namecr . ' - ' . $record->shtr . ' - ' . $record->si;
-			$en_name = $record->namei . ' - ' . $record->nameci . ' - ' . $record->shtr . ' - ' . $record->si;
-			$ua_name = $record->name . ' - ' . $record->namec . ' - ' . $record->shtr . ' - ' . $record->si;
+                $url = $categoriesMap[trim($record->namer)]['translit'] . '-' . $record->shtr;
 
+                $cvet = $record->cvet;
+                $namev = $record->namev;
+                $mas = $record->mas;
+                $proc = $record->proc > 0 ? $record->proc : 0;
+                $size = $record->razm > 0 ? $record->razm : 0;
 
-			$cvet = $record->cvet;
-			$namev = $record->namev;
-			$mas = $record->mas;
-			$proc = $record->proc;
-			$size = $record->razm;
+                $sql = "SELECT `id`, `product_id` FROM  `ok_variants` WHERE `new_sku` LIKE '{$new_sku}' LIMIT 1";
 
-			$sql = "SELECT `id`, `product_id` FROM  `ok_variants` WHERE `new_sku` LIKE '{$new_sku}' LIMIT 1";
+                $cron->query($sql);
+                $res = $cron->result();
 
-			$cron->query($sql);
-			$res = $cron->result();
+                if (!empty($res->product_id)) {
 
-			if(!empty($res->product_id)) {
-
-				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `size`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
-					. "{$res->product_id},"
-					. "'{$url}',"
-					. "'{$new_sku}',"
-					. "'{$cvet}',"
-					. "'{$namev}',"
-					. "'{$record->si}', "
-					. "{$record->shtr}, "
-					. "{$record->shtr}, "
-					. " '{$ru_name}', "
-					. "{$mas}, "
-					. "{$size}, "
-					. "{$proc}, "
-					. "{$record->cena}, "
-					. "{$record->cenas}, "
-					. "{$record->kol}, "
-					. "4"
-					. ")";
-				$cron->query($var);
-				$id_var = $cron->insert_id();
+                    $var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `size`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
+                        . "{$res->product_id},"
+                        . "'{$url}',"
+                        . "'{$new_sku}',"
+                        . "'{$cvet}',"
+                        . "'{$namev}',"
+                        . "'{$record->si}', "
+                        . "{$record->shtr}, "
+                        . "{$record->shtr}, "
+                        . " '{$ru_name}', "
+                        . "{$mas}, "
+                        . "{$size}, "
+                        . "{$proc}, "
+                        . "{$record->cena}, "
+                        . "{$record->cenas}, "
+                        . "{$record->kol}, "
+                        . "4"
+                        . ")";
+                    $cron->query($var);
+                    $id_var = $cron->insert_id();
 
 				$cron->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
                                                                         (1, {$id_var}, '{$ru_name}'),
@@ -171,42 +210,42 @@ try {
                                                                         (3, {$id_var}, '{$ua_name}')
                                                                         ");
 
-				$i++;
-				$data['add'][] = ['var' => $id_var];
+                    $i++;
+                    $data['add'][] = ['var' => $id_var];
 
-			} else {
-				$sql = "INSERT INTO `ok_products`("
-					. "`url`,"
-					. "`name`,"
-					. " `sku`,"
-					. " `stock`,"
-					. " `price`,"
-					. " `compare_price`,"
-					. " `shtr`,"
-					. " `from_sync`,"
-					. " `visible`,"
-					. " `collections`"
-					. ")"
-					. " VALUES "
-					. "('{$url}',"
-					. " '{$ru_name}',"
-					. " '{$record->si}',"
-					. " '{$record->kol}',"
-					. " '{$record->cena}',"
-					. " '{$record->cenas}',"
-					. " '{$record->shtr}', "
-					. "1,"
-					. " 0,"
-					. " '{$record->gr}'"
-					. ")";
+                } else {
+                    $sql = "INSERT INTO `ok_products`("
+                        . "`url`,"
+                        . "`name`,"
+                        . " `sku`,"
+                        . " `stock`,"
+                        . " `price`,"
+                        . " `compare_price`,"
+                        . " `shtr`,"
+                        . " `from_sync`,"
+                        . " `visible`,"
+                        . " `collections`"
+                        . ")"
+                        . " VALUES "
+                        . "('{$url}',"
+                        . " '{$ru_name}',"
+                        . " '{$record->si}',"
+                        . " '{$record->kol}',"
+                        . " '{$record->cena}',"
+                        . " '{$record->cenas}',"
+                        . " '{$record->shtr}', "
+                        . "1,"
+                        . " 0,"
+                        . " '{$record->gr}'"
+                        . ")";
 
-				$cron->query($sql);
+                    $cron->query($sql);
 
-				$id = $cron->insert_id();
+                    $id = $cron->insert_id();
 
-				if (0 == $id) {
-					throw new \RuntimeException('Error insert ok_products');
-				}
+                    if (0 == $id) {
+                        throw new \RuntimeException('Error insert ok_products');
+                    }
 
 				$cron->query("INSERT INTO `ok_lang_products` (`lang_id`, `product_id`, `name`) VALUES
                                                                         (1, {$id}, '{$ru_name}'),
@@ -214,26 +253,26 @@ try {
                                                                         (3, {$id}, '{$ua_name}')
                                                                         ");
 
-				$var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
-					. "{$id},"
-					. "'{$url}',"
-					. "'{$new_sku}',"
-					. "'{$cvet}',"
-					. "'{$namev}',"
-					. "'{$record->si}', "
-					. "{$record->shtr}, "
-					. "{$record->shtr}, "
-					. " '{$ru_name}', "
-					. "{$mas}, "
-					. "{$proc}, "
-					. "{$record->cena}, "
-					. "{$record->cenas}, "
-					. "{$record->kol}, "
-					. "4"
-					. ")";
-				$cron->query($var);
+                    $var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
+                        . "{$id},"
+                        . "'{$url}',"
+                        . "'{$new_sku}',"
+                        . "'{$cvet}',"
+                        . "'{$namev}',"
+                        . "'{$record->si}', "
+                        . "{$record->shtr}, "
+                        . "{$record->shtr}, "
+                        . " '{$ru_name}', "
+                        . "{$mas}, "
+                        . "{$proc}, "
+                        . "{$record->cena}, "
+                        . "{$record->cenas}, "
+                        . "{$record->kol}, "
+                        . "4"
+                        . ")";
+                    $cron->query($var);
 
-				$id_var = $cron->insert_id();
+                    $id_var = $cron->insert_id();
 
 				$cron->query("INSERT INTO `ok_lang_variants` (`lang_id`, `variant_id`, `name`) VALUES
                                                                         (1, {$id_var}, '{$ru_name}'),
@@ -241,29 +280,29 @@ try {
                                                                         (3, {$id_var}, '{$ua_name}')
                                                                         ");
 
-				if (!empty($color[$record->namecr])) {
-					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
+                    if (!empty($color[$record->namecr])) {
+                        $cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
 								VALUES ({$id}, {$color[$record->namecr]})
        						"); // добавление свойства: цвет золота
-				} else {
-					$data['error'][] = ['product_id' => $id, 'color' => $record->namecr];
-				}
+                    } else {
+                        $data['error'][] = ['product_id' => $id, 'color' => $record->namecr];
+                    }
 
-				if (!empty($collection[$record->gr])) {
-					$cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
+                    if (!empty($collection[$record->gr])) {
+                        $cron->query("INSERT INTO `ok_products_features_values` (`product_id`, `value_id`) 
 								VALUES ({$id}, {$collection[$record->gr]})
        						"); // добавление свойства: коллекция
-				} else {
-					$data['error'][] = ['product_id' => $id, 'collection' => $record->gr];
-				}
+                    } else {
+                        $data['error'][] = ['product_id' => $id, 'collection' => $record->gr];
+                    }
 
-				$cron->query("INSERT INTO `ok_products_categories` (`product_id`, `category_id`) VALUES ({$id}, {$categoriesMap[$record->namer]['id']})");
+                    $cron->query("INSERT INTO `ok_products_categories` (`product_id`, `category_id`) VALUES ({$id}, {$categoriesMap[$record->namer]['id']})");
 
-				$i++;
-				$data['add'][] = ['prod' => $id, 'var' => $id_var];
-			}
-
-        }   
+                    $i++;
+                    $data['add'][] = ['prod' => $id, 'var' => $id_var];
+                }
+            }
+        }
 }
 
 	$cron->query("UPDATE `ok_products` P SET
@@ -282,6 +321,7 @@ try {
 		if (count($data['error']) > 0) {
 			$cron->printLog($data['error']);
 		}
+
 	unset($data['error']);
 
 	$data['date_file'] = $cron->dateFile;
