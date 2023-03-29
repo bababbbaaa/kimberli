@@ -1,4 +1,5 @@
 backend/design/compiled/*
+application/providers/facebook.php
 compiled/*
 files/*
 files
