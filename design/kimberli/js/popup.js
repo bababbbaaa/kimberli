@@ -39,39 +39,42 @@ $(function(){
         }, 10000);
 });
 
-$(document).on('submit', '#popup_sale_form', function(e) {
+$(document).on('submit', '.popup', function(e) {
     e.preventDefault();
-    let phone;
+    let phone  = $(this).find('input[name=phone]').val();
 
-    /* Вариант */
-    if ($(this).find('input[name=phone]').size() > 0) {
-        phone = $(this).find('input[name=phone]').val();
-    }
+    let body = $(this).parents().find('.body');
+    let id = $(this).parents().find('.root').prop("id");
+    let subject = $(this).find('input[name=subject]').val();
 
     if (phone) {
         $.ajax({
             url: "rest/popup/send-email",
             method: 'POST',
-            data: {phone: phone},
+            data: {phone: phone, subject: subject},
             dataType: 'json',
             success: function (data, status) {
                 if (status === 'success') {
 
-                    gtag('event', 'popup', {'event_category': 'send_form',});
+                    if (data.data.message.length > 0) {
+                        body.html(data.data.message);
+                        setTimeout(function() {
+                            $.fancybox.close({
+                                src: '#' + id,
+                                type: 'inline'
+                            });
+                        }, 3000);
 
-                    $('#sale-popup .body').html(data.data.message);
-
-                    setTimeout(function(){
+                    } else {
                         $.fancybox.close({
-                            src: '#sale-popup',
+                            src: '#' + id,
                             type: 'inline'
                         });
-                    }, 3000);
+                    }
 
                 } else {
-
                     $.fancybox.close({
-                        src: '#sale-popup',
+                        src: '#' + id,
                         type: 'inline'
                     });
                 }
@@ -80,7 +83,7 @@ $(document).on('submit', '#popup_sale_form', function(e) {
                 console.log(e);
 
                 $.fancybox.close({
-                    src: '#sale-popup',
+                    src: '#' + id,
                     type: 'inline'
                 });
             }

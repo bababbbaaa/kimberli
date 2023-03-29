@@ -198,7 +198,7 @@ class View extends Okay {
             $this->design->assign('currency',   $this->currency);
             $this->design->assign('user',       $this->user);
             $this->design->assign('group',      $this->group);
-			$this->design->assign('url',      $this->group);
+			$this->design->assign('url',      $this->url);
             
             $this->design->assign('config',     $this->config);
             $this->design->assign('settings',   $this->settings);

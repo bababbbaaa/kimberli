@@ -11,6 +11,11 @@ class popup_controller extends base_controller
     public function action_send_email()
     {
         $phone = $this->request->post('phone');
+        $subject = $this->request->post('subject', '');
+
+        if (empty($subject)) {
+            $subject = 'Звернення клієнта з поп-ап форми';
+        }
 
         if (empty($phone)) {
             throw new ValidationException(errors::create(['phone' => 'Phone not be empty']));
@@ -31,8 +36,8 @@ class popup_controller extends base_controller
 
         try {
             $notify->email(
-                'shopkimberli@gmail.com,kimberli.ocean@gmail.com,Humeniukev@gmail.com',
-                'Звернення клієнта з поп-ап форми -40%',
+                'shopkimberli@gmail.com,kimberli.ocean@gmail.com,Humeniukev@gmail.com,Kimberli.jewellery@gmail.com',
+                $subject,
                 'Телефон: ' . $phone
             );
         } catch (\Exception $e) {

@@ -129,6 +129,7 @@
                                 <input class="hidden_check fn_check_all" type="checkbox" id="check_all_1" name="" value="" />
                                 <label class="okay_ckeckbox" for="check_all_1"></label>
                             </div>
+                            <div class="okay_list_heading okay_list_position">{$btr->general_position|escape}</div>
                             <div class="okay_list_heading okay_list_photo">{$btr->general_photo|escape}</div>
                             <div class="okay_list_heading okay_list_name">{$btr->general_name|escape} </div>
                             <div class="okay_list_heading okay_list_price">{$btr->general_price|escape}</div>
@@ -142,7 +143,6 @@
                             {foreach $products as $product}
                                 <div class="fn_row okay_list_body_item fn_sort_item">
                                     <div class="okay_list_row">
-                                        <input type="hidden" name="positions[{$product->id}]" value="{$product->position}">
 
                                         <div class="okay_list_boding okay_list_drag move_zone">
                                             {include file='svg_icon.tpl' svgId='drag_vertical'}
@@ -151,6 +151,9 @@
                                         <div class="okay_list_boding okay_list_check">
                                             <input class="hidden_check" type="checkbox" id="id_{$product->id}" name="check[]" value="{$product->id}"/>
                                             <label class="okay_ckeckbox" for="id_{$product->id}"></label>
+                                        </div>
+                                        <div class="okay_list_boding okay_list_photo">
+                                            <input type="text" class="variant_input" name="positions[{$product->id}]" value="{$product->position}">
                                         </div>
                                         <div class="okay_list_boding okay_list_photo">
                                             {if $product->image}
@@ -190,7 +193,7 @@
                                         </div>
                                         <div class="okay_list_boding okay_list_price">
                                             <div class="input-group">
-                                                <input class="form-control {if $product->variants[0]->compare_price > 0}text_warning{/if}" type="text" name="price[{$product->variants[0]->id}]" value="{$product->variants[0]->price}">
+                                                <input class="form-control {if $product->variants[0]->compare_price > 0}text_warning{/if}" disabled type="text" name="price[{$product->variants[0]->id}]" value="{$product->variants[0]->price}">
                                                 <span class="input-group-addon">
                                                       {if isset($currencies[$product->variants[0]->currency_id])}
                                                           {$currencies[$product->variants[0]->currency_id]->code|escape}
@@ -200,7 +203,7 @@
                                         </div>
                                         <div class="okay_list_boding okay_list_count">
                                             <div class="input-group">
-                                                <input class="form-control " type="text" name="stock[{$product->variants[0]->id}]" value="{if $product->variants[0]->infinity}∞{else}{$product->variants[0]->stock}{/if}"/>
+                                                <input class="form-control " type="text" name="stock[{$product->variants[0]->id}]" disabled value="{if $product->variants[0]->infinity}∞{else}{$product->remainder}{/if}"/>
                                                 <span class="input-group-addon  p-0">
                                                      {if $product->variants[0]->units}{$product->variants[0]->units|escape}{else}{$settings->units|escape}{/if}
                                                 </span>

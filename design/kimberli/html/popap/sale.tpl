@@ -6,10 +6,11 @@
         <div class="body">
             <p class="percent" data-language="coupon_percent">- 40% OFF</p>
             <p class="text-center" style="margin-bottom: 20px" data-language="popup_sale_pre_form">{$lang->popup_sale_pre_form}</p>
-            <form class="coupon_form popup form-inline" id="popup_sale_form"  method="post">
+            <form class="coupon_form form-inline popup" id="popup_sale_form"  method="post">
                 <div class="inline" >
                     {* User's phone *}
                     <div class="form_group">
+                        <input type="hidden" value="{$lang->popup_sale_header|escape}" name="subject">
                         <input class="form_input feature_input phone" style="max-width: 320px" type="text" id="phone" name="phone" placeholder="{$lang->form_phone}"
                                data-rule-required="true"
                                data-rule-minlength="10"

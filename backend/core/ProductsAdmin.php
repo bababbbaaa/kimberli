@@ -34,6 +34,7 @@ class ProductsAdmin extends Okay {
         } elseif ($category_id==-1) {
             $filter['without_category'] = 1;
         }
+
         $this->design->assign('category_id', $category_id);
         
         // Бренды категории
@@ -141,28 +142,36 @@ class ProductsAdmin extends Okay {
         // Обработка действий
         if($this->request->method('post')) {
             // Сохранение цен и наличия
-            $prices = $this->request->post('price');
+            /*$prices = $this->request->post('price');
             $stocks = $this->request->post('stock');
 
-            foreach($prices as $id=>$price) {
+            foreach($prices as $id => $price) {
                 $stock = $stocks[$id];
+
                 if($stock == '∞' || $stock == '') {
                     $stock = null;
                 }
+
                 $this->variants->update_variant($id, array('price'=>str_replace(',', '.', $price), 'stock'=>$stock));
-            }
-            
+            }*/
+
+
             // Сортировка
             $positions = $this->request->post('positions');
-            $ids = array_keys($positions);
-            sort($positions);
-            $positions = array_reverse($positions);
-            foreach($positions as $i=>$position) {
-                $this->products->update_product($ids[$i], array('position'=>$position));
+
+           // $ids = array_keys($positions);
+
+            //sort($positions);
+            //$positions = array_reverse($positions);
+
+            foreach($positions as $i => $position) {
+                $this->products->update_product($i, ['position' => $position]);
+                //$this->products->update_product($ids[$i], array('position' => $position));
             }
             
             // Действия с выбранными
             $ids = $this->request->post('check');
+
             if(!empty($ids)) {
                 switch($this->request->post('action')) {
                     case 'disable': {
@@ -304,6 +313,7 @@ class ProductsAdmin extends Okay {
         if(isset($brand)) {
             $this->design->assign('brand', $brand);
         }
+
         if(isset($category)) {
             $this->design->assign('category', $category);
         }
@@ -328,13 +338,15 @@ class ProductsAdmin extends Okay {
         $images_ids = array();
         $sku = array();
         $images = array();
+
         $products_array = $this->products->get_products($filter);
+
         if(!empty($products_array)) {
-        foreach($products_array as $p) {
-            $products[$p->id] = $p;
-            $images_ids[] = $p->main_image_id;
-            $sku[$p->sku] = 1;
-        }
+            foreach($products_array as $p) {
+                $products[$p->id] = $p;
+             $images_ids[] = $p->main_image_id;
+                $sku[$p->sku] = 1;
+            }
         }
         
         
@@ -348,17 +360,18 @@ class ProductsAdmin extends Okay {
         if(!empty($products)) {
             // Товары
             $products_ids = array_keys($products);
+
             foreach($products as &$product) {
                 $product->variants = array();
                 $product->properties = array();
                 
                 if (!empty($categories_xml)) {
-                foreach ($categories_xml as $c) {
-                    if($product->xml_category_id == $c->category_id) {
-                        $product->xml = $c->name;
+                    foreach ($categories_xml as $c) {
+                        if($product->xml_category_id == $c->category_id) {
+                            $product->xml = $c->name;
+                        }
                     }
                 }
-            }
             }
 
             $filterVariant = array_merge(['product_id'=>$products_ids], $filter);

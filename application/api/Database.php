@@ -100,6 +100,7 @@ class Database {
                 mkdir($this->log_dir);
                 file_put_contents($this->log_dir.'.htaccess', 'order deny,allow'.PHP_EOL.'deny from all');
             }
+
             $log_string = date('d.m.Y H:i:s').PHP_EOL;
             $log_string .= 'Error ('.$this->mysqli->errno.') '.$this->mysqli->error.PHP_EOL;
             $log_string .= '----------------------'.PHP_EOL;

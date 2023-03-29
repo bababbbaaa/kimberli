@@ -591,7 +591,7 @@ class ProductsView extends View {
         if (!empty($_SESSION['sort'])) {
             $filter['sort'] = $_SESSION['sort'];
         } else {
-            $filter['sort'] = 'view';
+            $filter['sort'] = 'position'; // default sort
         }
 
         $this->design->assign('sort', $filter['sort']);

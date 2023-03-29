@@ -162,11 +162,13 @@ try {
 
             $new_sku = $record->si . '-' . $record->cvet . '-' . $record->namev;
 
+            //print_r([$record->shtr, $new_sku]);
+
             if ('Сертификат' == $record->si) {
                 $new_sku .= '-' . $record->shtr;
             }
 
-            if (empty(trim($record->namer))) {
+            if (!empty(trim($record->namer))) {
 
                 $url = $categoriesMap[trim($record->namer)]['translit'] . '-' . $record->shtr;
 
@@ -201,6 +203,7 @@ try {
                         . "{$record->kol}, "
                         . "4"
                         . ")";
+
                     $cron->query($var);
                     $id_var = $cron->insert_id();
 
@@ -239,11 +242,15 @@ try {
                         . " '{$record->gr}'"
                         . ")";
 
-                    $cron->query($sql);
+                    $res = $cron->query($sql);
+
+                    if ($res == false) {
+                        var_dump($sql);
+                    }
 
                     $id = $cron->insert_id();
 
-                    if (0 == $id) {
+                    if (0 == $id || is_null($id)) {
                         throw new \RuntimeException('Error insert ok_products');
                     }
 
@@ -252,6 +259,9 @@ try {
                                                                         (2, {$id}, '{$en_name}'),
                                                                         (3, {$id}, '{$ua_name}')
                                                                         ");
+
+                    $kol = $record->get('kol') ?? 0;
+                    $mas = $record->get('mas') ?? 0;
 
                     $var = "INSERT INTO `ok_variants` (`product_id`, `url`, `new_sku`, `cvet`, `vstavka`, `sku2`, `sku`, `shtr`, `name`, `weight`, `proc`, `price`, `compare_price`, `stock`, `currency_id`) VALUES ("
                         . "{$id},"
@@ -267,10 +277,15 @@ try {
                         . "{$proc}, "
                         . "{$record->cena}, "
                         . "{$record->cenas}, "
-                        . "{$record->kol}, "
+                        . "{$kol}, "
                         . "4"
                         . ")";
-                    $cron->query($var);
+
+                   $res = $cron->query($var);
+
+                   if ($res == false) {
+                       var_dump($var);
+                   }
 
                     $id_var = $cron->insert_id();
 

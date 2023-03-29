@@ -5486,6 +5486,62 @@ body #bingc-active {
     max-width: 700px;
 }
 
+
+.quiz-popup{
+    padding: 40px !important;
+    max-width: 980px;
+    width: 99%;
+}
+.quiz-popup_wrapp{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+.quiz-popup_preview{
+    width: 45%;
+    flex-shrink: 0;
+    margin-right: 30px;
+}
+.quiz-popup_preview{
+    max-width: 100%;
+    height: auto;
+}
+.quiz-popup_heading{
+    font-family: 'SolomonSansSemiBold';
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.quiz-popup_descr{
+    font-size: 14px;
+    margin-bottom: 35px;
+}
+.quiz-popup_form .form_group {
+    display: flex;
+    justify-content: center;
+}
+.quiz-popup_form  .form_group .btn_black {
+    padding: 14px 40px;
+    font-size: 15px;
+}
+.quiz-popup_form .form_input{
+    height: 58px;
+    line-height: 58px;
+    border-right: none;
+}
+.quiz-popup_form{
+    margin-bottom: 35px;
+}
+.quiz-popup_rules{
+    font-size: 12px;
+}
+.quiz-popup_rules p:first-child{
+    font-size: 14px;
+}
+.quiz-popup_rules p{
+    margin-bottom: 6px;
+}
+
 .coupon-popup {
     padding: 50px!important;
 }

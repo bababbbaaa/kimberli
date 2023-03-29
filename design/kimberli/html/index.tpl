@@ -285,7 +285,8 @@
             {*include file='popap/coupon.tpl'*}
             {*include file='popap/info.tpl'*}
             {*include file='popap/vd_13.tpl'*}
-            {include file='popap/sale.tpl'}
+            {*include file='popap/sale.tpl'*}
+            {include file='popap/quiz.tpl'}
             {$content}
         </div>
     </div>

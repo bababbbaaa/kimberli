@@ -31,7 +31,7 @@ if (isset($_GET['lang_label'])) {
 
 // Товары
 $okay->db->query("SET SQL_BIG_SELECTS=1");
-$stock_filter = $okay->settings->yandex_export_not_in_stock ? '' : ' AND v.stock >0 ';
+$stock_filter = $okay->settings->yandex_export_not_in_stock ? '' : ' AND (v.stock >0 OR v.shtr in(116972,107663,113715,107662,116797,116800,116591,116801,116973,116970,116969,116951,188233,188232,188231))';
 $price_filter = $okay->settings->yandex_no_export_without_price ? ' AND v.price >0 ' : '';
 
 $lang_sql = $okay->languages->get_query(array('object'=>'variant'));

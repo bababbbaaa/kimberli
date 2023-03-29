@@ -31,6 +31,14 @@ class ProductAdmin extends Okay {
             $product->votes = $this->request->post('votes', 'integer');
             $product->special = $this->request->post('special','string');
 			$product->youtube = $this->request->post('youtube','string');
+
+            // Сортировка
+            $positions = $this->request->post('positions');
+            $ids = array_keys($positions);
+            sort($positions);
+            foreach($positions as $i=>$position) {
+                $this->products->update_product($ids[$i], array('position'=>$position));
+            }
             
             // Свойства товара
             if ($this->request->post('insertions')) {

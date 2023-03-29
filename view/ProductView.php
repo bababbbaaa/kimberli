@@ -15,7 +15,26 @@ class ProductView extends View {
         // Выбираем товар из базы
         $product = $this->products->get_product((string)$product_url);
 
-        if(empty($product) || (!$product->visible && empty($_SESSION['admin']))) {
+        if(empty($product)) {
+
+            $product_url = preg_replace ("/[^a-zA-Z\s]/","",$product_url);
+
+            if (!empty($product_url)) {
+                $productUrl = $this->products->getAlterUrl((string)$product_url);
+
+                if (empty($productUrl)) {
+                    return false;
+                }
+
+                header("HTTP/1.1 301 Moved Permanently");
+                header('Location: ' .$this->config->root_url . '/'. $this->lang_link . 'products/' . $productUrl);
+                exit;
+            } else {
+                return false;
+            }
+        }
+
+        if(!$product->visible && empty($_SESSION['admin'])) {
             return false;
         }
 

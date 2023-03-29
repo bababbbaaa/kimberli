@@ -389,7 +389,8 @@ class rest_controller extends base_controller
 			return [
 				'popup' => [
                     //'coupon',
-                    'sale',
+                    //'sale',
+                    'quiz',
                 ],
 			];
 		}
@@ -399,7 +400,8 @@ class rest_controller extends base_controller
 		$pp = [
 			//'coupon',
 			//'info',
-            'sale',
+            //'sale',
+            'quiz',
 		];
 
 		foreach ($cron->results() as $item) {
