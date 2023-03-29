@@ -18,7 +18,7 @@ use RuntimeException;
 class facebook extends Okay
 {
 	private $pixel_id = 757934748071157;
-	private $access_token = 'EAAETgJrZAs4kBAIMZBTIXBPhqqmz0Vk3PRntmYBPoeR5d9NM3ZATp6VlX4bTHIO2qmygug9ABzzPZAUSuKJWJtn6IBNB4kXQUt8Hw6ArUM7uWx5UD7xKfA7N5xftlgvKYNlBmsxMOrfhp1o7YKEGMZCjoBo97fbdRqjG2xpBz7Wu4BMbngbz0';
+	private $access_token = '';//'EAAETgJrZAs4kBAIMZBTIXBPhqqmz0Vk3PRntmYBPoeR5d9NM3ZATp6VlX4bTHIO2qmygug9ABzzPZAUSuKJWJtn6IBNB4kXQUt8Hw6ArUM7uWx5UD7xKfA7N5xftlgvKYNlBmsxMOrfhp1o7YKEGMZCjoBo97fbdRqjG2xpBz7Wu4BMbngbz0';
 
 	/**
 	 * facebook constructor.
@@ -26,6 +26,8 @@ class facebook extends Okay
 	public function __construct()
 	{
 		parent::__construct();
+
+        $this->access_token = $this->settings->facebook_token;
 	}
 
 	/**
