@@ -15,6 +15,6 @@ composer.phar
 /vendor/*
 config/config.local.php
 /application/providers/logs/
-/cron/files/
+/cron/files/*
 /application/log/
 /vendor/
