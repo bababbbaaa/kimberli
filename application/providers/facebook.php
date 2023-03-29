@@ -17,7 +17,7 @@ use RuntimeException;
 
 class facebook extends Okay
 {
-	private $pixel_id = 757934748071157;
+	private $pixel_id = 1544874959306268;
 	private $access_token = '';
 
 	/**
