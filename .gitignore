@@ -1,8 +1,8 @@
 backend/design/compiled/*
-application/providers/facebook.php
+/application/providers/facebook.php
 compiled/*
 files/*
-files
+/files/
 cron/dropbox.log
 tmp/
 log/*
@@ -12,9 +12,9 @@ dev/*
 vendor.tgz
 composer.phar
 .idea
-vendor/*
+/vendor/*
 config/config.local.php
-vendor
 /application/providers/logs/
 /cron/files/
 /application/log/
+/vendor/
