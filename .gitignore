@@ -11,7 +11,7 @@ mail/*
 dev/*
 vendor.tgz
 composer.phar
-.idea
+.idea/*
 /vendor/*
 config/config.local.php
 /application/providers/logs/
