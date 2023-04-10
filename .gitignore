@@ -4,6 +4,7 @@ compiled/*
 files/*
 /files/
 cron/dropbox.log
+cron/files
 tmp/
 log/*
 cache/*
@@ -16,5 +17,6 @@ composer.phar
 config/config.local.php
 /application/providers/logs/
 /cron/files/*
-/application/log/
+/application/log/*
+application/log/sql.log
 /vendor/
