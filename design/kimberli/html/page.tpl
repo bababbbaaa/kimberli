@@ -6,6 +6,7 @@
 {if $page->url == '404'}
     {include file='page_404.tpl'}
 {else}
+    {if $page->url !== atelier}
     <div class="wrap_heading_page mb-2" {if $page->image} style="background: rgb(36, 38, 38) url({$page->image|resize:1920:539:false:$config->resized_pages_dir});" {/if}>
         <div class="inner_heading_page txt_center">
             <h1 class="heading_page">
@@ -14,6 +15,7 @@
             <img class="border" src="design/{$settings->theme|escape}/images/heading_border.png" alt="page_border">
         </div>
     </div>
+    {/if}
     <div class="page_container1">
          {if $dop_files_header}
             {*$dop_files_header*}

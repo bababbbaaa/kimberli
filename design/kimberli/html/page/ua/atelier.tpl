@@ -1,3 +1,149 @@
+<div class="atelier-banner" style="background-image: url('design/{$settings->theme|escape}/images/atelier/banner-preview.jpg');">
+    <div class="container-fluid">
+        <div class="atelier-banner_heading">
+            УНІКАЛЬНІ (АВТОРСЬКІ) - ЮВЕЛІРНІ ПРИКРАСИ<br/> З ДІАМАНТАМИ ДЛЯ ВИБАГЛИВИХ!
+        </div>
+        <div class="atelier-banner_descr">СТВОРЕНІ ПІД КЛІЄНТА У ЄДИНОМУ ЕКЗЕМПЛЯРІ,<br/> НАЙКРАЩИМИ ХУДОЖНИКАМИ ТА ЮВЕЛІРАМИ ЗІ СВІТОВИМ ІМʼЯМ!</div>
+        <ul class="atelier-banner_list">
+            <li>Підбір стилю майбутньої прикраси - ювелірним стилістом</li>
+            <li>Дорогоцінне каміння та драг. матеріали зі всього світу</li>
+            <li>Розробка дизайну професійним ювелірним художником</li>
+            <li><b>БЕЗСТРОКОВА</b> гарантія на виріб! </li>
+        </ul>
+    </div>
+</div>
+
+<div class="atelier-consultation">
+    <div class="container-fluid">
+        <div class="atelier-consultation_container">
+            <div class="atelier-consultation_avatar" style="background-image: url('design/{$settings->theme|escape}/images/atelier/manager-avatar.jpg');"></div>
+            <div class="atelier-consultation_content">
+                <div class="atelier-consultation_wrapp">
+                    <div class="atelier-consultation_content_avatar" style="background-image: url('design/{$settings->theme|escape}/images/atelier/manager-avatar.jpg');"></div>
+                    <div class="atelier-consultation_content_main">
+                        <div class="atelier-consultation_heading">ОТРИМАТИ КОНСУЛЬТАЦІЮ ФАХІВЦЯ З РОЗРОБКИ ІНДИВІДУАЛЬНОЇ ПРИКРАСИ?</div>
+                        <div class="atelier-consultation_descr">залиште номер телефону та ювелірний<br/> консультант юлія звʼяжеться з вами незабаром!</div>
+                    </div>
+                </div>
+                <form action="" class="about-exposition_form">
+                    <input type="text" name="phone" placeholder="Номер телефону">
+                    <button>КОНСУЛЬТАЦІЯ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="atelier-individually consultation-individually">
+    <div class="atelier-individually_list">
+        <div class="atelier-individually_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier-individually1.jpg');"></div>
+        <div class="atelier-individually_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier-individually2.jpg');"></div>
+    </div>
+</div>
+
+<div class="atelier-howwork">
+    <div class="container-fluid">
+        <div class="about-heading">
+            Як ми працюємо
+        </div>
+        <div class="atelier-howwork_list">
+            <div class="atelier-howwork_item">
+                <div class="number">01</div>
+                <div class="heading">Знайомимось</div>
+                <div class="descr">Знайомство замовника з художником (офлайн / онлайн), креативне інтерв'ю, збирання образу клієнта</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">02</div>
+                <div class="heading">Обираємо найкраще</div>
+                <div class="descr">Вибір стилю та дизайну майбутньої прикраси.</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">03</div>
+                <div class="heading">Фіксуємо важливі деталі</div>
+                <div class="descr">Обговорення персонального бюджету клієнта.</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">04</div>
+                <div class="heading">Шукаємо найкращі вставки</div>
+                <div class="descr">Індивідуальний підбір каміння.</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">05</div>
+                <div class="heading">Малюємо декілька ескізів</div>
+                <div class="descr">Розробка ексклюзивного ескізу разом з художником.</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">06</div>
+                <div class="heading">Чуємо кліента</div>
+                <div class="descr">Спільне доопрацювання створеного дизайнерського проекту.</div>
+            </div>
+            <div class="atelier-howwork_item">
+                <div class="number">07</div>
+                <div class="heading">Виготовляємо шедевр</div>
+                <div class="descr">Перетворення проекту в унікальний ювелірний виріб.</div>
+            </div>
+            <a href="#" class="atelier-howwork_btn">замовити шедевр</a>
+        </div>
+    </div>
+</div>
+
+<div class="atelier-awards">
+    <div class="about-heading">
+        Наші нагороди
+    </div>
+
+    <div class="awards_slider-container">
+        <div class="awards_slider_nav">
+           <button class="prev">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M19.5 12.5H6.5" stroke="#030F14" stroke-linecap="square" stroke-linejoin="round"/>
+                 <path d="M12.5 5.5L5.5 12.5L12.5 19.5" stroke="#030F14" stroke-linecap="square" stroke-linejoin="round"/>
+              </svg>
+           </button>
+           <button class="next">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M5.5 12.5H18.5" stroke="#030F14" stroke-linecap="square" stroke-linejoin="round"/>
+                 <path d="M12.5 5.5L19.5 12.5L12.5 19.5" stroke="#030F14" stroke-linecap="square" stroke-linejoin="round"/>
+              </svg>
+           </button>
+        </div>
+        <div class="awards_slider swiper-container">
+           <div class="awards_slider-wrapp swiper-wrapper">
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/2.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/2.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/1.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/1.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/8.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/8.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/3.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/3.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/11.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/11.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/5.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/5.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/6.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/6.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/7.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/7.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/9.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/9.jpg" alt="">
+            </div>
+            <div class="atelier-slide swiper-slide" data-fancybox="awards" href="design/{$settings->theme|escape}/images/atelier/awards/10.jpg">
+                <img src="design/{$settings->theme|escape}/images/atelier/awards/10.jpg" alt="">
+            </div>
+           </div>
+        </div>
+     </div>
+</div>
+
 <div class="about-exposition atelier">
     <div class="container-fluid">
         <div class="about-exposition_container">
@@ -6,7 +152,7 @@
                 <div class="about-heading">
                     Авторські прикраси в KIMBERLI ATELIER: краса в єдиному екземплярі
                 </div>
-                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier_preview1.png');"></div>
+                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-exposition_preview.jpg');"></div>
                 <div class="about-exposition_descr">
                     <p>Кожна людина в дитинстві мріяла розкрити свій талант і прославитися. Придумати новий хімічний елемент, знайти ліки від невиліковної хвороби, створити щось прекрасне, що оцінять і полюблять люди. Бренд KIMBERLI дарує всім унікальну можливість розкрити в собі талант творця ювелірних прикрас!</p>
                     <p>Ласкаво просимо в KIMBERLI ATELIER – місце, де збуваються мрії! Цей підрозділ сформований для найвимогливіших клієнтів, що бажають пройти всі етапи створення ювелірних прикрас разом з командою KIMBERLI JEWELRY HOUSE.</p>
@@ -91,6 +237,56 @@
     </div>
 </div>
 
+<div class="atelier-services">
+    <div class="about-heading">
+        наші послуги
+        <div class="descr">Всі послуги можна модифікувати та скомбінувати по вашому бажанню</div>
+    </div>
+    <div class="atelier-services_list">
+        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier-specialization2.jpg');">
+            <div class="content">
+                <div class="heading">Розробка індивідуальної ювелірно прикраси та ії виготовлення</div>
+                <div class="price">від 3000$</div>
+                <div class="decr">
+                    <ul>
+                        <li>Знайомство замовника з художником (офлайн / онлайн).</li>
+                        <li>Розробка ексклюзивного ескізу разом з художником.</li>
+                        <li>Спільне доопрацювання створеного дизайнерського проєкту.</li>
+                        <li>Перетворення проєкту в унікальний ювелірний виріб.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier-specialization3.jpg');">
+            <div class="content">
+                <div class="heading">Придбання подарункового сертифіката на виготовлення ексклюзивної прикраси</div>
+                <div class="price">від 3000$</div>
+                <div class="decr">
+                    <ul>
+                        <li>Ексклюзивна та унікальна пакування подарункового сертифіката.</li>
+                        <li>Безмежний строк дії сертифіката.</li>
+                        <li>Можливість розширити рівень цінності подарункового сертифіката після придбання.</li>
+                        <li>Сертифікат дає можливість на будь-яке індивідуальне замовлення виготовлення ювелірної прикраси.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier-specialization1.jpg');">
+            <div class="content">
+                <div class="heading">Виготовлення прикраси з закритого каталогу готових ескізів KIMBERLI ATELIER</div>
+                <div class="price">від 3000$</div>
+                <div class="decr">
+                    <ul>
+                        <li>Знайомимо клієнтів з асортиментом кращих готових ескізів.</li>
+                        <li>До найбільш вподобаних із них підбираємо каміння.</li>
+                        <li>Створюємо ексклюзивну та унікальну прикрасу класу lux.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="atelier-individually">
     <div class="container-fluid">
@@ -117,69 +313,6 @@
     </div>
 </div>
 
-
-<div class="atelier-howwork">
-    <div class="container-fluid">
-        <div class="about-heading">
-            Як ми працюємо
-        </div>
-        <div class="atelier-howwork_list">
-            <div class="atelier-howwork_item">
-                <div class="number">01</div>
-                <div class="heading">Знайомимось</div>
-                <div class="descr">Знайомство замовника з художником (офлайн / онлайн), креативне інтерв'ю, збирання образу клієнта</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">02</div>
-                <div class="heading">Обираємо найкраще</div>
-                <div class="descr">Вибір стилю та дизайну майбутньої прикраси.</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">03</div>
-                <div class="heading">Фіксуємо важливі деталі</div>
-                <div class="descr">Обговорення персонального бюджету клієнта.</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">04</div>
-                <div class="heading">Шукаємо найкращі вставки</div>
-                <div class="descr">Індивідуальний підбір каміння.</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">05</div>
-                <div class="heading">Малюємо декілька ескізів</div>
-                <div class="descr">Розробка ексклюзивного ескізу разом з художником.</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">06</div>
-                <div class="heading">Чуємо кліента</div>
-                <div class="descr">Спільне доопрацювання створеного дизайнерського проекту.</div>
-            </div>
-            <div class="atelier-howwork_item">
-                <div class="number">07</div>
-                <div class="heading">Виготовляємо шедевр</div>
-                <div class="descr">Перетворення проекту в унікальний ювелірний виріб.</div>
-            </div>
-            <a href="#" class="atelier-howwork_btn">замовити шедевр</a>
-        </div>
-    </div>
-</div>
-
-
-<div class="atelier-movie">
-    <video poster="'design/{$settings->theme|escape}/video/poster.jpg" preload="none" controls="true">
-        <source type="video/mp4" src="design/{$settings->theme|escape}/video/production.mp4">
-    </video>
-    <div class="atelier-movie_plug" style="background-image: url('design/{$settings->theme|escape}/video/poster.jpg');">
-        <button type="button" id="video-play">
-            <svg width="89" height="89" viewBox="0 0 89 89" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="44.5" cy="44.5" r="44" stroke="#BE9948"/>
-                <path d="M54 45L39 54.5263L39 35.4737L54 45Z" fill="white"/>
-            </svg>
-        </button>
-        <div class="heading">Демонструємо за 15 секунд, як народжуються<br> шедеври KIMBERLI ATELIER!</div>
-    </div>
-</div>
-
 <div class="about-exposition atelier">
     <div class="container-fluid">
         <div class="about-exposition_container">
@@ -188,7 +321,7 @@
                 <div class="about-heading">
                     переваги перед покупкою готових прикрас
                 </div>
-                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier_preview1.png');"></div>
+                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/advantages_over buying_ready-made.jpg');"></div>
                 <div class="about-exposition_descr">
                     <p>Кожна людина в дитинстві мріяла розкрити свій талант і прославитися. Придумати новий хімічний елемент, знайти ліки від невиліковної хвороби, створити щось прекрасне, що оцінять і полюблять люди. Бренд KIMBERLI дарує всім унікальну можливість розкрити в собі талант творця ювелірних прикрас!</p>
                     <p>Ласкаво просимо в KIMBERLI ATELIER – місце, де збуваються мрії! Цей підрозділ сформований для найвимогливіших клієнтів, що бажають пройти всі етапи створення ювелірних прикрас разом з командою KIMBERLI JEWELRY HOUSE.</p>
@@ -201,15 +334,48 @@
 <div class="about-exposition atelier reverse-section">
     <div class="container-fluid">
         <div class="about-exposition_container">
-            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/main_differences.jpg');"></div>
+            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/banner-preview.jpg');"></div>
             <div class="about-exposition_content">
                 <div class="about-heading">
                     основні відмінності прикраси, виготовлених на замовлення
                 </div>
-                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview1.png');"></div>
+                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/banner-preview.jpg');"></div>
                 <div class="about-exposition_descr"> <p>Сервіс. Про нього слід сказати окремо! Крім KIMBERLI ATELIER, ми пропонуємо цілий ряд послуг:</p> <ul> <li>безстрокову гарантію на всі вироби;</li> <li>послуги персональних консультантів по стилю;</li> <li>примірку вдома;</li> <li>гнучку систему оплати;</li> <li>доставку кур'єром до дверей;</li> <li>програму лояльності;</li> <li>подарункові сертифікати на ексклюзивні ювелірні вироби;</li> <li>щедрі партнерські програми в рамках лояльності.</li> </ul> </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<div class="atelier-movie">
+    <video poster="'design/{$settings->theme|escape}/video/poster.jpg" preload="none" controls="true">
+        <source type="video/mp4" src="design/{$settings->theme|escape}/video/atelier.mp4">
+    </video>
+    <div class="atelier-movie_plug" style="background-image: url('design/{$settings->theme|escape}/video/poster.jpg');">
+        <button type="button" id="video-play">
+            <svg width="89" height="89" viewBox="0 0 89 89" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="44.5" cy="44.5" r="44" stroke="#BE9948"/>
+                <path d="M54 45L39 54.5263L39 35.4737L54 45Z" fill="white"/>
+            </svg>
+        </button>
+        <div class="heading">Демонструємо за 30 секунд, як народжуються<br> шедеври KIMBERLI ATELIER!</div>
+    </div>
+</div>
+
+<div class="about-gallery">
+    <div class="about-heading">
+        секрети процесу виробництва
+    </div>
+    <div class="about-gallery_list">
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview1.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview1.jpg" data-caption="Этап производства #1"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview2.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview2.jpg" data-caption="Этап производства #2"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview3.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview3.jpg" data-caption="Этап производства #3"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview4.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview4.jpg" data-caption="Этап производства #4"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview5.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview5.jpg" data-caption="Этап производства #5"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview6.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview6.jpg" data-caption="Этап производства #6"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview7.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview7.jpg" data-caption="Этап производства #7"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-company_preview8.jpg');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview8.jpg" data-caption="Этап производства #8"></a>
+        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview1.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier/about-company_preview9.jpg" data-caption="Этап производства #9"></a>
     </div>
 </div>
 
@@ -299,24 +465,6 @@
     </div>
 </div>
 
-
-<div class="about-gallery">
-    <div class="about-heading">
-        секрети процесу виробництва
-    </div>
-    <div class="about-gallery_list">
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization1.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier-specialization1.png" data-caption="Этап производства #1"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization3.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier-specialization3.png" data-caption="Этап производства #2"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization2.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/atelier-specialization2.png" data-caption="Этап производства #3"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview1.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-company_preview1.png" data-caption="Этап производства #4"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview3.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-company_preview3.png" data-caption="Этап производства #5"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-company_preview5.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-company_preview5.png" data-caption="Этап производства #6"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-production_preview1.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-production_preview1.png" data-caption="Этап производства #7"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-production_preview2.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-production_preview2.png" data-caption="Этап производства #8"></a>
-        <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/about-production_preview3.png');" data-fancybox="gallery" href="design/{$settings->theme|escape}/images/about-production_preview3.png" data-caption="Этап производства #9"></a>
-    </div>
-</div>
-
 <div class="about-gallery reverse">
     <div class="about-heading">
         ідеальний подарунок KIMBERLI ATELIER
@@ -331,57 +479,6 @@
         <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/perfect_gift/p7.jpg');" data-fancybox="products" href="design/{$settings->theme|escape}/images/atelier/perfect_gift/p7.jpg" data-caption="Подарок #7"></a>
         <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/perfect_gift/p8.jpg');" data-fancybox="products" href="design/{$settings->theme|escape}/images/atelier/perfect_gift/p8.jpg" data-caption="Подарок #8"></a>
         <a class="about-gallery_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier/perfect_gift/p9.jpg');" data-fancybox="products" href="design/{$settings->theme|escape}/images/atelier/perfect_gift/p9.jpg" data-caption="Подарок #9"></a>
-    </div>
-</div>
-
-
-<div class="atelier-services">
-    <div class="about-heading">
-        наші послуги
-        <div class="descr">Всі послуги можна модифікувати та скомбінувати по вашому бажанню</div>
-    </div>
-    <div class="atelier-services_list">
-        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization1.png');">
-            <div class="content">
-                <div class="heading">Розробка індивідуальної ювелірно прикраси та ії виготовлення</div>
-                <div class="price">від 3000$</div>
-                <div class="decr">
-                    <ul>
-                        <li>Знайомство замовника з художником (офлайн / онлайн).</li>
-                        <li>Розробка ексклюзивного ескізу разом з художником.</li>
-                        <li>Спільне доопрацювання створеного дизайнерського проєкту.</li>
-                        <li>Перетворення проєкту в унікальний ювелірний виріб.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization2.png');">
-            <div class="content">
-                <div class="heading">Придбання подарункового сертифіката на виготовлення ексклюзивної прикраси</div>
-                <div class="price">від 3000$</div>
-                <div class="decr">
-                    <ul>
-                        <li>Ексклюзивна та унікальна пакування подарункового сертифіката.</li>
-                        <li>Безмежний строк дії сертифіката.</li>
-                        <li>Можливість розширити рівень цінності подарункового сертифіката після придбання.</li>
-                        <li>Сертифікат дає можливість на будь-яке індивідуальне замовлення виготовлення ювелірної прикраси.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="atelier-services_item" style="background-image: url('design/{$settings->theme|escape}/images/atelier-specialization3.png');">
-            <div class="content">
-                <div class="heading">Виготовлення прикраси з закритого каталогу готових ескізів KIMBERLI ATELIER</div>
-                <div class="price">від 3000$</div>
-                <div class="decr">
-                    <ul>
-                        <li>Знайомимо клієнтів з асортиментом кращих готових ескізів.</li>
-                        <li>До найбільш вподобаних із них підбираємо каміння.</li>
-                        <li>Створюємо ексклюзивну та унікальну прикрасу класу lux.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -442,6 +539,7 @@
     </div>
 </div>
 
+<script src="design/{$settings->theme}/js/swiper.min.js"></script>
 <script>
     /* Временно - удалить */
     $('.fliud-tag').removeClass('container-fluid');
@@ -463,7 +561,7 @@
     });
 
     $(document).ready(function(){
-        $(".atelier-individually_item").slice(0,6).show();
+        $(".atelier-individually_item").slice(0,5).show();
         $(".atelier-individually_loadmore").click(function(e){
             e.preventDefault();
             $(".atelier-individually_item:hidden").slice(0,3).fadeIn("slow");
@@ -489,5 +587,20 @@
         $([document.documentElement, document.body]).animate({
             scrollTop: $(".atelier-request").offset().top -130
         }, 1000);
+    });
+
+    let foodSwiper = new Swiper(".atelier-awards .awards_slider", {
+        loop: false,
+        roundLengths: true,
+        //autoplay: true,
+        slidesPerView: "auto",
+        //centeredSlides: true,
+        spaceBetween: 13,
+        allowTouchMove: false,
+
+        navigation: {
+        nextEl: ".atelier-awards .awards_slider_nav .next",
+        prevEl: ".atelier-awards .awards_slider_nav .prev",
+        },
     });
 </script>

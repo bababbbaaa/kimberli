@@ -16,6 +16,7 @@
 
     {* Slick slider *}
     <script src="design/{$settings->theme}/js/slick.min.js{if $js_version}?v={$js_version}{/if}"></script>
+    
 
     {* Match height *}
     <script src="design/{$settings->theme}/js/jquery.matchHeight-min.js{if $js_version}?v={$js_version}{/if}"></script>
@@ -24,6 +25,9 @@
     {*<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i&amp;subset=cyrillic" rel="stylesheet">*}
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+
+    {* Swiper slider *}
+    <link href="design/{$settings->theme|escape}/css/swiper.min.css" rel="stylesheet">
 
     {* CSS *}
 
