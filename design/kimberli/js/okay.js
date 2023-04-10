@@ -2254,6 +2254,38 @@ function showPopup40(popup) {
       //  }, 40000);
 }
 
+function sendAtelierForm(e)
+{
+    let phone = e.phone.value;
+    let subject = 'ОТРИМАТИ КОНСУЛЬТАЦІЮ ФАХІВЦЯ З РОЗРОБКИ ІНДИВІДУАЛЬНОЇ ПРИКРАСИ';
+
+    console.log(e);
+
+    /* ajax запрос */
+    $.ajax({
+        url: "rest/popup/send-email",
+        method: 'POST',
+        data: {phone: phone, subject: subject},
+        dataType: 'json',
+        success: function (data, status) {
+            if (status === 'success') {
+                    $('p.result').html(data.data.message);
+                    setTimeout(function() {
+                        $('p.result').html('');
+                    }, 3000);
+
+            } else {
+                console.log(data.data.message);
+            }
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+
+    return false;
+}
+
 function showPopup(popup) {
 
     let pathname = $(location).attr('pathname');

@@ -25,9 +25,10 @@
                         <div class="atelier-consultation_descr">залиште номер телефону та ювелірний<br/> консультант юлія звʼяжеться з вами незабаром!</div>
                     </div>
                 </div>
-                <form action="" class="about-exposition_form">
-                    <input type="text" name="phone" placeholder="Номер телефону">
-                    <button>КОНСУЛЬТАЦІЯ</button>
+                <form action="" method="POST" onsubmit="sendAtelierForm(this) return false;" class="about-exposition_form">
+                    <input type="text" name="phone" value="" placeholder="Номер телефону">
+                    <button type="submit">КОНСУЛЬТАЦІЯ</button>
+                    <p class="result"></p>
                 </form>
             </div>
         </div>
