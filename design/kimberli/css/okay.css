@@ -3133,7 +3133,7 @@ a.logo img{
     padding-top: 3px;
 }
 .product_stock .old_price{
-    /*display: none !important;*/
+    display: none !important;
 }
 .product_stock.product_prices .price{
     color: rgb(151, 151, 151) !important;
@@ -5486,7 +5486,6 @@ body #bingc-active {
     max-width: 700px;
 }
 
-
 .quiz-popup{
     padding: 40px !important;
     max-width: 980px;
@@ -5541,6 +5540,7 @@ body #bingc-active {
 .quiz-popup_rules p{
     margin-bottom: 6px;
 }
+
 
 .coupon-popup {
     padding: 50px!important;
@@ -5823,7 +5823,7 @@ body #bingc-active {
     width: 50%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: right center;
     height: 480px;
     margin-left: -70px;
 }
@@ -5952,18 +5952,18 @@ body #bingc-active {
     margin: 0 auto;
     outline: none;
     text-transform: uppercase;
-    color: #000000;
+    color: #2E483E;
     letter-spacing: 0.08em;
     font-size: 12px;
     font-family: 'SolomonSansSemiBold';
     transition: all 0.2s;
     background: transparent;
-    border: 1px solid #000000;
+    border: 1px solid #2E483E;
     line-height: normal;
     cursor: pointer;
 }
 .about_loadmore.black{
-    background: #000000;
+    background: #2E483E;
     color: #fff;
 }
 .about_loadmore:hover{
@@ -5974,7 +5974,7 @@ body #bingc-active {
 
 
 .atelier-howwork {
-    margin-bottom: 80px
+    margin-bottom: 100px
 }
 .atelier-howwork .about-heading{
     margin-bottom: 40px;
@@ -6020,7 +6020,7 @@ body #bingc-active {
 .atelier-howwork_btn{
     outline: none;
     padding: 19px 52px;
-    background: #000000;
+    background: #2E483E;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #FFFFFF;
@@ -6163,8 +6163,8 @@ body #bingc-active {
     left: 0;
     top: 0;
     z-index: 2;
-    background: #2E4A37;
-    opacity: 0.4;
+    background: #000;
+    opacity: 0.3;
 }
 .atelier-services_item::before{
     content: '';
@@ -6242,7 +6242,7 @@ body #bingc-active {
     outline: none;
     transition: all 0.2s;
     padding: 14px 71px;
-    background: #000000;
+    background: #2E483E;
     color: #FFFFFF;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -6267,6 +6267,246 @@ body #bingc-active {
 }
 .atelier-request_socials a svg{
     max-width: 100%;
+}
+
+.atelier-consultation{
+    padding-top: 90px;
+    padding-bottom: 90px;
+    /*border-top: 1px solid #F3C47F;*/
+    /*border-bottom: 1px solid #F3C47F;*/
+}
+.atelier-consultation_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.atelier-consultation_avatar{
+    width: 224px;
+    height: 224px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    flex-shrink: 0;
+    margin-right: 60px;
+}
+.atelier-consultation_content_avatar{
+    display: none;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    flex-shrink: 0;
+}
+.atelier-consultation_heading{
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 24px;
+    font-size: 20px;
+    font-family: 'SolomonSansSemiBold';
+    position: relative;
+}
+.atelier-consultation_heading::after{
+    content: '';
+    display: block;
+    background: #F3C47F;
+    width: 63px;
+    height: 2px;
+    margin-top: 8px;
+}
+.atelier-consultation_descr{
+    font-family: 'SolomonSansNormal';
+    opacity: 0.8;
+    font-size: 16px;
+    line-height: 26px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.consultation-individually .atelier-individually_list{
+    padding: 0;
+}
+.consultation-individually .atelier-individually_item{
+    height: 596px;
+}
+.atelier-awards{
+    margin-bottom: 100px;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+}
+.atelier-awards .slick-track{
+    display: flex;
+}
+.atelier-slider{
+    width: 100%;
+    overflow: hidden;
+    display: block;
+}
+.atelier-slide img{
+    height: 450px;
+    width: auto;
+}
+.atelier-slide {
+    position: relative;
+    border: 1px solid #2E483E;
+    display: block;
+    box-sizing: border-box;
+    width: auto;
+}
+.atelier-slide::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.atelier-slide:hover::before{
+    background-color: rgba(0,0,0, 0);
+}
+.awards_slider-container{
+    position: relative;
+}
+.awards_slider_nav button{
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+    z-index: 5;
+}
+.awards_slider_nav button.prev{
+    left: 7px;
+}
+.awards_slider_nav button.next{
+    right: 7px;
+}
+
+.atelier-banner{
+    padding: 140px 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    background-position: center center;
+}
+.atelier-banner::after{
+    content: '';
+    position: absolute;
+    background-repeat: no-repeat;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.4);
+    display: none;
+}
+.atelier-banner .container-fluid{
+    position: relative;
+    z-index: 1;
+}
+.atelier-banner_heading{
+    margin-bottom: 40px;
+    width: 100%;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 40px;
+    font-size: 32px;
+    font-family: 'SolomonSansSemiBold';
+}
+.atelier-banner_heading::after{
+    content: '';
+    display: block;
+    background: #F3C47F;
+    width: 63px;
+    height: 2px;
+    margin-top: 8px;
+}
+.atelier-banner_descr{
+    margin-bottom: 100px;
+    width: 100%;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 28px;
+    font-size: 20px;
+    font-family: 'SolomonSansSemiBold';
+}
+.atelier-banner_list{
+    list-style: none;
+}
+.atelier-banner_list li{
+    position: relative;
+    color: #fff;
+    padding-left: 30px;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+.atelier-banner_list li::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 1px;
+    width: 16px;
+    display: block;
+    background:  #F3C47F;
+}
+
+
+
+
+.about-exposition_form{
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+}
+.about-exposition_form input{
+    width: 100%;
+    outline: none;
+    padding-left: 12px;
+    padding-right: 20px;
+    border: 1px solid #2E483E;
+    border-radius: 0;
+}
+.about-exposition_form button{
+    outline: none;
+    padding: 19px 52px;
+    background: #2E483E;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 12px;
+    line-height: normal;
+    font-family: 'SolomonSansSemiBold';
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.about-exposition_form button:hover{
+    color: #fff;
+    background: #BE9948;
+}
+.atelier-consultation_content{
+    max-width: 500px;
 }
 
 .about-reviews{
@@ -7392,8 +7632,4 @@ body #bingc-active {
 .page_compilation {
     max-width: 1024px;
     margin: auto;
-}
-
-.text-gray {
-    color: grey;
 }

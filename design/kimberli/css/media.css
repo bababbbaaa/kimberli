@@ -1375,6 +1375,9 @@
     .atelier-individually_item{
         height: 450px;
     }
+    .consultation-individually .atelier-individually_item{
+        height: 450px;
+    }
     .atelier-howwork_item{
         width: 29%;
         margin-left: 3.5%;
@@ -1407,10 +1410,91 @@
         margin: 0 auto;
         margin-bottom: 30px;
     }
+    .atelier-banner_heading{
+        line-height: 27px;
+        font-size: 18px;
+        max-width: 331px;
+    }
+    .atelier-banner_heading br{
+        display: none;
+    }
+    .atelier-banner_heading{
+        margin-bottom: 25px;
+    }
+    .atelier-banner_descr{
+        font-family: 'SolomonSansNormal';
+        line-height: 19px;
+        font-size: 14px;
+        text-transform: lowercase;
+        margin-bottom: 55px;
+    }
+    .atelier-banner_list li{
+        font-size: 13px;
+        max-width: 300px;
+    }
+    .atelier-banner{
+        padding-bottom: 70px;
+        padding-top: 90px;
+    }
+    .atelier-consultation_content_avatar{
+        display: block;
+        width: 69px;
+        height: 69px;
+        margin-right: 18px;
+    }
+    .atelier-consultation_avatar{
+        display: none;
+    }
+    .atelier-consultation_wrapp{
+        display: flex;
+        justify-content: space-between;
+    }
+    .atelier-consultation_content_main{
+        width: 100%;
+    }
+    .atelier-consultation{
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+    .atelier-consultation_heading{
+        line-height: 16px;
+        font-size: 12px;
+        margin-top: 4px;
+        margin-bottom: 11px;
+    }
+    .atelier-consultation_descr{
+        font-size: 12px;
+        line-height: 15px;
+        margin-bottom: 30px;
+    }
+    .about-exposition_form{
+        display: block;
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .about-exposition_form input{
+        height: 52px;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    .about-exposition_form button{
+        width: 100%;
+        font-size: 11px;
+    }
+
+    .atelier-awards_item{
+        height: 158px;
+        margin-bottom: 3px;
+        width: 32%;
+        border-radius: 3px;
+    }
 }
 
 
 @media screen and (max-width: 768px){
+    .atelier-slide img{
+        height: 370px;
+    }
     .atelier-portrait{
         margin: 50px 0 35px;
     }
@@ -1426,6 +1510,9 @@
     .atelier-individually_item{
         height: 250px;
         margin-bottom: 5px;
+    }
+    .consultation-individually .atelier-individually_item{
+        height: 250px;
     }
     .about_loadmore:hover{
         background: transparent;
@@ -1462,7 +1549,10 @@
         margin-bottom: 0;
     }
     .atelier-howwork{
-        margin-bottom: 50px;
+        margin-bottom: 70px;
+    }
+    .atelier-awards{
+        margin-bottom: 80px;
     }
     .atelier-movie{
         margin: 50px 0;
@@ -1853,7 +1943,6 @@
         margin-top: 40px;
     }
 }
-
 
 @media screen and (max-width: 992px){
     .quiz-popup_wrapp{
