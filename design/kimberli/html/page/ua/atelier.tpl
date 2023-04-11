@@ -22,7 +22,7 @@
                     <div class="atelier-consultation_content_avatar" style="background-image: url('design/{$settings->theme|escape}/images/atelier/manager-avatar.jpg');"></div>
                     <div class="atelier-consultation_content_main">
                         <div class="atelier-consultation_heading">ОТРИМАТИ КОНСУЛЬТАЦІЮ ФАХІВЦЯ З РОЗРОБКИ ІНДИВІДУАЛЬНОЇ ПРИКРАСИ?</div>
-                        <div class="atelier-consultation_descr">залиште номер телефону та ювелірний<br/> консультант юлія звʼяжеться з вами незабаром!</div>
+                        <div class="atelier-consultation_descr">залиште номер телефону та ювелірний<br/> консультант звʼяжеться з вами незабаром!</div>
                     </div>
                 </div>
                 <form action="" method="POST" onsubmit="sendAtelierForm(this) return false;" class="about-exposition_form">
@@ -148,12 +148,12 @@
 <div class="about-exposition atelier">
     <div class="container-fluid">
         <div class="about-exposition_container">
-            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-exposition_preview.jpg');"></div>
+            <div class="about-exposition_preview" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier_preview10.jpg');"></div>
             <div class="about-exposition_content">
                 <div class="about-heading">
                     Авторські прикраси в KIMBERLI ATELIER: краса в єдиному екземплярі
                 </div>
-                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/about-exposition_preview.jpg');"></div>
+                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier_preview10.jpg');"></div>
                 <div class="about-exposition_descr">
                     <p>Кожна людина в дитинстві мріяла розкрити свій талант і прославитися. Придумати новий хімічний елемент, знайти ліки від невиліковної хвороби, створити щось прекрасне, що оцінять і полюблять люди. Бренд KIMBERLI дарує всім унікальну можливість розкрити в собі талант творця ювелірних прикрас!</p>
                     <p>Ласкаво просимо в KIMBERLI ATELIER – місце, де збуваються мрії! Цей підрозділ сформований для найвимогливіших клієнтів, що бажають пройти всі етапи створення ювелірних прикрас разом з командою KIMBERLI JEWELRY HOUSE.</p>
@@ -322,7 +322,7 @@
                 <div class="about-heading">
                     переваги перед покупкою готових прикрас
                 </div>
-                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/advantages_over buying_ready-made.jpg');"></div>
+                <div class="about-exposition_preview mob" style="background-image: url('design/{$settings->theme|escape}/images/atelier/atelier_preview11.jpg'); background-position: center center;"></div>
                 <div class="about-exposition_descr">
                     <p>Кожна людина в дитинстві мріяла розкрити свій талант і прославитися. Придумати новий хімічний елемент, знайти ліки від невиліковної хвороби, створити щось прекрасне, що оцінять і полюблять люди. Бренд KIMBERLI дарує всім унікальну можливість розкрити в собі талант творця ювелірних прикрас!</p>
                     <p>Ласкаво просимо в KIMBERLI ATELIER – місце, де збуваються мрії! Цей підрозділ сформований для найвимогливіших клієнтів, що бажають пройти всі етапи створення ювелірних прикрас разом з командою KIMBERLI JEWELRY HOUSE.</p>
