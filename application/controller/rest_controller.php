@@ -372,7 +372,7 @@ class rest_controller extends base_controller
 			];
 		}*/
 		
-		//return ['popup' => []];
+		return ['popup' => []]; // turn off popup
 		
 		$dateFrom = new \DateTime(date('Y-m-d') . ' 00:00:00');
 		$dateTo = new \DateTime(date('Y-m-d') . ' 23:59:59');
